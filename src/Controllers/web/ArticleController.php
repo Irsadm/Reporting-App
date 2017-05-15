@@ -55,8 +55,8 @@ class ArticleController extends BaseController
 
         $file->addValidations(array(
 
-            new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
-            'image/jpg', 'image/jpeg')),
+            new \Upload\Validation\Mimetype(array('image/gif', 'image/jpg',
+            'image/jpeg')),
 
             new \Upload\Validation\Size('5M')
         ));
@@ -79,6 +79,7 @@ class ArticleController extends BaseController
 				// ['image'],
 			]
 		];
+
 		$this->validator->rules($rules);
 
 		$this->validator->labels([
@@ -89,10 +90,19 @@ class ArticleController extends BaseController
 
 
 		if ($this->validator->validate()) {
-			$file->upload();
-			$article->add($request->getParams(), $data['name']);
+			// Try to upload file
+			try {
+			    // Success!
+			    $file->upload();
+			} catch (\Exception $e) {
+			    // Fail!
+			    $errors = $file->getErrors();
 
-			return $response->withRedirect($this->router->pathFor('article-list-active'));
+			    $this->flash->addMessage('error', 'Errors');
+
+			    return $response->withRedirect($this->router->pathFor('article-add'));
+			}
+			$article->add($request->getParams(), $data['name']);
 
 			$this->flash->addMessage('succes', 'Data succesfully added');
 
@@ -149,7 +159,7 @@ class ArticleController extends BaseController
 
 		        $file->addValidations(array(
 
-		            new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+		            new \Upload\Validation\Mimetype(array('image/gif',
 		            'image/jpg', 'image/jpeg')),
 
 		            new \Upload\Validation\Size('5M')
@@ -164,7 +174,18 @@ class ArticleController extends BaseController
 		            'dimensions' => $file->getDimensions()
 		        );
 
-		        $file->upload();
+			// Try to upload file
+			try {
+			    // Success!
+			    $file->upload();
+			} catch (\Exception $e) {
+			    // Fail!
+			    $errors = $file->getErrors();
+
+			    $this->flash->addMessage('error', 'Errors, image can not be PNG');
+
+			    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
+			}
 
 		        $article->update($request->getParams(), $data['name'], $args['id']);
 			} else {
