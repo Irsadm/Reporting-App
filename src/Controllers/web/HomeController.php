@@ -38,9 +38,11 @@ class HomeController extends BaseController
         } elseif ($_SESSION['login']['is_admin'] == 0) {
             $article = new \App\Models\ArticleModel($this->db);
 
-            $article = $article->getAll();
+            $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 
-            $data = $this->view->render($response, 'index.twig', ['article' => $article]);
+            $findAll = $article->getArticle()->setPaginate($page, 2);
+
+            $data = $this->view->render($response, 'index.twig', $findAll);
 
         }
 

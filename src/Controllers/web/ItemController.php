@@ -25,7 +25,7 @@ class ItemController extends BaseController
         // die();
 
 
-        return $this->view->render($response, 'item/allitem.twig', $data);
+        return $this->view->render($response, 'admin/item/allitem.twig', $data);
     }
 
     public function getAdd(Request $request, Response $response)
@@ -35,7 +35,7 @@ class ItemController extends BaseController
 
         $data['group'] = $getGroup;
 
-        return $this->view->render($response, 'item/add.twig', $data);
+        return $this->view->render($response, 'admin/item/add.twig', $data);
     }
 
     public function postAdd(Request $request, Response $response)
@@ -96,7 +96,7 @@ class ItemController extends BaseController
         $data['group'] = $getGroup;
 
 
-        return $this->view->render($response, 'item/edit.twig', $data);
+        return $this->view->render($response, 'admin/item/edit.twig', $data);
     }
 
     public function postUpdateItem(Request $request, Response $response, $args)
@@ -161,7 +161,7 @@ class ItemController extends BaseController
         // die();
 
 
-        return $this->view->render($response, 'item/trash.twig', $data);
+        return $this->view->render($response, 'admin/item/trash.twig', $data);
     }
 
     public function hardDeleteItem(Request $request, Response $response, $args)

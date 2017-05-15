@@ -65,7 +65,7 @@ $app->group('/admin', function() use ($app, $container) {
     });
 
     $app->group('/item', function(){
-        $this->get('', 'App\Controllers\web\ItemController:index')->setName('index');
+        $this->get('', 'App\Controllers\web\ItemController:index')->setName('item.list');
         $this->get('/add', 'App\Controllers\web\ItemController:getAdd')->setName('item.add');
         $this->post('/add', 'App\Controllers\web\ItemController:postAdd')->setName('item.add.post');
         $this->get('/update/{id}', 'App\Controllers\web\ItemController:getUpdateItem')->setName('item.update');

@@ -273,7 +273,7 @@ class GroupController extends BaseController
 		$page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 		$users = $userGroup->findAll($args['id'])->setPaginate($page, 10);
 
-		$data = $this->view->render($response, 'admin/group/users.twig', [
+		$data = $this->view->render($response, 'admin/group/member.twig', [
 		'users' => $users['data'],
 		'group_id'	=> $args['id']
 		]);
@@ -288,7 +288,7 @@ class GroupController extends BaseController
 		$page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 		$users = $userGroup->notMember($args['id'])->setPaginate($page, 10);
 
-		$data = $this->view->render($response, 'admin/group/all-users.twig', [
+		$data = $this->view->render($response, 'admin/group/not-member.twig', [
 		'users' => $users['data'],
 		'group_id'	=> $args['id']
 		]);

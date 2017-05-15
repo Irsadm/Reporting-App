@@ -1,12 +1,8 @@
 <?php
-
 namespace App\Controllers\web;
-
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Models\ArticleModel;
-
-
 class ArticleController extends BaseController
 {
     public function getActiveArticle($request, $response, $arg)
@@ -30,7 +26,6 @@ class ArticleController extends BaseController
 		return $response->withRedirect($this->router
 						->pathFor('article-list-inactive'));
 	}
-
 	public function setInactive($request, $response)
 	{
         foreach ($request->getParam('inactive') as $key => $value) {
@@ -40,19 +35,15 @@ class ArticleController extends BaseController
 		return $response->withRedirect($this->router
 						->pathFor('article-list-active'));
 	}
-
 	public function getAdd(Request $request, Response $response)
 	{
 		return $this->view->render($response, 'admin/article/article-add.twig');
 	}
-
 	public function add(Request $request, Response $response)
 	{
 		$storage = new \Upload\Storage\FileSystem('assets/images');
 		$file = new \Upload\File('image', $storage);
-
         $file->setName(uniqid());
-
         $file->addValidations(array(
 
             new \Upload\Validation\Mimetype(array('image/gif', 'image/jpg',
@@ -60,7 +51,6 @@ class ArticleController extends BaseController
 
             new \Upload\Validation\Size('5M')
         ));
-
         $data = array(
             'name'       => $file->getNameWithExtension(),
             'extension'  => $file->getExtension(),
@@ -69,9 +59,7 @@ class ArticleController extends BaseController
             'md5'        => $file->getMd5(),
             'dimensions' => $file->getDimensions()
         );
-
         $article = new ArticleModel($this->db);
-
 		$rules = [
 			'required' => [
 				['title'],
@@ -81,14 +69,11 @@ class ArticleController extends BaseController
 		];
 
 		$this->validator->rules($rules);
-
 		$this->validator->labels([
 		'title' 	=>	'Title',
 		'content'	=>	'Content',
 		'image'		=>	'Image',
 		]);
-
-
 		if ($this->validator->validate()) {
 			// Try to upload file
 			try {
@@ -98,20 +83,17 @@ class ArticleController extends BaseController
 			    // Fail!
 			    $errors = $file->getErrors();
 
-			    $this->flash->addMessage('error', 'Errors');
+			    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
 
 			    return $response->withRedirect($this->router->pathFor('article-add'));
 			}
 			$article->add($request->getParams(), $data['name']);
 
 			$this->flash->addMessage('succes', 'Data succesfully added');
-
 			return $response->withRedirect($this->router->pathFor('article-list-active'));
-
 		} else {
 			$_SESSION['old'] = $request->getParams();
 			$_SESSION['errors'] = $this->validator->errors();
-
 			return $response->withRedirect($this->router->pathFor('article-add'));
 		}
 	}
@@ -120,22 +102,18 @@ class ArticleController extends BaseController
 	{
 		$article = new ArticleModel($this->db);
 		$data['article'] = $article->find('id', $args['id']);
-
 		return $this->view->render($response , 'admin/article/article-read.twig', $data);
 	}
-
 	//Edit article
 	public function getUpdate(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
         $data['article'] = $article->find('id', $args['id']);
-
 		return $this->view->render($response, 'admin/article/article-edit.twig', $data);
 	}
 	public function update(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
-
 		$rules = [
 			'required' => [
 				['title'],
@@ -144,7 +122,6 @@ class ArticleController extends BaseController
 			]
 		];
 		$this->validator->rules($rules);
-
 		$this->validator->labels([
 		'title' 	=>	'Title',
 		'content'	=>	'Content',
@@ -154,17 +131,13 @@ class ArticleController extends BaseController
 			if (!empty($_FILES['image']['name'])) {
 				$storage = new \Upload\Storage\FileSystem('assets/images');
 				$file = new \Upload\File('image', $storage);
-
 		        $file->setName(uniqid());
-
 		        $file->addValidations(array(
 
 		            new \Upload\Validation\Mimetype(array('image/gif',
 		            'image/jpg', 'image/jpeg')),
-
 		            new \Upload\Validation\Size('5M')
 		        ));
-
 		        $data = array(
 		            'name'       => $file->getNameWithExtension(),
 		            'extension'  => $file->getExtension(),
@@ -187,21 +160,20 @@ class ArticleController extends BaseController
 			    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
 			}
 
+			    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
+			    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
+			}
 		        $article->update($request->getParams(), $data['name'], $args['id']);
 			} else {
 				$article->updateData($request->getParams(), $args['id']);
 			}
-
 			return $response->withRedirect($this->router->pathFor('article-list-active'));
-
 		} else {
 			$_SESSION['old'] = $request->getParams();
 			$_SESSION['errors'] = $this->validator->errors();
-
 			return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
 		}
 	}
-
 	//Delete article
     public function setDelete($request, $response)
 	{
@@ -213,6 +185,4 @@ class ArticleController extends BaseController
 						->pathFor('article-list-inactive'));
 	}
 }
-
-
 ?>

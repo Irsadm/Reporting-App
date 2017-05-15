@@ -28,6 +28,20 @@ class ArticleModel extends BaseModel
 		];
 		$this->updateData($data, $id);
 	}
+
+	public function getArticle()
+    {
+        $qb = $this->db->createQueryBuilder();
+
+		$this->query =$qb->select('*')
+            ->from($this->table)
+            ->where('deleted = 0');
+        // $query = $qb->execute();
+
+        return $this;
+    }
+
+
 }
 
 ?>

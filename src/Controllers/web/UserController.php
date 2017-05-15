@@ -8,11 +8,11 @@ class UserController extends BaseController
         $user = new UserModel($this->db);
         $datauser = $user->getAllUser();
         $data['user'] = $datauser;
-        return $this->view->render($response, 'users/list.twig', $data);
+        return $this->view->render($response, 'admin/users/list.twig', $data);
     }
     public function getCreateUser($request, $response)
     {
-        return  $this->view->render($response, 'users/add.twig');
+        return  $this->view->render($response, 'admin/users/add.twig');
     }
     public function postCreateUser($request, $response)
     {
@@ -76,7 +76,7 @@ class UserController extends BaseController
         $user = new UserModel($this->db);
         $profile = $user->find('id', $args['id']);
         $data['data'] = $profile;
-        return $this->view->render($response, 'users/edit.twig',
+        return $this->view->render($response, 'admin/users/edit.twig',
             $data);
     }
     public function postUpdateData($request, $response, $args)
@@ -155,7 +155,7 @@ class UserController extends BaseController
         $user = new UserModel($this->db);
         $datauser = $user->trash();
         $data['usertrash'] = $datauser;
-        return $this->view->render($response, 'users/trash.twig', $data);
+        return $this->view->render($response, 'admin/users/trash.twig', $data);
     }
     public function restoreData($request, $response, $args)
     {

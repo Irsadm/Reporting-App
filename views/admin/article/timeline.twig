@@ -1,16 +1,29 @@
-{% for article in article %}
-    <div class="container">
-		<div class="col-md-8 col-md-offset-1">
-			<div class="card">
-			  <img class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}" width="200" height="300"  alt="Lights" style="width:100%" alt="Card image cap">
-			  <div class="card-block">
-			    <h4 class="media-heading">{{ article.title }}</h4>
-				<p class="fa fa-calendar"> {{ article.created_at|date('d/m/Y') }} </p>
-				<p class="fa fa-clock-o"> {{ article.created_at|date("H:m") }} </p>
-				<p class="text-justify">{{ article.content|slice(0, 300) }} <a href="{{ path_for('article-read', { id:article.id }) }}">Readmore...</a></p>
-			  </div>
-			</div>
-		</div>
-	</div>
-	<br>
-{% endfor %}
+<div class="container">
+    <div class="col-md-8 col-md-offset-1">
+        <div class="card">
+            {% for article in data %}
+            <img class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}" width="200" height="300"  alt="Lights" style="width:100%" alt="Card image cap">
+            <div class="card-block">
+                <h4 class="media-heading">{{ article.title }}</h4>
+                <p class="fa fa-calendar"> {{ article.created_at|date('d/m/Y') }} </p>
+                <p class="fa fa-clock-o"> {{ article.created_at|date("H:m") }} </p>
+                <p class="text-justify">{{ article.content|slice(0, 300) }} <a href="{{ path_for('article-read', { id:article.id }) }}">Readmore...</a></p>
+                <br>
+                {% endfor %}
+            </div>
+        </div>
+        <hr>
+        <nav aria-label="...">
+			<ul class="pager">
+				{% if current > 1 %}
+			    <li class="previous"><a href="{{ base_url() }}/home?page={{ current - 1 }}"><span aria-hidden="true">&larr;</span> Back</a></li>
+			    {% endif %}
+            	{% if current < total_page %}
+			    <li class="next"><a href="{{ base_url() }}/home?page={{ total_page }}">Last page <span aria-hidden="true">&rarr;</span></a></li>
+			    <li class="next"><a href="{{ base_url() }}/home?page={{ current + 1 }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+			    {% endif %}
+			  </ul>
+		</nav>
+    </div>
+</div>
+
