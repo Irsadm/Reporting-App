@@ -147,22 +147,19 @@ class ArticleController extends BaseController
 		            'dimensions' => $file->getDimensions()
 		        );
 
-			// Try to upload file
-			try {
-			    // Success!
-			    $file->upload();
-			} catch (\Exception $e) {
-			    // Fail!
-			    $errors = $file->getErrors();
+				// Try to upload file
+				try {
+				    // Success!
+				    $file->upload();
+				} catch (\Exception $e) {
+				    // Fail!
+				    $errors = $file->getErrors();
 
-			    $this->flash->addMessage('error', 'Errors, image can not be PNG');
+				    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
 
-			    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
-			}
-
-			    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
-			    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
-			}
+				    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
+				}
+			
 		        $article->update($request->getParams(), $data['name'], $args['id']);
 			} else {
 				$article->updateData($request->getParams(), $args['id']);
