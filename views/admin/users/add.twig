@@ -1,7 +1,7 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} Create User {% endblock %}
-{% block headContent %} Create User <a href=""><i class="fa fa-plus"></i></a> {% endblock %}       
+{% block headContent %} Create User <a href=""><i class="fa fa-plus"></i></a> {% endblock %}
 
 {% block content %}
   <form action="{{ path_for('user.create')}}" method="POST" enctype="multipart/form-data">
@@ -18,7 +18,7 @@
                             <i class="fa fa-users"></i>
                         </div>
                         <input type="text" name="username" class="form-control" value="{{ old.username }}" placeholder="Your Username">
-                    </div>  
+                    </div>
                     {% if errors.username %}
                         <span class="help-block">
                             {{errors.username | first}}</span>
@@ -35,7 +35,7 @@
                     </div>
                     {% if errors.name %}
                         <span class="help-block">{{errors.name | first}}</span>
-                    {% endif %}                                
+                    {% endif %}
                 </div>
 
                 <div class="form-group {{ errors.email ? 'has-error' : '' }}">
@@ -48,7 +48,7 @@
                     </div>
                     {% if errors.email %}
                         <span class="help-block">{{errors.email | first}}</span>
-                    {% endif %}                                
+                    {% endif %}
                 </div>
 
                 <div class="form-group {{ errors.password ? 'has-error' : '' }}">
@@ -62,7 +62,7 @@
                     {% if errors.password %}
                         <span class="help-block">
                             {{errors.password | first}}</span>
-                    {% endif %}                 
+                    {% endif %}
                 </div>
 
                 <div class="form-group {{ errors.gender ? 'has-error' : '' }}">
@@ -81,7 +81,7 @@
                     {% if errors.gender %}
                         <span class="help-block">
                             {{errors.gender | first}}</span>
-                    {% endif %}                 
+                    {% endif %}
                 </div>
 
                 <div class="form-group {{ errors.phone ? 'has-error' : '' }}">
@@ -94,7 +94,7 @@
                     </div>
                     {% if errors.phone %}
                         <span class="help-block">{{errors.phone | first}}</span>
-                    {% endif %}                                
+                    {% endif %}
                 </div>
 
                  <div class="form-group {{ errors.address ? 'has-error' : '' }}">
@@ -107,7 +107,7 @@
                     </div>
                     {% if errors.address %}
                         <span class="help-block">{{errors.address | first}}</span>
-                    {% endif %}                                
+                    {% endif %}
                 </div>
                 <div class="form-group {{ errors.image ? 'has-error' : '' }}">
                  <div id="image_preview"><img id="previewing" src="{{ base_url() }}/assets/images/{{ login.image }}" class="img-thumbnail" style="width:200px" ></div><br />
@@ -120,7 +120,7 @@
                     </div>
                     {% if errors.image %}
                         <span class="help-block">{{errors.image | first}}</span>
-                    {% endif %}                                
+                    {% endif %}
                 </div>
 
                 <button type="submit" class="btn btn-default" style="margin:10px"><span class="glyphicon glyphicon-share-alt"></span> Create</button>
@@ -128,4 +128,4 @@
         </div>
     </div>
 </form>
-{% endblock %}  
+{% endblock %}

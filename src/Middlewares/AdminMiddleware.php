@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Middlewares;
 
@@ -13,14 +13,11 @@ class AdminMiddleware extends BaseMiddleware
 
         $userToken = new \App\Models\Users\UserToken($this->container->db);
         $findToken = $userToken->find('token', $token);
-        // var_dump($token);
-        // die();
-
-
+    
         $users = new \App\Models\Users\UserModel($this->container->db);
         $findUser = $users->find('id', $findToken['user_id']);
 
-        if (!$findUser || $findUser['is_admin'] == 0) {
+        if (!$findUser || $findUser['status'] == 0) {
             $data['status'] = 401;
             $data['message'] = "You Are Not Admin";
 

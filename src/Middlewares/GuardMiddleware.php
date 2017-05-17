@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Middlewares;
 
@@ -18,8 +18,8 @@ class GuardMiddleware extends BaseMiddleware
         $findToken = $userToken->find('token', $token);
         $findUser = $users->find('id', $findToken['user_id']);
         $findGuard = $userGroup->find('user_id', $findToken['user_id']);
-// var_dump(expression)
-        if (!$findUser || $findUser['is_admin'] == 1 || $findGuard['status'] != 2) {
+
+        if (!$findUser || $findUser['status'] == 1 || $findGuard['status'] != 2) {
             $data['status'] = 401;
             $data['message'] = "You Are Not Guard";
 

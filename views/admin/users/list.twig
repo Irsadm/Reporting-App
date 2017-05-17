@@ -5,7 +5,7 @@
     <style>
         .margin{
             margin: 0 10px;
-        }   
+        }
     </style>
 {% endblock %}
 
@@ -14,10 +14,10 @@
 {% block content %}
 
 {% if flash.getMessage('remove') %}
-<script> 
+<script>
 swal("Succes!", "Data Berhasil Di Remove !", "success")
 </script>
-{% endif %} 
+{% endif %}
 
 <div class="row">
     <div class="col-xs-12">
@@ -61,7 +61,7 @@ swal("Succes!", "Data Berhasil Di Remove !", "success")
             <div class="col-lg-6">
                 <img style="width:200px" class="img-thumbnail" src="{{ base_url() }}/assets/images/{{ data.image }}" alt="">
             </div>
-              <div class="col-lg-6">  
+              <div class="col-lg-6">
                 <p class="text-left"><b>Name :</b> {{data.name}}<br>
                 <b>Username :</b> {{data.username}}<br>
                 <b>Email :</b> {{data.email}}<br>

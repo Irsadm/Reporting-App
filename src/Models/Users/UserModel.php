@@ -7,7 +7,7 @@ use App\Models\BaseModel;
 class UserModel extends BaseModel
 {
     protected $table = 'users';
-    protected $column = ['id', 'name', 'email', 'username', 'password', 'gender', 'address', 'phone', 'image', 'updated_at', 'created_at', 'is_admin'];
+    protected $column = ['id', 'name', 'email', 'username', 'password', 'gender', 'address', 'phone', 'image', 'updated_at', 'created_at', 'status'];
 
     public function createUser(array $data, $images = 'avatar.png')
     {
@@ -75,7 +75,7 @@ class UserModel extends BaseModel
             $qb = $this->db->createQueryBuilder();
                 $qb->select('*')
                          ->from($this->table)
-                         ->where('is_admin = 0 && deleted = 0');
+                         ->where('status = 0 && deleted = 0');
                 $query = $qb->execute();
                 return $query->fetchAll();
         }
@@ -91,5 +91,15 @@ class UserModel extends BaseModel
         }
         return false;
     }
+
+    //Set user as guardian
+	public function setGuardian($id)
+	{
+		$qb = $this->db->createQueryBuilder();
+		$qb->update($this->table)
+		   ->set('status', 2)
+	 	   ->where('id = ' . $id)
+		   ->execute();
+	}
 
 }

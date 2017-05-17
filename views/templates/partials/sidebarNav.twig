@@ -18,7 +18,7 @@
             <span>HOME</span></a>
         </li class="treeview">
 
-        {% if login.is_admin == 1 %}
+        {% if login.status == 1 %}
         <li class="treeview">
             <a href="#"><i class="fa fa-users"></i>
                 <span>GROUP</span>
@@ -72,7 +72,7 @@
             </ul>
             {% endif %}
 
-        {% if login.is_admin == 0 %}
+        {% if login.status == 0 %}
 
         <li class="treeview">
             <a href="#"><i class="fa fa-users"></i>

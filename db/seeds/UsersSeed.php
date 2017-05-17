@@ -23,7 +23,7 @@ class UsersSeed extends AbstractSeed
             'address'  =>  'Jakarta',
             'phone'    =>  '081234567890',
             'image'    =>  'admin.jpg',
-            'is_admin' =>  1,
+            'status' =>  1,
             'updated_at'   =>  '2017-04-30 00:00:00',
             'created_at'   =>  '2017-05-30 00:00:00',
         ];
@@ -31,7 +31,7 @@ class UsersSeed extends AbstractSeed
         $data[] = [
             'name'     =>  'Budiman',
             'email'    =>  'budi@null.net',
-            'username' =>  'budi',
+            'username' =>  'budiman',
             'password' =>  password_hash('budi123', PASSWORD_DEFAULT),
             'gender'   =>  'L',
             'address'  =>  'Jakarta',
@@ -42,10 +42,10 @@ class UsersSeed extends AbstractSeed
         ];
 
         $data[] = [
-            'name'      =>  'Caca',
+            'name'      =>  'Caca Larasati',
             'email'     =>  'caca@null.net',
-            'username'  =>  'caca',
-            'password'  =>  password_hash('caca123', PASSWORD_DEFAULT),
+            'username'  =>  'laras',
+            'password'  =>  password_hash('laras123', PASSWORD_DEFAULT),
             'gender'    =>  'P',
             'address'   =>  'Jakarta',
             'phone'     =>  '081234567819',
@@ -55,9 +55,9 @@ class UsersSeed extends AbstractSeed
         ];
 
         $data[] = [
-            'name'      =>  'Dede',
+            'name'      =>  'Dede Nurdandi',
             'email'     =>  'dede@null.net',
-            'username'  =>  'dede',
+            'username'  =>  'deden',
             'password'  =>  password_hash('dede123', PASSWORD_DEFAULT),
             'gender'    =>  'L',
             'address'   =>  'Bogor',
@@ -79,6 +79,20 @@ class UsersSeed extends AbstractSeed
             'updated_at'   =>  '2017-04-30 00:00:00',
             'created_at'   =>  '2017-05-30 00:00:00',
         ];
+
+        $data[] = [
+            'name'      =>  'Fahmi',
+            'email'     =>  'fahmi@null.net',
+            'username'  =>  'fahmi',
+            'password'  =>  password_hash('fahmi123', PASSWORD_DEFAULT),
+            'gender'    =>  'L',
+            'address'   =>  'Bogor',
+            'phone'     =>  '081234567888',
+            'image'     =>  'avatar.png',
+            'updated_at'   =>  '2017-04-30 00:00:00',
+            'created_at'   =>  '2017-05-30 00:00:00',
+        ];
+
 
         $this->insert('users', $data);
     }

@@ -27,11 +27,11 @@ class UserRoleTable extends AbstractMigration
      */
     public function change()
     {
-        $roles = $this->table('user_role');
-        $roles->addColumn('user_id', 'integer')
-                ->addColumn('role_id', 'integer')
+        $roles = $this->table('guardian');
+        $roles->addColumn('guard_id', 'integer')
+                ->addColumn('user_id', 'integer')
+                ->addForeignKey('guard_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->addForeignKey('role_id', 'roles', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->create();
     }
 }

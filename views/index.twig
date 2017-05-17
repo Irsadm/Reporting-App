@@ -4,7 +4,7 @@
 
 {% block headContent %}
 
-{% if login.is_admin == 1 %}
+{% if login.status == 1 %}
 Admin Panel
 {% endif %}
 
@@ -12,11 +12,11 @@ Admin Panel
 
 {% block content %}
 
-{% if login.is_admin == 1 %}
+{% if login.status == 1 %}
 
 {% include 'dashboard/dashboard.twig' %}
 
-{% elseif login.is_admin == 0 %}
+{% elseif login.status == 0 %}
 
 {% include 'admin/article/timeline.twig' %}
 

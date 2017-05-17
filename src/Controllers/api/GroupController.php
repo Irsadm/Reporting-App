@@ -160,7 +160,7 @@ class GroupController extends BaseController
 		$user = $users->find('id', $findUser['user_id']);
 
 		if ($group) {
-			if ($finduserGroup || $user['is_admin'] == 1) {
+			if ($finduserGroup || $user['status'] == 1) {
 				$page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 
 				$findAll = $userGroup->findAll($args['group'])->setPaginate($page, 10);

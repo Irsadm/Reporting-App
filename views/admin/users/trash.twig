@@ -5,7 +5,7 @@
     <style>
         .margin{
             margin: 0 10px;
-        }   
+        }
     </style>
 {% endblock %}
 
@@ -14,13 +14,13 @@
 {% block content %}
 
 {% if flash.getMessage('restore') %}
-<script language="javascript"> 
+<script language="javascript">
 swal("Succes!", "Data Berhasil Di Restore !", "success")
 </script>
-{% endif %} 
+{% endif %}
 
 {% if flash.getMessage('delete') %}
-<script language="javascript"> 
+<script language="javascript">
 swal("Succes!", "Data Berhasil Di Delete !", "success")
 </script>
 {% endif %} 

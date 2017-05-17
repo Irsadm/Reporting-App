@@ -37,7 +37,7 @@ class UsersTable extends AbstractMigration
              ->addColumn('phone', 'string')
              ->addColumn('image', 'string', ['default' => 'avatar.png'])
              ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
-             ->addColumn('is_admin', 'integer', ['limit' => 1, 'default' => 0])
+             ->addColumn('status', 'integer', ['limit' => 1, 'default' => 0])
              ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
              ->addColumn('deleted', 'integer', ['default' => '0'])
              ->create();

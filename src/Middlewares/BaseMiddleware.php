@@ -12,4 +12,4 @@ abstract class BaseMiddleware
     {
         $this->container = $container;
     }
-} 
+}

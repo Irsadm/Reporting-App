@@ -266,12 +266,12 @@ class UserController extends BaseController
             if (password_verify($request->getParam('password'),
                 $login['password'])) {
                 $_SESSION['login'] = $login;
-                if ($_SESSION['login']['is_admin'] == 1) {
+                if ($_SESSION['login']['status'] == 1) {
                     // $this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
                     return $response->withRedirect($this->router
                             ->pathFor('home'));
                 } else {
-                    if (isset($_SESSION['login']['is_admin'])) {
+                    if (isset($_SESSION['login']['status'])) {
                         $this->flash->addMessage('error', 'You are not admin');
                         return $response->withRedirect($this->router
                                 ->pathFor('login.admin'));
@@ -307,12 +307,12 @@ class UserController extends BaseController
                 $_SESSION['login'] = $login;
                 $_SESSION['user_group'] = $groups;
 
-                if ($_SESSION['login']['is_admin'] == 0) {
+                if ($_SESSION['login']['status'] == 0) {
                     $this->flash->addMessage('succes', 'Succes Login As User');
                     return $response->withRedirect($this->router
                             ->pathFor('home'));
                 } else {
-                    if (isset($_SESSION['login']['is_admin'])) {
+                    if (isset($_SESSION['login']['status'])) {
                         $this->flash->addMessage('succes', 'You Are Not User');
                         return $response->withRedirect($this->router
                                 ->pathFor('login'));
@@ -330,7 +330,7 @@ class UserController extends BaseController
     {
         session_destroy();
         // unset($_SESSION['login']);
-        return $response->withRedirect($this->router->pathFor('register'));
+        return $response->withRedirect($this->router->pathFor('user.login'));
     }
 
     public function viewProfile($request, $response)

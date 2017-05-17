@@ -6,7 +6,7 @@ class HomeController extends BaseController
 {
     public function index($request, $response)
     {
-        if ($_SESSION['login']['is_admin'] == 1) {
+        if ($_SESSION['login']['status'] == 1) {
             $article = new \App\Models\ArticleModel($this->db);
             $group = new \App\Models\GroupModel($this->db);
             $item = new \App\Models\Item($this->db);
@@ -34,7 +34,7 @@ class HomeController extends BaseController
     			]
     		]);
 
-        } elseif ($_SESSION['login']['is_admin'] == 0) {
+        } elseif ($_SESSION['login']['status'] == 0) {
             $article = new \App\Models\ArticleModel($this->db);
 
             $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');

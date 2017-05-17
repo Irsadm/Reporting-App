@@ -19,7 +19,7 @@ class PicMiddleware extends BaseMiddleware
         $findUser = $users->find('id', $findToken['user_id']);
         $findPic = $userGroup->find('user_id', $findToken['user_id']);
 
-        if (!$findUser || $findUser['is_admin'] == 1 || $findPic['status'] != 1 ) {
+        if (!$findUser || $findUser['status'] == 1 || $findPic['status'] != 1 ) {
             $data['status'] = 401;
             $data['message'] = "You Are Not PIC";
 
