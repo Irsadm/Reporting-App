@@ -36,7 +36,6 @@ class ArticleModel extends BaseModel
 		$this->query =$qb->select('*')
             ->from($this->table)
             ->where('deleted = 0');
-        // $query = $qb->execute();
 
         return $this;
     }

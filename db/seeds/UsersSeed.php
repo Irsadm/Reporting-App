@@ -22,7 +22,7 @@ class UsersSeed extends AbstractSeed
             'gender'   =>  'L',
             'address'  =>  'Jakarta',
             'phone'    =>  '081234567890',
-            'image'    =>  'image.png',
+            'image'    =>  'admin.jpg',
             'is_admin' =>  1,
             'updated_at'   =>  '2017-04-30 00:00:00',
             'created_at'   =>  '2017-05-30 00:00:00',
@@ -36,7 +36,7 @@ class UsersSeed extends AbstractSeed
             'gender'   =>  'L',
             'address'  =>  'Jakarta',
             'phone'    =>  '081234567891',
-            'image'    =>  'image2.png',
+            'image'    =>  'avatar.png',
             'updated_at'   =>  '2017-04-30 00:00:00',
             'created_at'   =>  '2017-05-30 00:00:00',
         ];
@@ -49,7 +49,7 @@ class UsersSeed extends AbstractSeed
             'gender'    =>  'P',
             'address'   =>  'Jakarta',
             'phone'     =>  '081234567819',
-            'image'     =>  'image3.png',
+            'image'     =>  'avatar.png',
             'updated_at'   =>  '2017-04-30 00:00:00',
             'created_at'   =>  '2017-05-30 00:00:00',
         ];
@@ -62,7 +62,7 @@ class UsersSeed extends AbstractSeed
             'gender'    =>  'L',
             'address'   =>  'Bogor',
             'phone'     =>  '081234567814',
-            'image'     =>  'image4.png',
+            'image'     =>  'avatar.png',
             'updated_at'   =>  '2017-04-30 00:00:00',
             'created_at'   =>  '2017-05-30 00:00:00',
         ];
@@ -75,7 +75,7 @@ class UsersSeed extends AbstractSeed
             'gender'    =>  'P',
             'address'   =>  'Bogor',
             'phone'     =>  '081234567814',
-            'image'     =>  'image5.png',
+            'image'     =>  'avatar.png',
             'updated_at'   =>  '2017-04-30 00:00:00',
             'created_at'   =>  '2017-05-30 00:00:00',
         ];

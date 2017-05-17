@@ -6,7 +6,6 @@ class HomeController extends BaseController
 {
     public function index($request, $response)
     {
-        // var_dump($_SESSION['login']['is_admin']);die();
         if ($_SESSION['login']['is_admin'] == 1) {
             $article = new \App\Models\ArticleModel($this->db);
             $group = new \App\Models\GroupModel($this->db);

@@ -60,7 +60,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-lock"></i>
                         </div>
-                        <input type="password" value="" name="password" class="form-control" placeholder="Your Password">
+                        <input type="password" name="password" class="form-control" placeholder="New Password">
                     </div>
                     {% if errors.password %}
                         <span class="help-block">
@@ -112,14 +112,14 @@
                     {% endif %}                                
                 </div>
     
-                <div class="form-group {{ errors.image ? 'has-error' : '' }}">
-                        <img src="{{ base_url() }}/assets/images/{{ data.image }}" class="img-thumbnail" style="width:150px" ><br />
+                 <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                <div id="image_preview"><img id="previewing" src="{{ base_url() }}/assets/images/{{ login.image }}" class="img-thumbnail" style="width:200px" ></div><br />
                     <label>Image :</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-image"></i>
                         </div>
-                        <input type="file" class="form-control" name="image" id="image" value="{{data.image}}" placeholder="Your image">
+                        <input type="file" class="form-control" name="image" value="{{ old.image }}" id="file" placeholder="Your image">
                     </div>
                     {% if errors.image %}
                         <span class="help-block">{{errors.image | first}}</span>

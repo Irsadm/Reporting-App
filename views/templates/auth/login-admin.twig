@@ -8,13 +8,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Register And Login</title>
-    <link rel="shortcut icon" href="(http://app.unbounce.com/favicon.ico)"/>
-    <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png" rel="shortcut icon" type="image/x-icon" />  
+        <title>Login Admin</title>
+         <link rel="shortcut icon" href="(http://app.unbounce.com/favicon.ico)"/>
+         <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png" rel="shortcut icon" type="image/x-icon" />  
         <!-- CSS -->
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
 
 
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
@@ -30,65 +31,35 @@
     <body style="background:url('http://www.myalivechurch.org/wp-content/uploads/2015/05/background_blue_v0011.jpg')">
 
         {% include 'templates/partials/flash.twig' %}
+ 
+<div class="login-box">
+  <div class="login-logo">
+    <a href="{{path_for('login.admin')}}"><b>Login</b>&nbsp;Admin</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+  <img style="width:350px; background:url('http://www.myalivechurch.org/wp-content/uploads/2015/05/background_blue_v0011.jpg')" src="http://www.timescapetech.co.ke/img/user2.png" class="img-thumbnail" alt="">
+    <p class="login-box-msg"><b>Sign in to Admin</b></p>
 
-        <!-- Top content -->
-        <div class="top-content">
-            
-            <div class="inner-bg">
-                <div class="container">
-                    
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong></strong> Login</h1>
-                            <div class="description">
-                                <p>
-                                    This is a free responsive <strong>"login and register forms"</strong> template made with Bootstrap. 
-                                    Download it on <a href="http://azmind.com" target="_blank"><strong>AZMIND</strong></a>, 
-                                    customize and use it as you like!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-sm-5">
-                            
-                            <div class="form-box">
-                                <div class="form-top">
-                                    <div class="form-top-left">
-                                        <h3 style="color:white">Login to our site</h3>
-                                        <p style="color:white">Enter username and password to log on:</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                <div class="form-bottom">
-                                    <form role="form" action="{{path_for('login.admin')}}" method="post" class="login-form">
-                                        <div class="form-group">
-                                         <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-user"></i>
-                                            </div>
-                                            <label class="sr-only" for="form-username">Username</label>
-                                            <input type="text" name="username" placeholder="Username..." class="form-username form-control" id="form-username">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-lock"></i>
-                                            </div>
-                                            <label class="sr-only" for="form-password">Password</label>
-                                            <input type="password" name="password" placeholder="Password..." class="form-password form-control" id="form-password">
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-social-button btn-yahoo"><i class="fa fa-login"></i>Sign in!</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-    </div>
-        
+    <form action="{{path_for('login.admin')}}" method="post">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="username" placeholder="Username...">
+        <span class="fa fa-users form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" name="password" placeholder="Password">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-social-button btn-yahoo">Sign In</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+</div>
+  <!-- /.login-box-body -->
+</div>
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>         
 <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->

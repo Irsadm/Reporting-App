@@ -4,7 +4,7 @@
 {% block headContent %} Create User <a href=""><i class="fa fa-plus"></i></a> {% endblock %}       
 
 {% block content %}
-  <form action="{{ path_for('user.create')}}"  method="POST" enctype="multipart/form-data">
+  <form action="{{ path_for('user.create')}}" method="POST" enctype="multipart/form-data">
     <div class="box box-info">
         <div class="box-header">
             <center>
@@ -103,19 +103,20 @@
                         <div class="input-group-addon">
                             <i class="fa fa-envelope"></i>
                         </div>
-                        <input type="text" name="address" class="form-control" value="{{ old.address }}" placeholder="Your address">
+                        <input type="text" name="address" class="form-control" value="{{old.address}}" placeholder="Your address">
                     </div>
                     {% if errors.address %}
                         <span class="help-block">{{errors.address | first}}</span>
                     {% endif %}                                
                 </div>
                 <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                 <div id="image_preview"><img id="previewing" src="{{ base_url() }}/assets/images/{{ login.image }}" class="img-thumbnail" style="width:200px" ></div><br />
                     <label>Image :</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-image"></i>
                         </div>
-                        <input type="file" class="form-control" name="image" value="{{ old.image }}" id="image" placeholder="Your image">
+                        <input type="file" class="form-control" name="image" value="{{ old.image }}" id="file" placeholder="Your image">
                     </div>
                     {% if errors.image %}
                         <span class="help-block">{{errors.image | first}}</span>

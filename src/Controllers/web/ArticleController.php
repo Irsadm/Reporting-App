@@ -11,6 +11,7 @@ class ArticleController extends BaseController
         $data['article'] = $article->getAll();
         return $this->view->render($response, 'admin/article/article-list-active.twig', $data);
     }
+
     public function getInactiveArticle($request, $response, $arg)
     {
         $article = new ArticleModel($this->db);
@@ -19,6 +20,7 @@ class ArticleController extends BaseController
         return $this->view->render($response, 'admin/article/article-list-inactive.twig',
         	$data);
     }
+
     public function setActive($request, $response, $args)
 	{
 		$article = new ArticleModel($this->db);
@@ -26,7 +28,8 @@ class ArticleController extends BaseController
 		return $response->withRedirect($this->router
 						->pathFor('article-list-inactive'));
 	}
-	public function setInactive($request, $response)
+
+    public function setInactive($request, $response)
 	{
         foreach ($request->getParam('inactive') as $key => $value) {
             $article = new ArticleModel($this->db);
@@ -35,11 +38,13 @@ class ArticleController extends BaseController
 		return $response->withRedirect($this->router
 						->pathFor('article-list-active'));
 	}
-	public function getAdd(Request $request, Response $response)
+
+    public function getAdd(Request $request, Response $response)
 	{
 		return $this->view->render($response, 'admin/article/article-add.twig');
 	}
-	public function add(Request $request, Response $response)
+
+    public function add(Request $request, Response $response)
 	{
 		$storage = new \Upload\Storage\FileSystem('assets/images');
 		$file = new \Upload\File('image', $storage);
@@ -97,21 +102,24 @@ class ArticleController extends BaseController
 			return $response->withRedirect($this->router->pathFor('article-add'));
 		}
 	}
-	//Read article
+
+    //Read article
 	public function readArticle(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
 		$data['article'] = $article->find('id', $args['id']);
 		return $this->view->render($response , 'admin/article/article-read.twig', $data);
 	}
-	//Edit article
+
+    //Edit article
 	public function getUpdate(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
         $data['article'] = $article->find('id', $args['id']);
 		return $this->view->render($response, 'admin/article/article-edit.twig', $data);
 	}
-	public function update(Request $request, Response $response, $args)
+
+    public function update(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
 		$rules = [
@@ -171,7 +179,8 @@ class ArticleController extends BaseController
 			return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
 		}
 	}
-	//Delete article
+
+    //Delete article
     public function setDelete($request, $response)
 	{
          foreach ($request->getParam('article') as $key => $value) {
@@ -191,4 +200,5 @@ class ArticleController extends BaseController
 		return $this->view->render($response, 'admin/article/timeline.twig', $data);
 	}
 }
+
 ?>

@@ -88,8 +88,72 @@ class UserItem extends BaseModel
         ->where('ui.user_id = :user_id')
         ->setParameter(':user_id', $id);
 
-        // $result = $qb->execute();
-
         return $this;
+    }
+
+    public function getItemInGroup($groupId, $userId)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+        $parameters = [
+            ':user_id' => $userId,
+            ':group_id' => $groupId
+        ];
+
+     $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description', 'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+        ->from($this->jointTable, 'it')
+        ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
+        ->where('ui.user_id = :user_id')
+        ->andWhere('ui.group_id = :group_id')
+        ->andWhere('ui.status = 0')
+        ->setParameters($parameters);
+
+        $result = $qb->execute();
+
+        return $result->fetchAll();
+    }
+
+    public function getDoneItemInGroup($groupId, $userId)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+        $parameters = [
+            ':user_id' => $userId,
+            ':group_id' => $groupId
+        ];
+
+     $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description', 'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+        ->from($this->jointTable, 'it')
+        ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
+        ->where('ui.user_id = :user_id')
+        ->andWhere('ui.group_id = :group_id')
+        ->andWhere('ui.status =  1 ')
+        ->setParameters($parameters);
+
+        $result = $qb->execute();
+
+        return $result->fetchAll();
+    }
+
+    public function setStatusItems($id)
+    {
+        $date = date('Y-m-d H:i:s');
+        $data = [
+            'status'        => 1,
+            'reported_at'   => $date
+        ];
+
+        $this->updateData($data, $id);
+    }
+
+    public function resetStatusItems($id)
+    {
+        $date = date('Y-m-d H:i:s');
+        $data = [
+            'status'        => 0,
+            'reported_at'   => $date
+        ];
+
+        $this->updateData($data, $id);
     }
 }

@@ -7,12 +7,19 @@ $app->get('/register', 'App\Controllers\web\UserController:getRegister')->setNam
 
 $app->post('/register', 'App\Controllers\web\UserController:postRegister');
 
+$app->get('/logout', 'App\Controllers\web\UserController:logout')->setName('logout');
+
 $app->get('/admin', 'App\Controllers\web\UserController:getLoginAsAdmin')->setName('login.admin');
 
 $app->post('/admin', 'App\Controllers\web\UserController:loginAsAdmin');
 
 $app->get('/', 'App\Controllers\web\UserController:getLogin')->setName('login');
 $app->post('/', 'App\Controllers\web\UserController:loginAsUser');
+
+$app->get('/profile', 'App\Controllers\web\UserController:viewProfile')->setName('user.profile');
+
+$app->get('/setting', 'App\Controllers\web\UserController:getSettingAccount')->setName('user.setting');
+$app->post('/setting', 'App\Controllers\web\UserController:settingAccount');
 
 $app->group('/admin', function() use ($app, $container) {
 
@@ -33,7 +40,7 @@ $app->group('/admin', function() use ($app, $container) {
     });
 
     $app->group('/user', function(){
-        $this->get('/user/list', 'App\Controllers\web\UserController:listUser')->setName('user.list.all');
+        $this->get('/list', 'App\Controllers\web\UserController:listUser')->setName('user.list.all');
         $this->get('/trash', 'App\Controllers\web\UserController:trashUser')->setName('user.trash');
         $this->get('/adduser', 'App\Controllers\web\UserController:getCreateUser')->setName('user.create');
         $this->post('/adduser', 'App\Controllers\web\UserController:postCreateUser')->setName('user.create.post');
@@ -79,4 +86,10 @@ $app->group('/admin', function() use ($app, $container) {
 
     });
 
+});
+
+$app->group('/user', function(){
+    $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')->setName('user.item.group');
+    $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')->setName('user.item.status');
+    $this->get('/item/reset/{id}', 'App\Controllers\web\UserController:restoreItemUserStatus')->setName('user.item.reset.status');
 });

@@ -13,17 +13,8 @@ class ItemController extends BaseController
     {
         $item = new Item($this->db);
         $getItem = $item->getAllItem();
-        // $count = count($getItem);
+
         $data['items'] = $getItem;
-
-        // var_dump($data);
-        // die();
-        // $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-        // $data['items'] = $item->paginate($page, $getItem, 10);
-
-        // var_dump($paginate);
-        // die();
-
 
         return $this->view->render($response, 'admin/item/allitem.twig', $data);
     }
@@ -81,8 +72,6 @@ class ItemController extends BaseController
 
             return $response->withRedirect($this->router->pathFor('item.add'));
         }
-        // var_dump($request->getParams());
-        // die();
     }
 
     public function getUpdateItem(Request $request, Response $response, $args)
@@ -149,17 +138,8 @@ class ItemController extends BaseController
     {
         $item = new Item($this->db);
         $getItem = $item->getAllDeleted();
-        // $count = count($getItem);
+
         $data['items'] = $getItem;
-
-        // var_dump($data);
-        // die();
-        // $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-        // $data['items'] = $item->paginate($page, $getItem, 10);
-
-        // var_dump($paginate);
-        // die();
-
 
         return $this->view->render($response, 'admin/item/trash.twig', $data);
     }

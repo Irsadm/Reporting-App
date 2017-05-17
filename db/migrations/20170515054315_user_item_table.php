@@ -32,6 +32,7 @@ class UserItemTable extends AbstractMigration
                 ->addColumn('user_id', 'integer')
                 ->addColumn('status', 'integer', ['default' => '0'])
                 ->addColumn('group_id', 'integer')
+                ->addColumn('reported_at', 'timestamp')
                 ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->addForeignKey('item_id', 'items', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])

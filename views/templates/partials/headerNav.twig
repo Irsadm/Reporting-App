@@ -9,51 +9,96 @@
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                {% if login %}
-                <li class="dropdown user user-menu">
+            </ul></div>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Notification menu -->
+                    {% if login %}
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 10 notifications</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                            page and may cause design problems
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-users text-red"></i> 5 new members joined
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-user text-red"></i> You changed your username
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                    </li>
 
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-             {# <i class="fa fa-user"></i> #}<img src="http://koolkampus.co.in/wp-content/uploads/2014/02/admin.png" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{login.name}}</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- User image -->
-              <li class="user-header">
-                <img src="http://koolkampus.co.in/wp-content/uploads/2014/02/admin.png" class="img-circle" alt="User Image">
+                    <li class="dropdown user user-menu">
 
-                <p>
-                  {{login.name}}
-                  <small>Join since {{ login.created_at}}</small>
-                </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Setting</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Account</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="">Admin</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
-              <!-- Menu Footer-->
-              <li class="user-footer">
-                <div class="pull-left">
-                  <a href="" class="btn btn-default btn-flat">View Profile</a>
-                </div>
-                <div class="pull-right">
-                  <a href="" class="btn btn-default btn-flat">Admin</a>
-                </div>
-              </li>
-            </ul>
-          </li>
-        </div>
-        {% endif %}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{{ base_url() }}/assets/images/{{ login.image }}" class="user-image" alt="User Image">
+                            <span class="hidden-xs">{{login.name}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="{{ base_url() }}/assets/images/{{ login.image }}" class="img-circle" alt="User Image">
 
-    </nav>
+                                <p>
+                                    {{login.name}}
+                                    <small>Join since {{ login.created_at | date("m-d-Y") }}</small>
+                                </p>
+                            </li>
+                            <!-- Menu Body -->
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Item</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Group</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="">Password</a>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{{path_for('user.profile')}}" class="btn btn-default btn-flat">View Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{{path_for('user.setting')}}" class="btn btn-default btn-flat">Setting Account</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
+                {% endif %}
+            </nav>
 </header>

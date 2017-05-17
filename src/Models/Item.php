@@ -41,7 +41,6 @@ class Item extends BaseModel
 
         $this->updateData($data, $id);
 
-        // return $this->db->lastInsertId();
     }
 
     public function getAllItem()

@@ -1,0 +1,26 @@
+{% extends 'templates/default.twig' %}
+{% block title %} Profile {% endblock %}
+{% block content %}
+    
+            <div class="panel-body">
+              <div class="box box-info">
+                <a href="#"><h4 class="text-center" style="font-family:impact">My &nbsp;P r o f i l e</h4></a>
+                <div class="box-header">
+                <div class="col-lg-4">
+            {% if login %}
+                <img style="width:300px" class="img-thumbnail" src="{{ base_url() }}/assets/images/{{ login.image }}" alt="">
+            </div>
+              <div class="col-lg-4">  
+                <p class="text-left"><b>Name :</b> {{login.name}}.<br><br>
+                <b>Username :</b> {{login.username}}.<br><br>
+                <b>Email :</b> {{login.email}}.<br><br>
+                <b>Gender :</b> {{login.gender}}.<br><br>
+                <b>Addres :</b> {{login.address}}.<br><br>
+                <b>phone :</b> {{login.phone}}.<br><br>
+                <b>Start Registration :</b>{{login.created_at | date("F jS Y ")}}.</p>
+              </div>
+        </div>
+    </div>
+    <a href="{{path_for('user.setting')}}"><button type="submit" class="btn btn-social-button btn-github"><i class="fa fa-cogs"></i> Setting profile</button></a>
+            {% endif %}
+{% endblock %}
