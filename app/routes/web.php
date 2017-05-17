@@ -62,6 +62,8 @@ $app->group('/admin', function() use ($app, $container) {
         ->setName('article-read');
         $this->post('delete', 'App\Controllers\web\ArticleController:setDelete')
         ->setName('article-del');
+        $this->post('search', 'App\Controllers\web\ArticleController:search')
+        ->setName('article.search');
     });
 
     $app->group('/item', function(){

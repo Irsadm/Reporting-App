@@ -181,5 +181,14 @@ class ArticleController extends BaseController
 		return $response->withRedirect($this->router
 						->pathFor('article-list-inactive'));
 	}
+	//Search article
+	public function search($request, $response)
+	{
+		$article = new ArticleModel($this->db);
+		$data['search'] = $request->getQueryParam('search');
+		$data['article'] = $article->search($request->getQueryParam('search'));
+
+		return $this->view->render($response, 'admin/article/timeline.twig', $data);
+	}
 }
 ?>
