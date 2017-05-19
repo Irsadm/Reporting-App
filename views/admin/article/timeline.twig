@@ -1,14 +1,14 @@
-<form method="post" action="{{path_for('article.search')}}">
-    <div class="input-group">
-        <input type="text" class="form-control" name="search" placeholder="Search for...">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Search</button>
-        </span>
-    </div>
-</form>
-
 <div class="container">
     <div class="col-md-8 col-md-offset-1">
+	<form method="GET" action="">
+	    <div class="input-group">
+	        <input type="text" class="form-control" name="search" placeholder="Search for...">
+	        <span class="input-group-btn">
+	            <button class="btn btn-default" type="submit">Search</button>
+	        </span>
+	    </div>
+ 	</form>   
+	</br>
         <div class="card">
             {% for article in data %}
             <center><img class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}"
@@ -26,17 +26,18 @@
         <hr>
         <nav aria-label="...">
 			<ul class="pager">
-				{% if current > 1 %}
-			    <li class="previous"><a href="{{ base_url() }}/home?page={{ current - 1 }}"><span aria-hidden="true">&larr;</span> Back</a></li>
+				{% if current > first_page %}
+			    	<li class="previous"><a href="{{ base_url() }}/home?page={{ first_page }}"><span aria-hidden="true">&larr;</span> First page</a></li>
+			    	<li class="previous"><a href="{{ base_url() }}/home?page={{ current - 1 }}"><span aria-hidden="true">&larr;</span> Back</a></li>
 			    {% endif %}
             	{% if current < total_page %}
-			    <li class="next"><a href="{{ base_url() }}/home?page={{ total_page }}">Last page <span aria-hidden="true">&rarr;</span></a></li>
-			    <li class="next"><a href="{{ base_url() }}/home?page={{ current + 1 }}">Next <span aria-hidden="true">&rarr;</span></a></li>
-			    <li class="previous"><a href="{{ base_url() }}/home?page={{ current - 1 }}">
-                    <span aria-hidden="true">&larr;</span> Back</a></li>
+			    	<li class="next"><a href="{{ base_url() }}/home?page={{ total_page }}">Last page <span aria-hidden="true">&rarr;</span></a></li>
+			    	<li class="next"><a href="{{ base_url() }}/home?page={{ current + 1 }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+			    {% endif %}
+			    {% if current %}
+			    	<li class="disabled pull-left"><a href="#"><span aria-hidden="false">&larr;</span> Back</a></li>
 			    {% endif %}
 			  </ul>
 		</nav>
     </div>
 </div>
-

@@ -43,11 +43,14 @@ class ArticleModel extends BaseModel
     public function search($title)
     {
     	$qb = $this->db->createQueryBuilder();
-
-        $this->query = $qb->select($this->column)
+        $this->query = $qb->select('*')
                  ->from($this->table)
-                 ->where('title LIKE "%'.$title.'%" AND deleted = 0');
-        $result = $qb->execute();
+                 ->where('title LIKE :title')
+                 ->andWhere('deleted = 0')
+                 ->setParameter('title', '%'.$title.'%');
+
+        $result = $this->query->execute();
+
         return $result->fetchAll();
     }
 

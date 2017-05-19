@@ -195,6 +195,7 @@ class ArticleController extends BaseController
 	{
 		$article = new ArticleModel($this->db);
 		$data['search'] = $request->getQueryParam('search');
+		
 		$data['article'] = $article->search($request->getQueryParam('search'));
 
 		return $this->view->render($response, 'admin/article/timeline.twig', $data);
