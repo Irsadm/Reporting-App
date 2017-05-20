@@ -16,18 +16,13 @@ class UserRolesSeed extends AbstractSeed
     {
 
         $data[] = [
-            'guard_id' =>  5,
-            'user_id'  =>  2,
+            'guard_id' =>  2,
+            'user_id'  =>  3,
         ];
 
         $data[] = [
-            'guard_id' =>  3,
+            'guard_id' =>  2,
             'user_id'  =>  4,
-        ];
-
-        $data[] = [
-            'guard_id' =>  3,
-            'user_id'  =>  5,
         ];
 
         $this->insert('guardian', $data);

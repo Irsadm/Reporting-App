@@ -14,11 +14,14 @@
                     {% for group in groups %}
                     <div class="col-sm-2 col-md-3">
                         <div class="thumb1">
-                            <center><img src="{{ base_url() }}/assets/images/{{ group.image }}" height="151" width="151" style="margin-bottom:5px"></center>
+                            <center><img src="{{ base_url() }}/assets/images/{{ group.image }}"
+                                 height="151" width="151" style="margin-bottom:5px"></center>
                             <div class="caption">
-                                <center><input type="checkbox" name="group[]" value="{{ group.id }}"><font color=#0160a4> select</font></center>
+                                <center><input type="checkbox" name="group[]" value="{{ group.id }}">
+                                    <font color=#0160a4> select</font></center>
                                 <a href="{{ base_url() }}/admin/group/detail/{{ group.id }}"
-                                class="btn btn-primary btn-block btn btn-info btn-md" style="margin-bottom:7px">
+                                class="btn btn-primary btn-block btn btn-info btn-md"
+                                 style="margin-bottom:7px">
                                 <b>{{ group.name }}</b>
                             </a>
                             <hr>
@@ -27,10 +30,19 @@
                 </div>
                 {% endfor %}
             </div>
+            {% if groups == null %}
+            <hr>
+        	<p align="center" style="color:red;"><b>There are no active groups</b></p>
+            <hr>
+        	{% elseif groups != null %}
             <hr style="margin-top:10px;margin-bottom:10px;" >
-            <button type="submit" name="restore" value="1" class="btn btn-warning"><i class="fa fa-repeat fa-lg" aria-hidden="true"></i> Restore</button>
-            <button type="submit" name="delete" value="2" class="btn btn-danger"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete</button>
+            <button type="submit" name="restore" value="1" class="btn btn-warning">
+                <i class="fa fa-repeat fa-lg" aria-hidden="true"></i> Restore</button>
+            <button type="submit" name="delete" value="2" class="btn btn-danger">
+                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete</button>
             <hr style="margin-top:10px;margin-bottom:10px;" >
+            {% endif %}
+
         </form>
     </div>
 </div>

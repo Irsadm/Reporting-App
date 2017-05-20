@@ -27,9 +27,10 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-4 col-md-7">
+					 <div id="image_preview"><img id="previewing" src="{{ base_url() }}/assets/images/{{ login.image }}" class="img-thumbnail" style="width:200px" ></div><br />
 						<div class="form-group {{ errors.image ? 'has-error' : '' }}">
 							<label for="image">Image</label>
-							<input type="file" name="image" id="image" class="form-control">
+							<input type="file" id="file" name="image" id="image" class="form-control">
 							{% if errors.image %}
 							<span class="help-block">{{errors.image | first}}</span>
 							{% endif %}

@@ -171,4 +171,44 @@ class ItemController extends BaseController
         return $response->withRedirect($this->router->pathFor('item.trash'));
     }
 
+    public function getSelectItem($request, $response)
+    {
+        $userItem = new \App\Models\UserItem($this->db);
+
+        $userId = $_SESSION['login']['id'];
+
+        $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+        $item = $userItem->unselectedItem($userId)->setPaginate($page, 10);
+        $data = $this->view->render($response, 'users/additem.twig', ['item' => $item['data']]);
+
+
+        return $data;
+    }
+
+    public function setItem($request, $response)
+    {
+        $userItem = new UserItem($this->db);
+        $item = new Item($this->db);
+        $userId = $_SESSION['login']['id'];
+        $group = $_SESSION['user_group'];
+
+        if (!empty($request->getParams()['set'])) {
+            foreach ($request->getParams()['item'] as $key =>  $value ) {
+                $findItem = $item->find('id', $value);
+                $data = [
+                    'user_id' => $userId,
+                    'item_id' => $value,
+                    'group_id' => $findItem['group_id']
+                ];
+
+                $userItem->setItem($data, $data['group_id']);
+
+            }
+        }
+
+        return $response->withRedirect($this->router->pathFor('user.item.all'));
+
+
+    }
+
 }

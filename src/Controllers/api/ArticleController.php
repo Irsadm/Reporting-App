@@ -21,7 +21,8 @@ class ArticleController extends BaseController
 			$page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 			$get = $article->paginate($page, $getArticle, 10);
 			if ($get) {
-				$data = $this->responseDetail(200, 'Data Available', $get, $this->paginate($countArticles, 10, $page, ceil($countArticles/10)));
+				$data = $this->responseDetail(200, 'Data Available', $get,
+				 $this->paginate($countArticles, 10, $page, ceil($countArticles/10)));
 			} else {
 				$data = $this->responseDetail(404, 'Error', 'Data Not Found');
 			}

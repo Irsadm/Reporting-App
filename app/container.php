@@ -44,6 +44,10 @@ $container['view'] = function ($container) {
 		$view->getEnvironment()->addGlobal('user_group', $_SESSION['user_group']);
 	}
 
+	if (@$_SESSION['guard']) {
+		$view->getEnvironment()->addGlobal('guard', $_SESSION['guard']);
+	}
+
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
 	return $view;

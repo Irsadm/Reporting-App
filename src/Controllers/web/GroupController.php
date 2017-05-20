@@ -233,7 +233,7 @@ class GroupController extends BaseController
 		return $response->withRedirect($this->router->pathFor('group.inactive'));
 	}
 
-	//Set user as member, PIC or guardian of group
+	//Set user as member or PIC of group
 	public function setUserGroup($request, $response)
 	{
 		$userGroup = new UserGroupModel($this->db);
@@ -248,11 +248,6 @@ class GroupController extends BaseController
 			foreach ($request->getParam('user') as $key => $value) {
 				$finduserGroup = $userGroup->findUser('id', $value, 'group_id', $groupId);
 				$userGroup->setUser($finduserGroup['id']);
-			}
-		} elseif (!empty($request->getParams()['guard'])) {
-			foreach ($request->getParam('user') as $key => $value) {
-				$finduserGroup = $userGroup->findUser('id', $value, 'group_id', $groupId);
-				$userGroup->setGuardian($finduserGroup['id']);
 			}
 		} elseif (!empty($request->getParams()['delete'])) {
 			foreach ($request->getParam('user') as $key => $value) {
@@ -301,7 +296,6 @@ class GroupController extends BaseController
 		$userGroup = new UserGroupModel($this->db);
 
 		$groupId = $request->getParams()['group_id'];
-
 
 		if (!empty($request->getParams()['member'])) {
 			foreach ($request->getParam('user') as $key => $value) {

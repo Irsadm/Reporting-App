@@ -9,7 +9,8 @@
 {% block content %}
 
  <div class="box box-primary">
-        <form method="post" autocomplete="off" action="{{ path_for('article-add') }}" enctype="multipart/form-data">
+        <form method="post" autocomplete="off" action="{{ path_for('article-add') }}"
+		 enctype="multipart/form-data">
             <div class="box-body">
                 <div class="form-group {{ errors.title ? 'has-error': '' }}">
                     <input type="text" name="title" class="form-control" placeholder="Title">
@@ -18,13 +19,18 @@
                     {% endif %}
                 </div>
                 <div class="form-group {{ errors.content ? 'has-error': '' }}">
-                    <textarea name="content" class="form-control" placeholder="Content" rows="10"></textarea>
+                    <textarea name="content" class="form-control" placeholder="Content" rows="10">
+                    	
+                    </textarea>
                     {% if errors.content %}
                         <span class="help-block">{{ errors.content|first }}</span>
                     {% endif %}
                 </div>
 				<div class="form-group {{ errors.image ? 'has-error' : '' }}">
-                <div id="image_preview"><img id="previewing" src="{{ base_url() }}/assets/images/{{ login.image }}" class="img-thumbnail" style="width:200px" ></div><br />
+                <div id="image_preview"><img id="previewing"
+					src="{{ base_url() }}/assets/images/{{ login.image }}"
+					class="img-thumbnail" style="width:200px" ></div><br />
+
 					<label for="image">Image</label>
 					<input type="file" id="file" name="image" id="image" class="form-control">
 					{% if errors.image %}
@@ -33,7 +39,8 @@
 				</div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary center-block"><i class="fa fa-reply"></i> Submit</button>
+                <button type="submit" class="btn btn-primary center-block">
+					<i class="fa fa-reply"></i> Submit</button>
             </div>
         </form>
     </div>

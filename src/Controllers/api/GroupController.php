@@ -22,7 +22,8 @@ class GroupController extends BaseController
 			$page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 			$get = $group->paginate($page, $getGroup, 10);
 			if ($get) {
-				$data = $this->responseDetail(200, 'Data Available', $get, $this->paginate($countGroups, 10, $page, ceil($countGroups/10)));
+				$data = $this->responseDetail(200, 'Data Available', $get,
+				 $this->paginate($countGroups, 10, $page, ceil($countGroups/10)));
 			} else {
 				$data = $this->responseDetail(404, 'Error', 'Data Not Found');
 			}

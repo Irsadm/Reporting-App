@@ -25,7 +25,8 @@
                                 <select class="form-control" name="group_id" >
                                     <option value="">Select Group</option>
                                     {% for data in group %}
-                                        <option value="{{ data.id }}"{% if item.group_id == data.id %} selected="selected"{% endif %}>{{ data.name }}</option>
+                                        <option value="{{ data.id }}"{% if item.group_id == data.id %}
+                                         selected="selected"{% endif %}>{{ data.name }}</option>
                                     {% endfor %}
                                 </select>
                                 {% if errors.group_id %}
@@ -47,7 +48,8 @@
                         <div class="col-xs-12 col-sm-6 col-md-7">
                             <div class="form-group {{ errors.description ? 'has-error' : '' }}">
                                 <label for="description">Description</label>
-                                <input type="text" name="description" class="form-control"  value="{{ item.description}}">
+                                <input type="text" name="description" class="form-control"
+                                  value="{{ item.description}}">
                                 {% if errors.description %}
                                     <span class="help-block">{{ errors.description | first }}</span>
                                 {% endif %}
@@ -58,7 +60,8 @@
                                 <label for="recurrent">Recurrent</label>
                                 <select class="form-control" name="recurrent" value="">
                                     <option value="">Select Recurrent</option>
-                                    <option value="{{ item.recurrent }}" {% if item.recurrent != empty %} selected="selected" {% endif %}>{{ item.recurrent }}</option>
+                                    <option value="{{ item.recurrent }}" {% if item.recurrent != empty %}
+                                     selected="selected" {% endif %}>{{ item.recurrent }}</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
                                     <option value="monhtly">Monthly</option>
@@ -74,7 +77,8 @@
                         <div class="col-xs-12 col-sm-6 col-md-7">
                             <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
                                 <label for="start_date">Start date</label>
-                                <input type="text" name="start_date" class="form-control"  value="{{ item.start_date}}">
+                                <input type="text" name="start_date" class="form-control"
+                                 value="{{ item.start_date}}">
                                 {% if errors.start_date %}
                                     <span class="help-block">{{ errors.start_date | first }}</span>
                                 {% endif %}
@@ -83,14 +87,16 @@
                         <div class="col-xs-12 col-sm-6 col-md-5">
                             <div class="form-group {{ errors.end_date ? 'has-error' : '' }}">
                                 <label for="end_date">End date</label>
-                                <input type="text" name="end_date" class="form-control"  value="{{ item.end_date}}">
+                                <input type="text" name="end_date" class="form-control"
+                                 value="{{ item.end_date}}">
                                 {% if errors.end_date %}
                                     <span class="help-block">{{ errors.end_date | first }}</span>
                                 {% endif %}
                             </div>
                         </div>
                     </div>
-                    <center><button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> UPDATE </button></center>
+                    <center><button type="submit" class="btn btn-success">
+                        <i class="fa fa-pencil-square" aria-hidden="true"></i> UPDATE </button></center>
                     <hr style="margin-top:10px;margin-bottom:10px;">
 
                 </form>

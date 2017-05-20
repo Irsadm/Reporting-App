@@ -36,8 +36,13 @@
                                 <td>{{ item.start_date }}</td>
                                 <td>{{ item.end_date }}</td>
                                 <td>
-                                    <a href="{{ path_for('item.soft.delete', {('id'): item.id})}}" title="Remove item" style="color:red" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a>
-                                    <a href="{{ path_for('item.update', {('id'): item.id})}}" title="Edit item"  data-toggle="tooltip" data-placement="top"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ path_for('item.soft.delete', {('id'): item.id})}}"
+                                     title="Remove item" style="color:red" data-toggle="tooltip"
+                                     data-placement="top"><i class="fa fa-trash-o"></i></a>
+
+                                    <a href="{{ path_for('item.update', {('id'): item.id})}}"
+                                     title="Edit item"  data-toggle="tooltip" data-placement="top">
+                                     &nbsp&nbsp&nbsp&nbsp&nbsp<i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}

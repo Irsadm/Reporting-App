@@ -20,7 +20,8 @@ class UserController extends BaseController
             $get = $user->paginate($page, $getUser, 5);
 
             if ($get) {
-                $data = $this->responseDetail(200, 'Data Available', $get, $this->paginate($countUser, 5, $page, ceil($countUser/5)));
+                $data = $this->responseDetail(200, 'Data Available', $get,
+                 $this->paginate($countUser, 5, $page, ceil($countUser/5)));
             } else {
                 $data = $this->responseDetail(404, 'Error', 'Data Not Found');
             }
@@ -34,7 +35,8 @@ class UserController extends BaseController
 
     public function createUser($request, $response)
     {
-        $this->validator->rule('required', ['name', 'email', 'username', 'password', 'gender', 'address', 'phone', 'image']);
+        $this->validator->rule('required', ['name', 'email', 'username',
+                            'password', 'gender', 'address', 'phone', 'image']);
         $this->validator->rule('email', 'email');
         $this->validator->rule('alphaNum', 'username');
         $this->validator->rule('numeric', 'phone');
@@ -45,7 +47,8 @@ class UserController extends BaseController
             $user = new UserModel($this->db);
             $createUsers = $user->createUser($request->getParsedBody());
 
-            $data = $this->responseDetail(201, 'Success', 'Create User Succes', $request->getParsedBody());
+            $data = $this->responseDetail(201, 'Success', 'Create User Succes',
+                        $request->getParsedBody());
         } else {
             $data = $this->responseDetail(400, 'Errors', $this->validator->errors());
         }
@@ -96,7 +99,8 @@ class UserController extends BaseController
         $findUser = $user->find('id', $args['id']);
 
         if ($findUser) {
-            $this->validator->rule('required', ['name', 'email', 'username', 'password', 'gender', 'address', 'phone', 'image']);
+            $this->validator->rule('required', ['name', 'email', 'username',
+                            'password', 'gender', 'address', 'phone', 'image']);
             $this->validator->rule('email', 'email');
             $this->validator->rule('alphaNum', 'username');
             $this->validator->rule('numeric', 'phone');
@@ -127,7 +131,8 @@ class UserController extends BaseController
         $findUser = $users->find('id', $user['user_id']);
 
         if ($findUser) {
-            $this->validator->rule('required', ['name', 'email', 'username', 'password', 'gender', 'address', 'phone', 'image']);
+            $this->validator->rule('required', ['name', 'email', 'username',
+                            'password', 'gender', 'address', 'phone', 'image']);
             $this->validator->rule('email', 'email');
             $this->validator->rule('alphaNum', 'username');
             $this->validator->rule('numeric', 'phone');
@@ -266,4 +271,3 @@ class UserController extends BaseController
             return $this->responseDetail(200, 'Success', 'Logout Success');
         }
 }
-

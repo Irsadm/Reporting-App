@@ -13,7 +13,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 {% for item in items %}
-                    <form class="" action="{{ path_for('user.item.status', { ('id'): item.id })}}" method="get">
+                    <form action="{{ path_for('user.item.status', { ('id'): item.id })}}" method="get">
                 {% endfor %}
                     <table id="" class="example2 table table-condensed table-bordered table-striped"
                             width="100%" cellspacing="0">
@@ -29,7 +29,8 @@
                             {% for item in items %}
                             <tr>
                                 <td class="text-center">
-                                    <input class="custom-control-input" id="checkbox" type="checkbox"  onclick="this.form.submit();">
+                                    <input class="custom-control-input" id="checkbox"
+                                      type="checkbox"  onclick="this.form.submit();">
                                 </td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.description }}</td>
@@ -47,7 +48,8 @@
     <div class="col-xs-12" style="padding-bottom: 10px;">
 
         {% if reported == NULL %}
-        <a href="{{ base_url() }}/user/group/{{ group_id }}/item?reported=1" class="btn-clear discard-answer dno">
+        <a href="{{ base_url() }}/user/group/{{ group_id }}/item?reported=1"
+         class="btn-clear discard-answer dno">
             <button class="btn btn-primary" type="button">
                 Show Reported Item <span class="badge">{{ count }}</span>
             </button></a>
@@ -58,8 +60,16 @@
                     Hide Reported Item
                 </button></a></a>
             {% endif %}
+                <a href="{{ path_for('user.item.all') }}" class="btn-clear discard-answer dno">
+                    <button class="btn btn-success " type="button">
+                         <i class="fa fa-plus-circle"></i>   Add Item
+                    </button>
+                </a>
+
+
     </div>
 </div>
+
 
 {% if reported == 1 %}
 <div class="" style="font-size:25px">
@@ -71,7 +81,7 @@
             <div class="panel-body">
                 </div>
                     {% for item in itemdone %}
-                        <form class="" action="{{ path_for('user.item.reset.status', {('id'): item.id })}}" method="get">
+                    <form action="{{ path_for('user.item.reset.status', {('id'): item.id })}}" method="get">
                     {% endfor %}
                         <table id="" class="example2 table table-condensed table-bordered table-striped"
                             width="100%" cellspacing="0">
@@ -87,7 +97,7 @@
                             {% for item in itemdone %}
                                 <tr>
                                     <td class="text-center">
-                                        <input type="checkbox" checked onclick="this.form.submit();" name="" value="">
+                                        <input type="checkbox" checked onclick="this.form.submit();">
                                     </td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.description }}</td>
@@ -101,6 +111,6 @@
         </div>
     </div>
     {% endif %}
-</div>
+<!-- </div> -->
 
 {% endblock %}

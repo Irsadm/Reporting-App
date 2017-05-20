@@ -3,75 +3,73 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Login Admin</title>
-         <link rel="shortcut icon" href="(http://app.unbounce.com/favicon.ico)"/>
-         <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png" rel="shortcut icon" type="image/x-icon" />  
-        <!-- CSS -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login Admin</title>
+    <link rel="shortcut icon" href="(http://app.unbounce.com/favicon.ico)"/>
+    <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png"
+    rel="shortcut icon" type="image/x-icon" />
+    <!-- CSS -->
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
 
 
-<script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+</head>
 
-    </head>
+<body style="background:url('http://www.myalivechurch.org/wp-content/uploads/2015/05/background_blue_v0011.jpg')">
 
-    <body style="background:url('http://www.myalivechurch.org/wp-content/uploads/2015/05/background_blue_v0011.jpg')">
+    {% include 'templates/partials/flash.twig' %}
 
-        {% include 'templates/partials/flash.twig' %}
- 
-<div class="login-box">
-  <div class="login-logo">
-    <a href="{{path_for('login.admin')}}"><b>Login</b>&nbsp;Admin</a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-  <img style="width:350px; background:url('http://www.myalivechurch.org/wp-content/uploads/2015/05/background_blue_v0011.jpg')" src="http://www.timescapetech.co.ke/img/user2.png" class="img-thumbnail" alt="">
-    <p class="login-box-msg"><b>Sign in to Admin</b></p>
-
-    <form action="{{path_for('login.admin')}}" method="post">
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="username" placeholder="Username...">
-        <span class="fa fa-users form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-social-button btn-yahoo">Sign In</button>
+    <div class="login-box" style="margin-top:20px;margin-bottom:10px;">
+        <div class="login-logo">
+            <a href="{{path_for('login.admin')}}"><b>Login</b>&nbsp;Admin</a>
         </div>
-        <!-- /.col -->
-      </div>
-    </form>
-</div>
-  <!-- /.login-box-body -->
-</div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <img style="width:335px; height:320px; background:url('http://www.myalivechurch.org/wp-content/uploads/2015/05/background_blue_v0011.jpg')"
+            src="http://www.timescapetech.co.ke/img/user2.png" class="img-thumbnail" alt="">
+            <p class="login-box-msg"><b>Sign in as Admin</b></p>
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>         
-<!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
+            <form action="{{path_for('login.admin')}}" method="post">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" name="username" placeholder="Username...">
+                    <span class="fa fa-users form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-social-button btn-yahoo">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
 
-<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
 </body>
-</html>  
+</html>
 {% endblock %}

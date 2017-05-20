@@ -2,18 +2,13 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css">
-
-
-<script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/AdminLTE.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/css/skins/_all-skins.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css">
 
@@ -32,39 +27,30 @@
         </aside>
         <!-- Content -->
         <div class="content-wrapper">
-        <section class="content-header">
-            <h1>{% block headContent %} {% endblock %}</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Here</li>
-            </ol>
+            <section class="content-header">
+                <h1>{% block headContent %} {% endblock %}</h1>
         </section>
-            <section class="content">
-        {% include 'templates/partials/flash.twig' %}
-                {% block content %} {% endblock %}
-            </section>
-        </div>
-        <!-- Footer -->
-        {% include 'templates/partials/footer.twig' %}
+        <section class="content">
+            {% include 'templates/partials/flash.twig' %}
+            {% block content %} {% endblock %}
+        </section>
     </div>
+    <!-- Footer -->
+    {% include 'templates/partials/footer.twig' %}
+</div>
 </body>
 
 
-
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
 
 <!-- Include a polyfill for ES6 Promises (optional) for IE11 and Android browser -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/js/bootstrap-formhelpers.min.js"></script>
-
 <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
 <script>
 $(function () {
@@ -76,74 +62,73 @@ $(function () {
         "info": true,
         "autoWidth": true
     });
-  });
+});
 </script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
 <script>
-$(function () {
-    $('table.example2').DataTable({
-    	"paging": true,
-    	"lengthChange": true,
-     	"searching": true,
-      	"ordering": true,
-      	"info": true,
-      	"autoWidth": true
+    $(function () {
+        $('table.example2').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true
+        });
     });
-  });
 </script>
 
 <script>
     $(document).ready(function (e) {
-$("#uploadimage").on('submit',(function(e) {
-e.preventDefault();
-$("#message").empty();
-$('#loading').show();
-$.ajax({
-url: "ajax_php_file.php", // Url to which the request is send
-type: "POST",             // Type of request to be send, called as method
-data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-contentType: false,       // The content type used when sending data to the server.
-cache: false,             // To unable request pages to be cached
-processData:false,        // To send DOMDocument or non processed data file it is set to false
-success: function(data)   // A function to be called if request succeeds
-{
-$('#loading').hide();
-$("#message").html(data);
-}
-});
-}));
-
-// Function to preview image after validation
-$(function() {
-$("#file").change(function() {
-$("#message").empty(); // To remove the previous error message
-var file = this.files[0];
-var imagefile = file.type;
-var match= ["image/jpeg","image/png","image/jpg"];
-if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2])))
-{
-$('#previewing').attr('src','noimage.png');
-$("#message").html("<p id='error'>Please Select A valid Image File</p>"+"<h4>Note</h4>"+"<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
-return false;
-}
-else
-{
-var reader = new FileReader();
-reader.onload = imageIsLoaded;
-reader.readAsDataURL(this.files[0]);
-}
-});
-});
-function imageIsLoaded(e) {
-$("#file").css("color","green");
-$('#image_preview').css("display", "block");
-$('#previewing').attr('src', e.target.result);
-$('#previewing').attr('width', '250px');
-$('#previewing').attr('height', '230px');
-};
-});
+        $("#uploadimage").on('submit',(function(e) {
+            e.preventDefault();
+            $("#message").empty();
+            $('#loading').show();
+            $.ajax({
+                url: "ajax_php_file.php", // Url to which the request is send
+                type: "POST",             // Type of request to be send, called as method
+                data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                contentType: false,       // The content type used when sending data to the server.
+                cache: false,             // To unable request pages to be cached
+                processData:false,        // To send DOMDocument or non processed data file it is set to false
+                success: function(data)   // A function to be called if request succeeds
+                {
+                    $('#loading').hide();
+                    $("#message").html(data);
+                }
+            });
+        }));
+        // Function to preview image after validation
+        $(function() {
+            $("#file").change(function() {
+                $("#message").empty(); // To remove the previous error message
+                var file = this.files[0];
+                var imagefile = file.type;
+                var match= ["image/jpeg","image/png","image/jpg"];
+                if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2])))
+                {
+                    $('#previewing').attr('src','noimage.png');
+                    $("#message").html("<p id='error'>Please Select A valid Image File</p>"+"
+                    <h4>Note</h4>"+"<span id='error_message'>Only jpeg, jpg and png Images type allowed</span>");
+                    return false;
+                }
+                else
+                {
+                    var reader = new FileReader();
+                    reader.onload = imageIsLoaded;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+        function imageIsLoaded(e) {
+            $("#file").css("color","green");
+            $('#image_preview').css("display", "block");
+            $('#previewing').attr('src', e.target.result);
+            $('#previewing').attr('width', '250px');
+            $('#previewing').attr('height', '230px');
+        };
+    });
 </script>
 {% block script %} {% endblock %}
 </html>
-

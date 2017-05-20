@@ -8,30 +8,35 @@
 
 {% block content %}
     <div class="box box-primary">
-        <form method="post" autocomplete="off" action="{{ path_for('article-edit', {id:article.id} ) }}" enctype="multipart/form-data">
+        <form method="post" autocomplete="off"
+         action="{{ path_for('article-edit', {id:article.id} ) }}" enctype="multipart/form-data">
             <div class="box-body">
                 <div class="form-group {{ errors.title ? 'has-error': '' }}">
-                    <input type="text" name="title" class="form-control" placeholder="Title" value="{{article.title}}">
+                    <input type="text" name="title" class="form-control"
+                     placeholder="Title" value="{{article.title}}">
                     {% if errors.title %}
                         <span class="help-block">{{ errors.title|first }}</span>
                     {% endif %}
                 </div>
                 <div class="form-group {{ errors.content ? 'has-error': '' }}">
-                    <textarea name="content" class="form-control" placeholder="Content" rows="10">{{ article.content }}</textarea>
+                    <textarea name="content" class="form-control" placeholder="Content"
+                     rows="10">{{ article.content }}</textarea>
                     {% if errors.content %}
                         <span class="help-block">{{ errors.content|first }}</span>
                     {% endif %}
                 </div>
                 <div class="form-group {{ errors.image ? 'has-error' : '' }}">
                     <label for="image">Image</label>
-                    <input type="file" name="image" id="image" class="form-control" value="{{ article.image }}">
+                    <input type="file" name="image" id="image" class="form-control"
+                     value="{{ article.image }}">
                     {% if errors.image %}
                     <span class="help-block">{{errors.image | first}}</span>
                     {% endif %}
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary center-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Submit</button>
+                <button type="submit" class="btn btn-primary center-block">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Submit</button>
             </div>
         </form>
     </div>

@@ -34,10 +34,11 @@
 			    	<li class="next"><a href="{{ base_url() }}/home?page={{ total_page }}">Last page <span aria-hidden="true">&rarr;</span></a></li>
 			    	<li class="next"><a href="{{ base_url() }}/home?page={{ current + 1 }}">Next <span aria-hidden="true">&rarr;</span></a></li>
 			    {% endif %}
-			    {% if current %}
+			    {% if current <= 1 %}
 			    	<li class="disabled pull-left"><a href="#"><span aria-hidden="false">&larr;</span> Back</a></li>
 			    {% endif %}
 			  </ul>
 		</nav>
     </div>
 </div>
+

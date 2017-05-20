@@ -38,7 +38,8 @@ class UserController extends BaseController
         );
         $user = new UserModel($this->db);
         $this->validator
-            ->rule('required', ['username', 'password', 'name', 'email', 'phone', 'address', 'gender'])
+            ->rule('required', ['username', 'password', 'name', 'email',
+                    'phone', 'address', 'gender'])
             ->message('{field} must not be empty')
             ->label('Username', 'password', 'name', 'Password', 'Email', 'Address');
         $this->validator
@@ -59,22 +60,25 @@ class UserController extends BaseController
                 'name',
                 'password'
              ], 5);
+
         if ($this->validator->validate()) {
             $image->upload();
-            $register = $user->checkDuplicate($request->getParam('username'), $request->getParam('email'));
+            $register = $user->checkDuplicate($request->getParam('username'),
+                        $request->getParam('email'));
 
             if ($register == 1) {
                 $_SESSION['old'] = $request->getParams();
                 $this->flash->addMessage('warning', 'Username, already used');
-                    return $response->withRedirect($this->router->pathFor('user.create'));
+
+                return $response->withRedirect($this->router->pathFor('user.create'));
             } elseif ($register == 2) {
                 $_SESSION['old'] = $request->getParams();
                 $this->flash->addMessage('warning', 'Email, already used');
                 return $response->withRedirect($this->router->pathFor('user.create'));
             } else {
-                $create = $request->getParams();
-                $user->createUser($create);
+                $user->createUser($request->getParams(), $data['name']);
                 $this->flash->addMessage('succes', 'Create Data Succes');
+
                 return $response->withRedirect($this->router->pathFor('user.list.all'));
             }
         } else {
@@ -91,8 +95,7 @@ class UserController extends BaseController
         $user = new UserModel($this->db);
         $profile = $user->find('id', $args['id']);
         $data['data'] = $profile;
-        return $this->view->render($response, 'admin/users/edit.twig',
-            $data);
+        return $this->view->render($response, 'admin/users/edit.twig', $data);
     }
 
     public function postUpdateData($request, $response, $args)
@@ -147,7 +150,8 @@ class UserController extends BaseController
         } else {
             $_SESSION['old'] = $request->getParams();
             $_SESSION['errors'] = $this->validator->errors();
-            return $response->withRedirect($this->router->pathFor('user.edit.data', ['id' => $args['id']]));
+            return $response->withRedirect($this->router
+                ->pathFor('user.edit.data', ['id' => $args['id']]));
         }
     }
 
@@ -220,7 +224,8 @@ class UserController extends BaseController
 
         if ($this->validator->validate()) {
             $user = new UserModel($this->db);
-            $register = $user->checkDuplicate($request->getParam('username'), $request->getParam('email'));
+            $register = $user->checkDuplicate($request->getParam('username'),
+                        $request->getParam('email'));
 
             if ($register == 1) {
                 $_SESSION['old'] = $request->getParams();
@@ -235,10 +240,7 @@ class UserController extends BaseController
                 $user->register($registers);
                 $this->flash->addMessage('succes', 'Register Succes, Please Login');
                 return $response->withRedirect($this->router->pathFor('register'));
-
-
             }
-
         } else {
             $_SESSION['errors'] = $this->validator->errors();
             $_SESSION['old'] = $request->getParams();
@@ -290,38 +292,49 @@ class UserController extends BaseController
         return  $this->view->render($response, 'templates/auth/register.twig');
     }
 
-    public function loginAsUser($request, $response)
+    public function login($request, $response)
     {
+        // var_dump($request->getParams()['optlogin']);die();
         $user = new UserModel($this->db);
-        $login = $user->find('username', $request->getParam('username'));
         $group =  new \App\Models\UserGroupModel($this->db);
+        $guardian =  new \App\Models\GuardModel($this->db);
+
+        $login = $user->find('username', $request->getParam('username'));
+        $users = $guardian->findAllUser($login['id']);
         $groups = $group->findAllGroup($login['id']);
 
         if (empty($login)) {
-            $this->flash->addMessage('warning', ' Username is not registered');
+            $this->flash->addMessage('warning', 'Username is not registered!');
             return $response->withRedirect($this->router
-                    ->pathFor('login'));
+            ->pathFor('login'));
         } else {
-            if (password_verify($request->getParam('password'),
-                $login['password'])) {
-                $_SESSION['login'] = $login;
-                $_SESSION['user_group'] = $groups;
+            if (password_verify($request->getParam('password'),$login['password'])) {
 
-                if ($_SESSION['login']['status'] == 0) {
-                    $this->flash->addMessage('succes', 'Succes Login As User');
-                    return $response->withRedirect($this->router
-                            ->pathFor('home'));
-                } else {
-                    if (isset($_SESSION['login']['status'])) {
-                        $this->flash->addMessage('succes', 'You Are Not User');
-                        return $response->withRedirect($this->router
-                                ->pathFor('login'));
-                    }
+                $_SESSION['login'] = $login;
+                if ($_SESSION['login']['status'] == 0 &&
+                $request->getParam('optlogin') == 'user') {
+                    $_SESSION['user_group'] = $groups;
+
+                    $this->flash->addMessage('succes', 'Successfully logged in as User');
+                    return $response->withRedirect($this->router->pathFor('home'));
                 }
+                elseif ($_SESSION['login']['status'] == 0 &&
+                $request->getParam('optlogin') == 'guard') {
+                    $_SESSION['guard'] = [
+                        'user' => $users,
+                        'status'=> $request->getParam('optlogin'),
+                    ];
+
+                    $this->flash->addMessage('succes', 'Successfully logged in as Guardian');
+                    return $response->withRedirect($this->router->pathFor('home'));
+                } else {
+                    $this->flash->addMessage('warning', 'You Are Not User');
+                    return $response->withRedirect($this->router->pathFor('login'));
+                }
+
             } else {
-                $this->flash->addMessage('warning', ' Password is not registered');
-                return $response->withRedirect($this->router
-                        ->pathFor('login'));
+                $this->flash->addMessage('warning', 'Password incorrect!');
+                return $response->withRedirect($this->router->pathFor('login'));
             }
         }
     }
@@ -329,7 +342,6 @@ class UserController extends BaseController
     public function logout($request, $response)
     {
         session_destroy();
-        // unset($_SESSION['login']);
         return $response->withRedirect($this->router->pathFor('user.login'));
     }
 
@@ -398,11 +410,12 @@ class UserController extends BaseController
 
             return $response->withRedirect($this->router->pathFor('user.setting'));
         } else {
-            var_dump($request->getParams());die();
 
             $_SESSION['old'] = $request->getParams();
             $_SESSION['errors'] = $this->validator->errors();
-            return $response->withRedirect($this->router->pathFor('user.setting', ['id' => $args['id']]));
+
+            return $response->withRedirect($this->router
+                            ->pathFor('user.setting', ['id' => $args['id']]));
         }
     }
 
@@ -453,7 +466,7 @@ class UserController extends BaseController
         $count = count($findUserItem['itemdone']);
         $reported = $request->getQueryParam('reported');
 
-        $data = $this->view->render($response, 'users/useritem.twig', [
+        return $this->view->render($response, 'users/useritem.twig', [
             'itemdone' => $findUserItem['itemdone'],
             'items' => $findUserItem['items'],
             'status'=> $user['status'],
@@ -461,20 +474,103 @@ class UserController extends BaseController
             'reported'=> $reported,
             'count'=> $count,
         ]);
+    }
 
-        return $data;
+    public function getItemUser($request,$response, $args)
+    {
+        $item = new \App\Models\Item($this->db);
+        $userItem = new \App\Models\UserItem($this->db);
+        $user = new UserModel($this->db);
+
+        $userItems = $userItem->getItem($args['id'])->fetchAll();
+        $findUser = $user->find('id', $args['id']);
+        $count = count($userItems);
+
+        return $this->view->render($response, 'guardian/useritem.twig', [
+            'items' => $userItems,
+            'user' => $findUser,
+            'count'=> $count,
+        ]);
+    }
+
+    public function getNotUser($request, $response, $args)
+	{
+		$guard = new \App\Models\GuardModel($this->db);
+
+		$users = $guard->notUser($args['id'])->fetchAll();
+
+		$data = $this->view->render($response, 'guardian/not-user.twig', [
+		'users' => $users,
+		'guard_id'	=> $args['id']
+		]);
+		return $data;
+	}
+
+    public function setGuardUser($request, $response)
+    {
+        $guard = new \App\Models\GuardModel($this->db);
+
+        $guardId = $_SESSION['login']['id'];
+        $status = $_SESSION['guard']['status'];
+
+        if (!empty($request->getParams()['setuser'])) {
+            foreach ($request->getParam('user') as $value) {
+
+                $data = [
+                'guard_id' 	=> 	$guardId,
+                'user_id'	=>	$value,
+                ];
+
+                $addUser = $guard->createData($data);
+            }
+
+            $users = $guard->findAllUser($guardId);
+
+            $_SESSION['guard'] = [
+                'user' => $users,
+                'status'=> $status,
+                ];
+        }
+
+        return $response->withRedirect($this->router
+        ->pathFor('get.user.add', ['id' => $guardId]));
+    }
+
+    public function delGuardUser($request, $response, $args)
+    {
+        $guard = new \App\Models\GuardModel($this->db);
+
+        $guardId = $_SESSION['login']['id'];
+        $status = $_SESSION['guard']['status'];
+        $findId = $guard->findGuard('user_id', $args['id'], 'guard_id', $guardId);
+        // var_dump($findId);die();
+
+        if ($findId && $status == 'guard') {
+
+            $guard->hardDelete($findId['id']);
+
+            $users = $guard->findAllUser($guardId);
+
+            $_SESSION['guard'] = [
+                'user' => $users,
+                'status'=> $status,
+                ];
+        }
+
+        return $response->withRedirect($this->router
+        ->pathFor('home'));
     }
 
     public function setItemUserStatus($request, $response, $args)
     {
         $userItem = new \App\Models\UserItem($this->db);
 
-
         $setItem = $userItem->setStatusItems($args['id']);
         $findGroup = $userItem->find('id', $args['id']);
         $groupId = $findGroup['group_id'];
 
-        return $response->withRedirect($this->router->pathFor('user.item.group', ['id' =>$groupId]));
+        return $response->withRedirect($this->router
+                        ->pathFor('user.item.group', ['id' =>$groupId]));
     }
 
     public function restoreItemUserStatus($request, $response, $args)
@@ -485,6 +581,49 @@ class UserController extends BaseController
         $findGroup = $userItem->find('id', $args['id']);
         $groupId = $findGroup['group_id'];
 
-        return $response->withRedirect($this->router->pathFor('user.item.group', ['id' =>$groupId]));
+        return $response->withRedirect($this->router
+                        ->pathFor('user.item.group', ['id' =>$groupId]));
+    }
+
+    public function getChangePassword($request, $response)
+    {
+        return  $this->view->render($response, '/users/change.twig');
+    }
+
+    public function changePassword($request, $response, $args)
+    {
+        $user = new UserModel($this->db);
+        $this->validator
+            ->rule('required', 'password')
+            ->message('{field} must not be empty');
+        $this->validator
+             ->rule('lengthMax', [
+                'password'
+             ], 30);
+        $this->validator
+             ->rule('equals', 'new_password', 'retype_password');
+        $this->validator
+             ->rule('lengthMin', [
+                'password'
+             ], 5);
+
+        if ($this->validator->validate()) {
+
+            if (password_verify($request->getParam('password'), $_SESSION['login']['password'])) {
+
+            $user->changePassword($request->getParams(), $_SESSION['login']['id']);
+            return $response->withRedirect($this->router->pathFor('user.setting'));
+            } else {
+
+                $this->flash->addMessage('warning', 'The old password you have entered is incorrect');
+                return $response->withRedirect($this->router->pathFor('user.change.password'));
+            }
+        } else {
+
+            $_SESSION['old'] = $request->getParams();
+            $_SESSION['errors'] = $this->validator->errors();
+
+            return $response->withRedirect($this->router->pathFor('user.change.password', ['id' => $args['id']]));
+        }
     }
 }

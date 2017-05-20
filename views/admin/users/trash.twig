@@ -9,7 +9,8 @@
     </style>
 {% endblock %}
 
-{% block headContent %} Trash User <a href="" style="color:red"><i class="fa fa-trash-o"></i></a>{% endblock %}
+{% block headContent %} Trash User <a href="" style="color:red">
+    <i class="fa fa-trash-o"></i></a>{% endblock %}
 
 {% block content %}
 
@@ -23,7 +24,7 @@ swal("Succes!", "Data Berhasil Di Restore !", "success")
 <script language="javascript">
 swal("Succes!", "Data Berhasil Di Delete !", "success")
 </script>
-{% endif %} 
+{% endif %}
 
 <div class="row">
     <div class="col-xs-12">
@@ -37,55 +38,62 @@ swal("Succes!", "Data Berhasil Di Delete !", "success")
                             <th>Username</th>
                             <th>Email</th>
                             <th class="text-center">Option</th>
-                         </tr>
+                        </tr>
                     </thead>
-                <tbody>
-                {% for data in usertrash %}
-                    {% set i = i + 1 %}
-                     <tr>
-                       <td class="text-center">{{i}}</td>
-                        <td>{{data.name}}</td>
+                    <tbody>
+                        {% for data in usertrash %}
+                        {% set i = i + 1 %}
+                        <tr>
+                            <td class="text-center">{{i}}</td>
+                            <td>{{data.name}}</td>
                             <td>{{data.username}}</td>
                             <td>{{data.email}}</td>
                             <td class="text-center">
-                            <a href="{{path_for('user.delt' , {('id'): data.id})}}" title=" Delete Data" style="color:red" data-toggle="tooltip" data-placement="top"><i class="fa fa-times"></i></a>
-                            <a href="{{path_for('user.restore' , {('id'): data.id})}}" data-toggle="tooltip" data-placement="top" title=" Restore Data" ><i class="fa fa-refresh margin"></i></a>
-                    <a href="" data-toggle="modal" data-target="#{{data.id}}" value="{{data.id}}"title=" View User" ><i class="fa fa-eye"></i></a>
+                                <a href="{{path_for('user.delt' , {('id'): data.id})}}"
+                                title=" Delete Data" style="color:red" data-toggle="tooltip"
+                                data-placement="top"><i class="fa fa-times"></i></a>
 
+                                <a href="{{path_for('user.restore' , {('id'): data.id})}}"
+                                data-toggle="tooltip" data-placement="top" title=" Restore Data" >
+                                <i class="fa fa-refresh margin"></i></a>
 
-<!-- Modal -->
-<div id="{{data.id}}" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" style="color:red">&times;</button>
-        <center><h3 class="modal-title" style="font-family:impact">D a t a  U s e r</h4></center>
-      </div>
-      <div class="modal-body">
-        <center><img style="width:250px" class="pull-left" src="https://cdn1.iconfinder.com/data/icons/metro-ui-dock-icon-set--icons-by-dakirby/128/User_No-Frame_mirror.png" alt=""></center>
-        <p><b>Name :</b> {{data.name}}</p>
-        <p><b>Username :</b> {{data.username}}</p>
-        <p><b>Email :</b> {{data.email}}</p>
-        <p><b>Gender :</b> {{data.gender}}</p>
-        <p><b>Addres :</b> {{data.address}}</p>
-        <p><b>phone :</b> {{data.phone}}</p>
-        <p><b>Start Registration :</b> {{data.created_at}}</p>
-      </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        </div>
-    </div>
-</div>
-
-         </td>
-    </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                                <a href="" data-toggle="modal" data-target="#{{data.id}}"
+                                value="{{data.id}}"title=" View User" ><i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
+{% for data in usertrash %}
+<div id="{{data.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" style="color:red">&times;</button>
+                <center><h3 class="modal-title" style="font-family:impact">D a t a  U s e r</h4></center>
+                </div>
+            <div class="modal-body">
+                <center><img style="width:250px" class="pull-left"
+                    src="https://cdn1.iconfinder.com/data/icons/metro-ui-dock-icon-set--icons-by-dakirby/128/User_No-Frame_mirror.png" alt=""></center>
+                <p><b>Name :</b> {{data.name}}</p>
+                <p><b>Username :</b> {{data.username}}</p>
+                <p><b>Email :</b> {{data.email}}</p>
+                <p><b>Gender :</b> {{data.gender}}</p>
+                <p><b>Addres :</b> {{data.address}}</p>
+                <p><b>phone :</b> {{data.phone}}</p>
+                <p><b>Start Registration :</b> {{data.created_at}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
 {% endblock %}

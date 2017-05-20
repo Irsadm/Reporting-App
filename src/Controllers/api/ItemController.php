@@ -21,7 +21,8 @@ class ItemController extends BaseController
         if ($getItems) {
             $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
             $paginate = $itzem->paginate($page, $getItems, 10);
-            $data = $this->responseDetail(200, 'Data Available', $paginate, $this->paginate($countItems, 10, $page, ceil($countItems/10)));
+            $data = $this->responseDetail(200, 'Data Available', $paginate,
+             $this->paginate($countItems, 10, $page, ceil($countItems/10)));
         } else {
             $data = $this->responseDetail(400, 'Data not found', null);
         }

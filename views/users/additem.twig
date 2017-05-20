@@ -1,0 +1,55 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Add Item {% endblock %}
+
+{% block headContent %}
+	Add Item <i style="color:green" class="fa fa-plus-square"></i>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form action="{{ path_for('user.item.add') }}" method="POST">
+					<table id="example2" class="table table-bordered table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Recurrent</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th style="width: 40px">Select</th>
+							</tr>
+						</thead>
+						{% for item in item %}
+
+						<tr>
+							<td>{{ item.name }}</td>
+							<td>{{ item.description }}</td>
+							<td>{{ item.recurrent }}</td>
+							<td>{{ item.start_date }}</td>
+							<td>{{ item.end_date }}</td>
+                            <td>
+                                <input type="checkbox" name="item[]" value="{{ item.id }}">
+                            </td>
+						</tr>
+						{% endfor %}
+					</table>
+					<hr style="margin-top:10px;margin-bottom:10px;" >
+				</div>
+				<div class="panel-body" align="right">
+					<input type="hidden" name="id" value="{{ group_id }}">
+
+					<button type="submit" name="set" value="1" class="btn btn-success">
+						<i class="fa fa-plus" aria-hidden="true"></i> Add Item </button>
+					<hr style="margin-top:10px;margin-bottom:10px;" >
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

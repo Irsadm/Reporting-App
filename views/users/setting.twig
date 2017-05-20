@@ -4,138 +4,132 @@
 
 <div class="panel-body">
     <div class="box box-info">
-        <a href="#"><h4 class="text-center">&nbsp;&nbsp;&nbsp;Setting account</h4></a>
+        <a href="#"><h4 class="text-center"><i class="fa fa-cogs"></i>Setting account</h4></a>
 
-    <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-           <button type="button" class="btn btn-social-button btn-twitter"><i class="fa fa-cogs"></i> Public</button></div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-social-button btn-twitter"><i class="fa fa-user-secret"></i> Private</button>
-        </div>
-    </div>
-
-             <form action="{{ path_for('user.setting', {id:login.id} ) }}" method="POST" enctype="multipart/form-data">
-        <div class="col-lg-6">
-            <div class="box-body">
-                <div class="form-group {{ errors.username ? 'has-error' : '' }}" >
-                    <label>Username:</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-users"></i>
+        <form action="{{ path_for('user.setting', {id:login.id} ) }}"
+        method="POST" enctype="multipart/form-data">
+            <div class="col-lg-6">
+                <div class="box-body">
+                    <div class="form-group {{ errors.username ? 'has-error' : '' }}" >
+                        <label>Username:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <input type="text" name="username" class="form-control"
+                            value="{{ login.username }}" placeholder="Your Username">
                         </div>
-                        <input type="text" name="username" class="form-control" value="{{ login.username }}" placeholder="Your Username">
-                    </div>
-                    {% if errors.username %}
+                        {% if errors.username %}
                         <span class="help-block">
                             {{errors.username | first}}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group {{ errors.name ? 'has-error' : '' }}">
-                    <label>Name:</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-user"></i>
-                        </div>
-                        <input type="text" name="name" class="form-control" value="{{ login.name }}" placeholder="Your Name">
+                            {% endif %}
                     </div>
-                    {% if errors.name %}
+
+                    <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                        <label>Name:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <input type="text" name="name" class="form-control"
+                             value="{{ login.name }}" placeholder="Your Name">
+                        </div>
+                        {% if errors.name %}
                         <span class="help-block">{{errors.name | first}}</span>
-                    {% endif %}
-                </div>
-
-                 <div class="form-group {{ errors.gender ? 'has-error' : '' }}">
-                    <label>gender :</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-transgender-alt"></i>
-                        </div>
-                        <!-- <input type="text" name="gender" value="{{login.gender}}" class="form-control" placeholder="Your gender"> -->
-                        <select name="gender" class="form-control" id="">
-                            <option value="Laki-Laki">Laki-Laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
+                        {% endif %}
                     </div>
-                    {% if errors.gender %}
+
+                    <div class="form-group {{ errors.gender ? 'has-error' : '' }}">
+                        <label>Gender :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-transgender-alt"></i>
+                            </div>
+                            <select name="gender" class="form-control" id="">
+                                <option value="L" {% if  login.gender == "L" %}
+                                 selected="selected"{% endif %}>Laki-Laki</option>
+                                <option value="P" {% if  login.gender == "P" %}
+                                 selected="selected"{% endif %}>Perempuan</option>
+                            </select>
+                        </div>
+                        {% if errors.gender %}
                         <span class="help-block">
                             {{errors.gender | first}}</span>
-                    {% endif %}
-                </div>
-
-                 <div class="form-group {{ errors.address ? 'has-error' : '' }}">
-                    <label>address:</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <input type="text" name="address" class="form-control" value="{{ login.address }}" placeholder="Your address">
+                            {% endif %}
                     </div>
-                    {% if errors.address %}
+
+                    <div class="form-group {{ errors.address ? 'has-error' : '' }}">
+                        <label>Address:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <input type="text" name="address" class="form-control"
+                             value="{{ login.address }}" placeholder="Your address">
+                        </div>
+                        {% if errors.address %}
                         <span class="help-block">{{errors.address | first}}</span>
-                    {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="form-group {{ errors.email ? 'has-error' : '' }}">
+                        <label>Email:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <input type="email" name="email" class="form-control"
+                            value="{{ login.email }}" placeholder="Your email">
+                        </div>
+                        {% if errors.email %}
+                        <span class="help-block">{{errors.email | first}}</span>
+                        {% endif %}
+                    </div>
+                    <div class="form-group {{ errors.phone ? 'has-error' : '' }}">
+                        <label>Phone Number:</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <input type="text" class="form-control input-medium bfh-phone"
+                             data-format="+62 (ddd) ddd-ddd-ddd" name="phone"
+                             value="{{ login.phone }}" placeholder="Your phone">
+                        </div>
+                        {% if errors.phone %}
+                        <span class="help-block">{{errors.phone | first}}</span>
+                        {% endif %}
+                    </div>
                 </div>
-                  <span class="label label-info">Note : *Password Jangan Diisi Bila Tidak Ingin Diganti
-                  </span>
             </div>
-        </div>
 
             <div class="box-body">
-                  <div class="form-group {{ errors.email ? 'has-error' : '' }}">
-                    <label>Email:</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <input type="email" name="email" class="form-control" value="{{ login.email }}" placeholder="Your email">
-                    </div>
-                    {% if errors.email %}
-                        <span class="help-block">{{errors.email | first}}</span>
-                    {% endif %}
-                </div>
-                <div class="form-group {{ errors.password ? 'has-error' : '' }}">
-                    <label>Password :</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-lock"></i>
-                        </div>
-                        <input type="password" name="password" class="form-control" placeholder="New Password">
-                    </div>
-                    {% if errors.password %}
-                        <span class="help-block">
-                            {{errors.password | first}}</span>
-                    {% endif %}
-                </div>
-                <div class="form-group {{ errors.phone ? 'has-error' : '' }}">
-                    <label>Phone Number:</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-phone"></i>
-                        </div>
-                        <input type="text" class="form-control input-medium bfh-phone" data-format="+62 (ddd) ddd-ddd-ddd" name="phone" value="{{ login.phone }}" placeholder="Your phone">
-                    </div>
-                    {% if errors.phone %}
-                        <span class="help-block">{{errors.phone | first}}</span>
-                    {% endif %}
-                </div>
-                 <div class="col-lg-6">
+                <div class="col-lg-6">
                     <div class="form-group {{ errors.image ? 'has-error' : '' }}">
-                    <div id="image_preview"><img id="previewing" src="{{ base_url() }}/assets/images/{{ login.image }}" class="img-thumbnail" style="width:200px" ></div><br />
-                    <label>Image :</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-image"></i>
+                        <div id="image_preview"><img id="previewing"
+                            src="{{ base_url() }}/assets/images/{{ login.image }}"
+                            class="img-thumbnail" style="width:200px" ></div><br />
+                        <label>Image :</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-image"></i>
+                            </div>
+                            <input type="file" id="file" class="form-control"
+                            name="image" value="{{login.image}}" placeholder="Your image">
+                            <input type="hidden" name="id" value="{{ login.id }}">
                         </div>
-                        <input type="file" id="file" class="form-control" name="image" value="{{login.image}}" placeholder="Your image">
-                        <input type="hidden" name="id" value="{{ login.id }}">
-                    </div>
-                    {% if errors.image %}
+                        {% if errors.image %}
                         <span class="help-block">{{errors.image | first}}</span>
-                    {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
+                <button type="submit" class="btn btn-default" style="margin:10px">
+                    <i class="fa fa-cog"></i> Save changes</button>
+
+                </form>
+            </div>
+            <a href="{{path_for('user.change.password')}}"><button type="submit"
+                class="btn btn-social-button btn-github pull-right" style="margin:10px">
+                <i class="fa fa-user-secret"></i> Change Password</button></a>
             </div>
         </div>
-                <button type="submit" class="btn btn-default" style="margin:10px"><i class="fa fa-pencil"></i> Update</button>
-        </div>
-</form>
 
 {% endblock %}

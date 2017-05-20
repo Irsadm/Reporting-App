@@ -1,0 +1,96 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Reporting App {% endblock %}
+
+{% block headContent %}
+<i style="color:#076c73" class="fa fa-list-alt">
+    <strong>{{user.name}} Item </strong>({{count}} item) </i>
+    <span class="pull-right" style="font-size:17px;color:#000ec7">
+    <a href="" data-toggle="modal" data-target="#{{user.id}}" value="{{user.id}}"
+    title="View Profile"><b><u>{{user.name}} Profile </u></b></a>
+    </span>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {% for item in items %}
+                    <form class="" action="{{ path_for('user.item.status',
+                     { ('id'): item.id })}}" method="get">
+                {% endfor %}
+                    <table id="example2" class="table table-condensed
+                    table-bordered table-striped" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.description }}</td>
+                                <td>
+                                    {% if item.status == 0 %}
+                                    Not reported
+                                    {% elseif item.status == 1 %}
+                                    reported
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="{{user.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                    style="color:#ed0513">close(&times;)</button>
+                <h3 class="modal-title text-center" style="font-family:impact">
+                    User information</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img style="width:200px" class="img-thumbnail"
+                        src="{{ base_url() }}/assets/images/{{ user.image }}" alt="user image">
+                    </div>
+                    <div class="col-lg-6">
+                        <p class="text-left">
+                            <b>Name :</b> {{user.name}}<br>
+                            <b>Username :</b> {{user.username}}<br>
+                            <b>Gender :</b> {{user.gender}}<br>
+                            <b>Email :</b> {{user.email}}<br>
+                            <b>Addres :</b> {{user.address}}<br>
+                            <b>Phone :</b> {{user.phone}}<br>
+                            <b>Registered :</b> {{user.created_at}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="{{path_for('get.user.del' , {('id'): user.id})}}"
+                    title=" Remove Data" style="color:red" data-toggle="tooltip"
+                    data-placement="top">
+                    <button type="button" class="btn btn-danger">
+                        Delete This User</button></a>
+                </div>
+            </div>
+        </div>
+
+<!-- Modal -->
+</div>
+
+{% endblock %}

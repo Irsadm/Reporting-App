@@ -2,21 +2,22 @@
 {% block title %} List User {% endblock %}
 
 {% block css %}
-    <style>
-        .margin{
-            margin: 0 10px;
-        }
-    </style>
+<style>
+.margin{
+    margin: 0 10px;
+}
+</style>
 {% endblock %}
 
-{% block headContent %} List User <a href="" style="color:green"><i class="fa fa-list"></i></a>{% endblock %}
+{% block headContent %} List User <a href="" style="color:green">
+    <i class="fa fa-list"></i></a>{% endblock %}
 
-{% block content %}
+    {% block content %}
 
-{% if flash.getMessage('remove') %}
-<script>
-swal("Succes!", "Data Berhasil Di Remove !", "success")
-</script>
+    {% if flash.getMessage('remove') %}
+    <script>
+    swal("Succes!", "Data Berhasil Di Remove !", "success")
+    </script>
 {% endif %}
 
 <div class="row">
@@ -31,57 +32,72 @@ swal("Succes!", "Data Berhasil Di Remove !", "success")
                             <th>Username</th>
                             <th>Email</th>
                             <th class="text-center">Option</th>
-                         </tr>
+                        </tr>
                     </thead>
-                <tbody>
-                {% for data in user %}
-                    {% set i = i + 1 %}
-                     <tr>
-                       <td class="text-center">{{i}}</td>
-                        <td>{{data.name}}</td>
+                    <tbody>
+                        {% for data in user %}
+                        {% set i = i + 1 %}
+                        <tr>
+                            <td class="text-center">{{i}}</td>
+                            <td>{{data.name}}</td>
                             <td>{{data.username}}</td>
                             <td>{{data.email}}</td>
                             <td class="text-center">
-                            <a href="{{path_for('user.del' , {('id'): data.id})}}" title=" Remove Data" style="color:red" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o"></i></a>
-                            <a href="{{ path_for('user.edit.data', { id:data.id }) }}" data-toggle="tooltip" data-placement="top" title=" Edit Data" ><i class="fa fa-edit margin"></i></a>
-                    <a href="" data-toggle="modal" data-target="#{{data.id}}" value="{{data.id}}"title=" View User" ><i class="fa fa-eye"></i></a>
+                                <a href="{{path_for('user.del' , {('id'): data.id})}}"
+                                title=" Remove Data" style="color:red" data-toggle="tooltip"
+                                data-placement="top"><i class="fa fa-trash-o"></i></a>
 
+                                <a href="{{ path_for('user.edit.data', { id:data.id }) }}"
+                                data-toggle="tooltip" data-placement="top" title=" Edit Data" >
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<i class="fa fa-edit margin"></i></a>
 
-<!-- Modal -->
-<div id="{{data.id}}" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" style="color:red">&times;</button>
-        <h3 class="modal-title text-center" style="font-family:impact">D a t a  U s e r</h3>
-      </div>
-        <div class="modal-body">
-         <div class="row">
-            <div class="col-lg-6">
-                <img style="width:200px" class="img-thumbnail" src="{{ base_url() }}/assets/images/{{ data.image }}" alt="">
+                                <a href="" data-toggle="modal" data-target="#{{data.id}}"
+                                value="{{data.id}}"title="View User" >
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<i class="fa fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-              <div class="col-lg-6">
-                <p class="text-left"><b>Name :</b> {{data.name}}<br>
-                <b>Username :</b> {{data.username}}<br>
-                <b>Email :</b> {{data.email}}<br>
-                <b>Gender :</b> {{data.gender}}<br>
-                <b>Addres :</b> {{data.address}}<br>
-                <b>phone :</b> {{data.phone}}<br>
-                <b>Start Registration :</b> {{data.created_at}}</p>
-              </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
         </div>
     </div>
 </div>
 
-                    </td>
-                </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% for data in user %}
+
+<!-- Modal -->
+<div id="{{data.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                style="color:red">Close(&times;)</button>
+                <h3 class="modal-title text-center" style="font-family:impact">
+                    User Information</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img style="width:200px" class="img-thumbnail"
+                        src="{{ base_url() }}/assets/images/{{ data.image }}" alt="">
+                    </div>
+                    <div class="col-lg-6">
+                        <p class="text-left"><b>Name :</b> {{data.name}}<br>
+                            <b>Username :</b> {{data.username}}<br>
+                            <b>Email :</b> {{data.email}}<br>
+                            <b>Gender :</b> {{data.gender}}<br>
+                            <b>Addres :</b> {{data.address}}<br>
+                            <b>phone :</b> {{data.phone}}<br>
+                            <b>Start Registration :</b> {{data.created_at}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
 {% endblock %}

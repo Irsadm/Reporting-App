@@ -7,9 +7,10 @@ use App\Models\BaseModel;
 class UserModel extends BaseModel
 {
     protected $table = 'users';
-    protected $column = ['id', 'name', 'email', 'username', 'password', 'gender', 'address', 'phone', 'image', 'updated_at', 'created_at', 'status'];
+    protected $column = ['id', 'name', 'email', 'username', 'password', 'gender',
+                'address', 'phone', 'image', 'updated_at', 'created_at', 'status'];
 
-    public function createUser(array $data, $images = 'avatar.png')
+    public function createUser(array $data, $images)
     {
         $data = [
             'name' => $data['name'],
@@ -47,7 +48,6 @@ class UserModel extends BaseModel
             'name' => $data['name'],
             'email' => $data['email'],
             'username' => $data['username'],
-            'password' => password_hash($data['password'], PASSWORD_BCRYPT),
             'gender' => $data['gender'],
             'address' => $data['address'],
             'phone' => $data['phone'],
@@ -62,7 +62,6 @@ class UserModel extends BaseModel
             'name' => $data['name'],
             'email' => $data['email'],
             'username' => $data['username'],
-            'password' => password_hash($data['password'], PASSWORD_BCRYPT),
             'gender' => $data['gender'],
             'address' => $data['address'],
             'phone' => $data['phone'],
@@ -101,5 +100,15 @@ class UserModel extends BaseModel
 	 	   ->where('id = ' . $id)
 		   ->execute();
 	}
+
+
+    public function changePassword(array $data, $id)
+    {
+        $dataPassword = [
+            'password' => password_hash($data['new_password'], PASSWORD_BCRYPT),
+         ];
+
+        $this->updateData($dataPassword, $id);
+    }
 
 }

@@ -25,18 +25,22 @@
 						</thead>
 						{% for article in article %}
 						<tr>
-							<td class="text-center"><input type="checkbox" name="article[]" value="{{ article.id }}"></td>
-							<td><img src="{{ base_url() }}/assets/images/{{ article.image }}" width="100" height="100"></td>
+							<td class="text-center"><input type="checkbox" name="article[]"
+								 value="{{ article.id }}"></td>
+							<td><img src="{{ base_url() }}/assets/images/{{ article.image }}"
+								 width="100" height="100"></td>
 							<td>{{ article.title }}</td>
 							<td>{{ article.content|slice(0, 200) }}</td>
-							<td class="text-center"><a href="{{ path_for('article-restore', { ('id'):article.id }) }}"><i class="fa fa-refresh"></i></a></td>
+							<td class="text-center"><a href="{{ path_for('article-restore', { ('id'):article.id }) }}">
+								<i class="fa fa-refresh"></i></a></td>
 						</tr>
 						{% endfor %}
 					</table>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</div>
 				<div class="panel-body" align="right">
-					<button type="submit" name="active"  class="btn btn-danger"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete permanent</button>
+					<button type="submit" name="active"  class="btn btn-danger">
+						<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete permanent</button>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</form>
 			</div>

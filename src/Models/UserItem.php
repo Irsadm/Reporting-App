@@ -65,14 +65,13 @@ class UserItem extends BaseModel
             ':group_id' => $groupId
         ];
 
-        $this->query = $qb->select('it.name', 'it.description', 'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+        $this->query = $qb->select('it.name', 'it.description', 'it.recurrent',
+                                    'it.start_date', 'it.end_date', 'it.status')
         ->from($this->jointTable, 'it')
         ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
         ->where('ui.user_id = :user_id')
         ->andWhere('ui.group_id = :group_id')
         ->setParameters($parameters);
-
-        // $result = $qb->execute();
 
         return $this;
     }
@@ -81,8 +80,8 @@ class UserItem extends BaseModel
     {
         $qb = $this->db->createQueryBuilder();
 
-
-        $this->query = $qb->select('it.name', 'it.description', 'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+        $this->query = $qb->select('it.name', 'it.description', 'it.recurrent',
+                                'it.start_date', 'it.end_date', 'it.status')
         ->from($this->jointTable, 'it')
         ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
         ->where('ui.user_id = :user_id')
@@ -100,7 +99,8 @@ class UserItem extends BaseModel
             ':group_id' => $groupId
         ];
 
-     $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description', 'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+     $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description',
+            'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
         ->from($this->jointTable, 'it')
         ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
         ->where('ui.user_id = :user_id')
@@ -122,7 +122,8 @@ class UserItem extends BaseModel
             ':group_id' => $groupId
         ];
 
-     $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description', 'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+     $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description',
+            'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
         ->from($this->jointTable, 'it')
         ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
         ->where('ui.user_id = :user_id')
@@ -155,5 +156,24 @@ class UserItem extends BaseModel
         ];
 
         $this->updateData($data, $id);
+    }
+
+    public function unselectedItem($userId)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+        $query1 = $qb->select('item_id')
+                     ->from($this->table)
+                     ->where('user_id ='. $userId)
+                     ->execute();
+
+        $qb1 = $this->db->createQueryBuilder();
+
+        $this->query = $qb1->select('it.*')
+             ->from($this->table, 'ui')
+             ->join('ui', $this->jointTable, 'it', $qb1->expr()->notIn('it.id', $query1))
+             ->groupBy('it.id');
+
+            return $this;
     }
 }
