@@ -186,8 +186,10 @@
                                             </div>
                                      <select name="gender" class="form-control" id="">
                                         <option value="">Select Gender</option>
-                                        <option value="Laki-Laki">Laki-Laki</option>
-                                        <option value="Perempuan">Perempuan</option>
+                                        <option value="Laki-laki" {% if  old.gender == 'Laki-laki' %}
+                                         selected="selected"{% endif %}>Laki-Laki</option>
+                                        <option value="Perempuan" {% if  old.gender == 'Perempuan' %}
+                                         selected="selected"{% endif %}>Perempuan</option>
                                     </select>
                                         </div>
                                     </div>

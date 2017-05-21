@@ -2,7 +2,9 @@
 
 {% block title %} Updata User {% endblock %}
 {% block headContent %} Update User <a href=""><i class="fa fa-pencil-square"></i></a> <br />
-    <a href="{{path_for('user.list.all')}}"><button type="submit" class="btn btn-default" style="margin:10px"><i class="fa fa-undo"></i> Back</button></a>
+    <a href="{{path_for('user.list.all')}}">
+        <button type="submit" class="btn btn-default" style="margin:10px">
+            <i class="fa fa-undo"></i> Back</button></a>
 {% endblock %}
 
 {% block content %}
@@ -80,10 +82,10 @@
                                     <i class="fa fa-transgender-alt"></i>
                                 </div>
                                 <select name="gender" class="form-control" id="">
-                                    <option value="L" {% if  data.gender == "L" %}
+                                    <option value="Laki-laki" {% if  data.gender == "Laki-laki" %}
                                      selected="selected"{% endif %}>Laki-Laki</option>
 
-                                    <option value="P" {% if  data.gender == "P" %}
+                                    <option value="Perempuan" {% if  data.gender == "Perempuan" %}
                                      selected="selected"{% endif %}>Perempuan</option>
                                 </select>
                             </div>

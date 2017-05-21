@@ -150,7 +150,7 @@ class ItemController extends BaseController
         $deleteItem = $item->hardDelete($args['id']);
         $this->flash->addMessage('succes', 'Item deleted');
 
-        return $response->withRedirect($this->router->pathFor('index'));
+        return $response->withRedirect($this->router->pathFor('item.trash'));
     }
 
     public function softDeleteItem(Request $request, Response $response, $args)
@@ -159,7 +159,7 @@ class ItemController extends BaseController
         $deleteItem = $item->softDelete($args['id']);
         $this->flash->addMessage('succes', 'Item deleted');
 
-        return $response->withRedirect($this->router->pathFor('index'));
+        return $response->withRedirect($this->router->pathFor('item.list'));
     }
 
     public function restoreItem(Request $request, Response $response, $args)
@@ -209,6 +209,72 @@ class ItemController extends BaseController
         return $response->withRedirect($this->router->pathFor('user.item.all'));
 
 
+    }
+
+    public function getCreateItem($request, $response)
+    {
+
+
+        $group     = new \App\Models\GroupModel($this->db);
+        $findGroup = $group->find('id', $_SESSION['group']);
+
+        $data['groups'] = $findGroup['name'];
+        return $this->view->render($response, 'users/createitem.twig', $data);
+
+    }
+
+    public function postCreateItem($request, $response)
+    {
+        $rules = [
+            'required'  => [
+                ['name'],
+                ['recurrent'],
+                ['description'],
+                ['start_date'],
+                ['end_date'],
+                ['group_id'],
+            ],
+            'dateformat' => [
+                ['start_date', 'Y-m-d H:i:s'],
+                ['end_date', 'Y-m-d H:i:s'],
+            ]
+
+        ];
+
+        $this->validator->rules($rules);
+
+        $this->validator->labels([
+            'name'         => 'Name',
+            'recurrent'    => 'Recurrent',
+            'start_date'   => 'Start date',
+            'end_date'     => 'End date',
+            'group_id'     => 'Group id',
+        ]);
+
+        if ($this->validator->validate()) {
+            $item  = new Item($this->db);
+            $userItem = new UserItem($this->db);
+            $newItem = $item->create($request->getParams());
+            $groupId = $request->getParam('group_id');
+
+            $userItemData = [
+                'user_id' => $_SESSION['login']['id'],
+                'item_id' => $newItem,
+                'group_id' => $groupId
+            ];
+
+            $newUserItem = $userItem->setItem($userItemData, $groupId);
+
+            $this->flash->addMessage('succes', 'New item successfully added');
+
+            return $response->withRedirect($this->router->pathFor('user.item.create'));
+        } else {
+
+            $_SESSION['old']  = $request->getParams();
+            $_SESSION['errors'] = $this->validator->errors();
+
+            return $response->withRedirect($this->router->pathFor('user.item.create'));
+        }
     }
 
 }
