@@ -270,8 +270,7 @@ class UserController extends BaseController
                 $_SESSION['login'] = $login;
                 if ($_SESSION['login']['status'] == 1) {
                     // $this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
-                    return $response->withRedirect($this->router
-                            ->pathFor('home'));
+                    return $response->withRedirect($this->router->pathFor('home'));
                 } else {
                     if (isset($_SESSION['login']['status'])) {
                         $this->flash->addMessage('error', 'You are not admin');
@@ -446,20 +445,25 @@ class UserController extends BaseController
         $userId  = $_SESSION['login']['id'];
         $user = $userGroup->findUser('group_id', $args['id'], 'user_id', $userId);
 
-        $findUserItem['items'] = $userItem->getItemInGroup($args['id'], $userId);
-        $findUserItem['itemdone'] = $userItem->getDoneItemInGroup($args['id'], $userId);
+        if ($user) {
+            $findUserItem['items'] = $userItem->getItemInGroup($args['id'], $userId);
+            $findUserItem['itemdone'] = $userItem->getDoneItemInGroup($args['id'], $userId);
 
-        $count = count($findUserItem['itemdone']);
-        $reported = $request->getQueryParam('reported');
+            $count = count($findUserItem['itemdone']);
+            $reported = $request->getQueryParam('reported');
 
-        return $this->view->render($response, 'users/useritem.twig', [
-            'itemdone' => $findUserItem['itemdone'],
-            'items' => $findUserItem['items'],
-            'status'=> $user['status'],
-            'group_id' => $args['id'],
-            'reported'=> $reported,
-            'count'=> $count,
-        ]);
+            return $this->view->render($response, 'users/useritem.twig', [
+                'itemdone' => $findUserItem['itemdone'],
+                'items' => $findUserItem['items'],
+                'status'=> $user['status'],
+                'group_id' => $args['id'],
+                'reported'=> $reported,
+                'count'=> $count,
+            ]);
+        } else {
+            $this->flash->addMessage('error', 'You are not allowed to access this group!');
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
     }
 
     public function getItemUser($request,$response, $args)
@@ -484,8 +488,7 @@ class UserController extends BaseController
 
         } else {
             $this->flash->addMessage('error', 'You are not allowed to access this user!');
-            return $response->withRedirect($this->router
-            ->pathFor('home'));
+            return $response->withRedirect($this->router->pathFor('home'));
         }
     }
 
@@ -502,8 +505,7 @@ class UserController extends BaseController
             ]);
         } else {
             $this->flash->addMessage('error', 'You can only add user to your own!');
-            return $response->withRedirect($this->router
-            ->pathFor('home'));
+            return $response->withRedirect($this->router->pathFor('home'));
         }
 	}
 
@@ -558,8 +560,7 @@ class UserController extends BaseController
                 ];
         }
 
-        return $response->withRedirect($this->router
-        ->pathFor('home'));
+        return $response->withRedirect($this->router->pathFor('home'));
     }
 
     public function setItemUserStatus($request, $response, $args)

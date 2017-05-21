@@ -3,7 +3,9 @@
 
     <div class="panel-body">
         <div class="box box-info">
-        <a href="#"><h4 class="text-center">Change &nbsp;Password</h4></a>
+          <a href="{{path_for('user.setting')}}"><button type="submit" class="btn btn-social-button btn-github pull-right pull-right" style="margin:10px"><i class="fa fa-refresh"></i> Back</button></a>
+
+        <a href="#"><h4 class="text-center"><i class="fa fa-user-secret">  Change &nbsp;Password</i></h4></a>
                 <div class="box-header">
         <form action="{{ path_for('user.change.password', {id:login.id} ) }}" method="POST">
          <div class="form-group {{ errors.password ? 'has-error' : '' }}">

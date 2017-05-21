@@ -1,5 +1,13 @@
 {% extends 'templates/default.twig' %}
 {% block title %} Profile {% endblock %}
+{% block css %}
+    <style>
+    .col1 {
+        width: 120px;
+        float: left;
+    }
+    </style>
+{% endblock %}
 {% block content %}
 
             <div class="panel-body">
@@ -14,13 +22,14 @@
                  src="{{ base_url() }}/assets/images/{{ login.image }}" alt="">
             </div>
               <div class="col-lg-4">
-                <p class="text-left"><b>Name :</b> {{login.name}}.<br><br>
-                <b>Username :</b> {{login.username}}.<br><br>
-                <b>Email :</b> {{login.email}}.<br><br>
-                <b>Gender :</b> {{login.gender}}.<br><br>
-                <b>Addres :</b> {{login.address}}.<br><br>
-                <b>phone :</b> {{login.phone}}.<br><br>
-                <b>Start Registration :</b>{{login.created_at | date("F jS Y ")}}.</p>
+
+                <p class="text-left"><b><span class="col1">Name </span>:  </b> {{login.name}}<br><br>
+                <b><span class="col1">Username </span>:  </b> {{login.username}}<br><br>
+                <b><span class="col1">Email </span>:  </b> {{login.email}}<br><br>
+                <b><span class="col1">Gender </span>:  </b> {{login.gender}}<br><br>
+                <b><span class="col1">Addres </span>:  </b> {{login.address}}<br><br>
+                <b><span class="col1">Phone </span>:  </b> {{login.phone}}<br><br>
+                <b><span class="col1">Registration Date</span>:  </b>{{login.created_at | date("F jS Y ")}}</p>
               </div>
         </div>
     </div>
