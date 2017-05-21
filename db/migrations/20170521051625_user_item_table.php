@@ -29,13 +29,11 @@ class UserItemTable extends AbstractMigration
     {
         $items = $this->table('user_item');
         $items->addColumn('item_id', 'integer')
-                ->addColumn('user_id', 'integer')
-                ->addColumn('group_id', 'integer')
-                ->addColumn('reported_at', 'timestamp')
+                ->addColumn('user_group_id', 'integer')
+                ->addColumn('reported_at', 'timestamp', ['null' => true])
                 ->addColumn('status', 'integer', ['default' => '0'])
-                ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+                ->addForeignKey('user_group_id', 'user_group', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->addForeignKey('item_id', 'items', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->create();
     }
 }

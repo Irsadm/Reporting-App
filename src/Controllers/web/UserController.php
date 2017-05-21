@@ -446,8 +446,8 @@ class UserController extends BaseController
         $userId  = $_SESSION['login']['id'];
         $user = $userGroup->findUser('group_id', $args['id'], 'user_id', $userId);
 
-        $findUserItem['items'] = $userItem->getItemInGroup($args['id'], $userId);
-        $findUserItem['itemdone'] = $userItem->getDoneItemInGroup($args['id'], $userId);
+        $findUserItem['items'] = $userItem->getItemInGroup($user['id']);
+        $findUserItem['itemdone'] = $userItem->getDoneItemInGroup($user['id']);
 
         $count = count($findUserItem['itemdone']);
         $reported = $request->getQueryParam('reported');
@@ -567,8 +567,8 @@ class UserController extends BaseController
         $userItem = new \App\Models\UserItem($this->db);
 
         $setItem = $userItem->setStatusItems($args['id']);
-        $findGroup = $userItem->find('id', $args['id']);
-        $groupId = $findGroup['group_id'];
+        // $findGroup = $userItem->find('id', $args['id']);
+        $groupId = $_SESSION['group'];
 
         return $response->withRedirect($this->router
                         ->pathFor('user.item.group', ['id' =>$groupId]));
@@ -579,8 +579,8 @@ class UserController extends BaseController
         $userItem = new \App\Models\UserItem($this->db);
 
         $setItem = $userItem->resetStatusItems($args['id']);
-        $findGroup = $userItem->find('id', $args['id']);
-        $groupId = $findGroup['group_id'];
+        // $findGroup = $userItem->find('id', $args['id']);
+        $groupId = $_SESSION['group'];
 
         return $response->withRedirect($this->router
                         ->pathFor('user.item.group', ['id' =>$groupId]));
