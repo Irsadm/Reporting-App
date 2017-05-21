@@ -1,6 +1,5 @@
 <?php
 
-$app->get('/home', 'App\Controllers\web\HomeController:index')->setName('home');
 
 $app->get('/register', 'App\Controllers\web\UserController:getRegister')->setName('register');
 
@@ -15,11 +14,12 @@ $app->get('/', 'App\Controllers\web\UserController:getLogin')->setName('login');
 $app->post('/', 'App\Controllers\web\UserController:login');
 
 $app->group('', function() use ($app, $container) {
+    $app->get('/home', 'App\Controllers\web\HomeController:index')->setName('home');
     $app->get('/logout', 'App\Controllers\web\UserController:logout')->setName('logout');
     $app->get('/profile', 'App\Controllers\web\UserController:viewProfile')->setName('user.profile');
     $app->get('/setting', 'App\Controllers\web\UserController:getSettingAccount')->setName('user.setting');
     $app->post('/setting', 'App\Controllers\web\UserController:settingAccount');
-    
+
     $app->group('/admin', function() use ($app, $container) {
 
         $app->group('/group', function(){
@@ -84,24 +84,40 @@ $app->group('', function() use ($app, $container) {
     })->add(new \App\Middlewares\web\AdminMiddleware($container));
 
     $app->group('/pic', function(){
-        $this->get('/group/{id}/item', 'App\Controllers\web\UserController:getItemInGroup')->setName('pic.item.group');
-        $this->get('/detail/{id}', 'App\Controllers\web\GroupController:findGroup')->setName('pic.group.detail');
-        $this->get('/{id}/users', 'App\Controllers\web\GroupController:getMemberGroup')->setName('pic.user.group.get');
-        $this->get('/{id}/allusers', 'App\Controllers\web\GroupController:getNotMember')->setName('pic.all.users.get');
-        $this->post('/users', 'App\Controllers\web\GroupController:setUserGroup')->setName('pic.user.group.set');
-        $this->post('/allusers', 'App\Controllers\web\GroupController:setMemberGroup')->setName('pic.member.group.set');
+        $this->get('/group/{id}/item', 'App\Controllers\web\UserController:getItemInGroup')
+        ->setName('pic.item.group');
+        $this->get('/detail/{id}', 'App\Controllers\web\GroupController:findGroup')
+        ->setName('pic.group.detail');
+        $this->get('/{id}/users', 'App\Controllers\web\GroupController:getMemberGroup')
+        ->setName('pic.user.group.get');
+        $this->get('/{id}/allusers', 'App\Controllers\web\GroupController:getNotMember')
+        ->setName('pic.all.users.get');
+        $this->post('/users', 'App\Controllers\web\GroupController:setUserGroup')
+        ->setName('pic.user.group.set');
+        $this->post('/allusers', 'App\Controllers\web\GroupController:setMemberGroup')
+        ->setName('pic.member.group.set');
     });
 
     $app->group('/user', function(){
-        $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')->setName('user.item.group');
-        $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')->setName('user.item.status');
-        $this->get('/item/reset/{id}', 'App\Controllers\web\UserController:restoreItemUserStatus')->setName('user.item.reset.status');
-        $this->get('/change/password', 'App\Controllers\web\UserController:getChangePassword')->setName('user.change.password');
+        $this->get('read/{id}', 'App\Controllers\web\ArticleController:readArticle')
+        ->setName('user.article-read');
+        $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')
+        ->setName('user.item.group');
+        $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')
+        ->setName('user.item.status');
+        $this->get('/item/reset/{id}', 'App\Controllers\web\UserController:restoreItemUserStatus')
+        ->setName('user.item.reset.status');
+        $this->get('/change/password', 'App\Controllers\web\UserController:getChangePassword')
+        ->setName('user.change.password');
         $this->post('/change/password', 'App\Controllers\web\UserController:changePassword');
-        $this->get('/item/all', 'App\Controllers\web\ItemController:getSelectItem')->setName('user.item.all');
-        $this->post('/item/add', 'App\Controllers\web\ItemController:setItem')->setName('user.item.add');
-        $this->get('/item/create', 'App\Controllers\web\ItemController:getCreateItem')->setName('user.item.create');
-        $this->post('/item/create', 'App\Controllers\web\ItemController:postCreateItem')->setName('user.item.create.post');
+        $this->get('/item/all', 'App\Controllers\web\ItemController:getSelectItem')
+        ->setName('user.item.all');
+        $this->post('/item/add', 'App\Controllers\web\ItemController:setItem')
+        ->setName('user.item.add');
+        $this->get('/item/create', 'App\Controllers\web\ItemController:getCreateItem')
+        ->setName('user.item.create');
+        $this->post('/item/create', 'App\Controllers\web\ItemController:postCreateItem')
+        ->setName('user.item.create.post');
     });
 
     $app->group('/article/', function() {

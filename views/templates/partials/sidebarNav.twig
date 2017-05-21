@@ -95,14 +95,22 @@
         {% elseif login.status == 0 and guard.status == 'guard'%}
 
         <li class="treeview">
+            <a href="{{ path_for('get.user.add', {('id'): login.id }) }}"><i class="fa fa-user-plus"></i>
+                <span>ADD USER</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+        </li>
+
+        <li class="treeview">
             <a href="#"><i class="fa fa-users"></i>
-                <span>USER</span>
+                <span>MY USER</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ path_for('get.user.add', {('id'): login.id }) }}">Add User</a></li>
 
                 {% for user in guard.user %}
 

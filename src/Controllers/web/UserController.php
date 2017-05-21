@@ -464,32 +464,47 @@ class UserController extends BaseController
 
     public function getItemUser($request,$response, $args)
     {
-        $item = new \App\Models\Item($this->db);
-        $userItem = new \App\Models\UserItem($this->db);
         $user = new UserModel($this->db);
+        $item = new \App\Models\Item($this->db);
+        $guard = new \App\Models\GuardModel($this->db);
+        $userItem = new \App\Models\UserItem($this->db);
 
+        $guardId = $_SESSION['login']['id'];
         $userItems = $userItem->getItem($args['id'])->fetchAll();
+        $userGuard = $guard->findGuard('guard_id', $guardId, 'user_id', $args['id']);
         $findUser = $user->find('id', $args['id']);
-        $count = count($userItems);
+        // $count = count($userItems);
 
-        return $this->view->render($response, 'guardian/useritem.twig', [
-            'items' => $userItems,
-            'user' => $findUser,
-            'count'=> $count,
-        ]);
+        if ($userGuard && $_SESSION['guard']['status'] == 'guard' ) {
+            return $this->view->render($response, 'guardian/useritem.twig', [
+                'items' => $userItems,
+                'user' => $findUser,
+                'count'=> count($userItems),
+            ]);
+
+        } else {
+            $this->flash->addMessage('error', 'You are not allowed to access this user!');
+            return $response->withRedirect($this->router
+            ->pathFor('home'));
+        }
     }
 
     public function getNotUser($request, $response, $args)
 	{
 		$guard = new \App\Models\GuardModel($this->db);
+// var_dump($_SESSION['guard']['status']);die();
+        if ($_SESSION['login']['id'] == $args['id'] && $_SESSION['guard']['status'] == 'guard') {
 
-		$users = $guard->notUser($args['id'])->fetchAll();
-
-		$data = $this->view->render($response, 'guardian/not-user.twig', [
-		'users' => $users,
-		'guard_id'	=> $args['id']
-		]);
-		return $data;
+            $users = $guard->notUser($args['id'])->fetchAll();
+            return $this->view->render($response, 'guardian/not-user.twig', [
+                'users' => $users,
+                'guard_id'	=> $args['id']
+            ]);
+        } else {
+            $this->flash->addMessage('error', 'You can only add user to your own!');
+            return $response->withRedirect($this->router
+            ->pathFor('home'));
+        }
 	}
 
     public function setGuardUser($request, $response)
