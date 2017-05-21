@@ -340,8 +340,14 @@ class UserController extends BaseController
 
     public function logout($request, $response)
     {
-        session_destroy();
-        return $response->withRedirect($this->router->pathFor('login'));
+        if ($_SESSION['login']['status'] == 0) {
+            session_destroy();
+            return $response->withRedirect($this->router->pathFor('login'));
+
+        } elseif ($_SESSION['login']['status'] == 1) {
+            session_destroy();
+            return $response->withRedirect($this->router->pathFor('login.admin'));
+        }
     }
 
     public function viewProfile($request, $response)
