@@ -174,12 +174,15 @@ class ItemController extends BaseController
     public function getSelectItem($request, $response)
     {
         $userItem = new \App\Models\UserItem($this->db);
-
+        $userGroup = new \App\Models\UserGroupModel($this->db);
         $userId = $_SESSION['login']['id'];
+        $findUserGroup = $userGroup->findUser('user_id', $userId,
+                                              'group_id', $_SESSION['group']);
+        $userGroupId = $findUserGroup['id'];
 
-        $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-        $item = $userItem->unselectedItem($userId)->setPaginate($page, 10);
-        $data = $this->view->render($response, 'users/additem.twig', ['item' => $item['data']]);
+        // $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+        $item = $userItem->unselectedItem($userGroupId, $_SESSION['group']);
+        $data = $this->view->render($response, 'users/additem.twig', ['item' => $item]);
 
 
         return $data;
@@ -189,19 +192,22 @@ class ItemController extends BaseController
     {
         $userItem = new UserItem($this->db);
         $item = new Item($this->db);
+        $userGroup = new \App\Models\UserGroupModel($this->db);
+
         $userId = $_SESSION['login']['id'];
         $group = $_SESSION['user_group'];
+        $userGroupId = $userGroup->findUser('user_id', $userId,
+                                            'group_id', $_SESSION['group']);
 
         if (!empty($request->getParams()['set'])) {
             foreach ($request->getParams()['item'] as $key =>  $value ) {
                 $findItem = $item->find('id', $value);
                 $data = [
-                    'user_id' => $userId,
                     'item_id' => $value,
-                    'group_id' => $findItem['group_id']
+                    'user_group_id' => $userGroupId['id']
                 ];
 
-                $userItem->setItem($data, $data['group_id']);
+                $userItem->setItem($data, $userGroupId['id']);
 
             }
         }
@@ -228,7 +234,7 @@ class ItemController extends BaseController
         $rules = [
             'required'  => [
                 ['name'],
-                ['recurrent'],
+                // ['recurrent'],
                 ['description'],
                 ['start_date'],
                 ['end_date'],
@@ -254,16 +260,19 @@ class ItemController extends BaseController
         if ($this->validator->validate()) {
             $item  = new Item($this->db);
             $userItem = new UserItem($this->db);
+
+            $userGroup = new \App\Models\UserGroupModel($this->db);
+            $findUserGroup = $userGroup->findUser('user_id', $_SESSION[login]['id'],
+                                                    'group_id', $_SESSION['group']);
             $newItem = $item->create($request->getParams());
-            $groupId = $request->getParam('group_id');
+            $UserGroupId = $findUserGroup['id'];
 
             $userItemData = [
-                'user_id' => $_SESSION['login']['id'],
                 'item_id' => $newItem,
-                'group_id' => $groupId
+                'user_group_id' => $UserGroupId
             ];
 
-            $newUserItem = $userItem->setItem($userItemData, $groupId);
+            $newUserItem = $userItem->setItem($userItemData, $UserGroupId);
 
             $this->flash->addMessage('succes', 'New item successfully added');
 

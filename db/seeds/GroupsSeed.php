@@ -15,8 +15,20 @@ class GroupsSeed extends AbstractSeed
     public function run()
     {
         $data[] = [
-            'name'         =>  'Siswa',
-            'description'  =>  'Grup khusus siswa',
+            'name'         =>  '7E',
+            'description'  =>  'Grup khusus siswa Kelas 7E',
+            'image'        =>  'default.jpg'
+        ];
+
+        $data[] = [
+            'name'         =>  '8E',
+            'description'  =>  'Grup khusus siswa Kelas 8E',
+            'image'        =>  'default.jpg'
+        ];
+
+        $data[] = [
+            'name'         =>  '9A',
+            'description'  =>  'Grup khusus siswa Kelas 9A',
             'image'        =>  'default.jpg'
         ];
 

@@ -14,6 +14,6 @@ class ArticlesSeed extends AbstractSeed
      */
     public function run()
     {
-        
+
     }
 }

@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Article | Add {% endblock %}
+{% block title %} Create Article  {% endblock %}
 
 {% block headContent %}
-	<i class="fa fa-plus" aria-hidden="true"></i> Add Article
+	<i class="fa fa-plus" aria-hidden="true">  Create Article</i> 
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group {{ errors.content ? 'has-error': '' }}">
                     <textarea name="content" class="form-control" placeholder="Content" rows="10">
-                    	
+
                     </textarea>
                     {% if errors.content %}
                         <span class="help-block">{{ errors.content|first }}</span>

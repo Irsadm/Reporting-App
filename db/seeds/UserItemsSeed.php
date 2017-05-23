@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class UserItemSeed extends AbstractSeed
+class UserItemsSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -16,38 +16,22 @@ class UserItemSeed extends AbstractSeed
     {
         $data[] = [
             'item_id' =>  1,
-            'user_id' =>  2,
-            'group_id' =>  2,
-        ];
-
-        $data[] = [
-            'item_id' =>  2,
-            'user_id' =>  2,
-            'group_id' =>  2,
+            'user_group_id' =>  1,
         ];
 
         $data[] = [
             'item_id' =>  1,
-            'user_id' =>  3,
-            'group_id' =>  2,
+            'user_group_id' =>  2,
         ];
 
         $data[] = [
             'item_id' =>  2,
-            'user_id' =>  3,
-            'group_id' =>  2,
-        ];
-
-        $data[] = [
-            'item_id' =>  1,
-            'user_id' =>  4,
-            'group_id' =>  2,
+            'user_group_id' =>  1,
         ];
 
         $data[] = [
             'item_id' =>  2,
-            'user_id' =>  4,
-            'group_id' =>  2,
+            'user_group_id' =>  2,
         ];
 
         $this->insert('user_item', $data);

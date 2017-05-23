@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class RolesTable extends AbstractMigration
+class UserItemTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,11 +27,13 @@ class RolesTable extends AbstractMigration
      */
     public function change()
     {
-        $roles = $this->table('roles');
-        $roles->addColumn('name', 'string')
-             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
-             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-             ->addColumn('deleted', 'integer', ['default' => '0'])
-             ->create();
+        $items = $this->table('user_item');
+        $items->addColumn('item_id', 'integer')
+                ->addColumn('user_group_id', 'integer')
+                ->addColumn('reported_at', 'timestamp', ['null' => true])
+                ->addColumn('status', 'integer', ['default' => '0'])
+                ->addForeignKey('user_group_id', 'user_group', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+                ->addForeignKey('item_id', 'items', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+                ->create();
     }
 }

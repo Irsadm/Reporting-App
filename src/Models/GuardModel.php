@@ -63,7 +63,6 @@ class GuardModel extends BaseModel
 					 ->from($this->table)
 					 ->where('guard_id =' . $guardId)
 					 ->execute();
-
 		$qb1 = $this->db->createQueryBuilder();
 
 		$this->query = $qb1->select('u.*')
@@ -74,6 +73,7 @@ class GuardModel extends BaseModel
 			 ->andWhere('u.id !='. $guardId)
 			 ->groupBy('u.id');
 
+			//  var_dump($this->fetchAll());die();
 		return $this;
 	}
 

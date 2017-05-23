@@ -52,6 +52,10 @@ $container['view'] = function ($container) {
 		$view->getEnvironment()->addGlobal('group', $_SESSION['group']);
 	}
 
+	if (@$_SESSION['pic']) {
+		$view->getEnvironment()->addGlobal('pic', $_SESSION['pic']);
+	}
+
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
 	return $view;

@@ -1,7 +1,7 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} Create User {% endblock %}
-{% block headContent %} Create User <a href=""><i class="fa fa-plus"></i></a> {% endblock %}
+{% block headContent %} <i class="fa fa-plus">  Create User </i> {% endblock %}
 
 {% block content %}
 <form action="{{ path_for('user.create')}}" method="POST" enctype="multipart/form-data">

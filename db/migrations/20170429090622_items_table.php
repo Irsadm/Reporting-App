@@ -31,13 +31,13 @@ class ItemsTable extends AbstractMigration
         $items->addColumn('name', 'string')
              ->addColumn('description', 'string')
              ->addColumn('recurrent', 'string')
+             ->addColumn('group_id', 'integer')
              ->addColumn('start_date', 'datetime')
              ->addColumn('end_date', 'datetime')
-             ->addColumn('group_id', 'integer')
-             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
-             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
              ->addColumn('status', 'integer', ['default' => '0'])
              ->addColumn('deleted', 'integer', ['default' => '0'])
+             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
+             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
              ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
              ->create();
     }

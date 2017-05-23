@@ -432,8 +432,13 @@ class UserController extends BaseController
         $user = $userGroup->findUser('group_id', $args['id'], 'user_id', $userId);
 
         $_SESSION['group'] = $user['group_id'];
+        $reported = $request->getQueryParam('reported');
 
-        if ($user['status'] == 1) {
+        if ($user['status'] == 1 && $reported) {
+            return $this->getItemInGroup($request,$response, $args);
+
+        } elseif ($user['status'] == 1) {
+            $_SESSION['pic'] = $user['group_id'];
 
             return $response->withRedirect($this->router
                             ->pathFor('pic.group.detail', ['id' => $args['id']]));
@@ -452,8 +457,9 @@ class UserController extends BaseController
         $user = $userGroup->findUser('group_id', $args['id'], 'user_id', $userId);
 
         if ($user) {
-            $findUserItem['items'] = $userItem->getItemInGroup($args['id'], $userId);
-            $findUserItem['itemdone'] = $userItem->getDoneItemInGroup($args['id'], $userId);
+
+        $findUserItem['items'] = $userItem->getItemInGroup($user['id']);
+        $findUserItem['itemdone'] = $userItem->getDoneItemInGroup($user['id']);
 
             $count = count($findUserItem['itemdone']);
             $reported = $request->getQueryParam('reported');
@@ -480,10 +486,11 @@ class UserController extends BaseController
         $userItem = new \App\Models\UserItem($this->db);
 
         $guardId = $_SESSION['login']['id'];
-        $userItems = $userItem->getItem($args['id'])->fetchAll();
+        $userItems = $userItem->getItem($args['id']);
         $userGuard = $guard->findGuard('guard_id', $guardId, 'user_id', $args['id']);
         $findUser = $user->find('id', $args['id']);
         // $count = count($userItems);
+        // var_dump($userItems);die();
 
         if ($userGuard && $_SESSION['guard']['status'] == 'guard' ) {
             return $this->view->render($response, 'guardian/useritem.twig', [
@@ -501,14 +508,31 @@ class UserController extends BaseController
     public function getNotUser($request, $response, $args)
 	{
 		$guard = new \App\Models\GuardModel($this->db);
-// var_dump($_SESSION['guard']['status']);die();
-        if ($_SESSION['login']['id'] == $args['id'] && $_SESSION['guard']['status'] == 'guard') {
+        $user = new UserModel($this->db);
 
-            $users = $guard->notUser($args['id'])->fetchAll();
+        $guardId = $_SESSION['login']['id'];
+        $find = $guard->find('guard_id', $guardId);
+        $status = $_SESSION['guard']['status'];
+
+        if ($_SESSION['login']['id'] == $args['id'] && $_SESSION['guard']['status'] == 'guard') {
+            if ($find) {
+                $users = $guard->notUser($args['id'])->fetchAll();
+            } else {
+                $users = $user->getAllUser();
+            }
+
+            $guardUser = $guard->findAllUser($guardId);
+
+            $_SESSION['guard'] = [
+                'user' => $guardUser,
+                'status'=> $status,
+                ];
+
             return $this->view->render($response, 'guardian/not-user.twig', [
                 'users' => $users,
                 'guard_id'	=> $args['id']
             ]);
+
         } else {
             $this->flash->addMessage('error', 'You can only add user to your own!');
             return $response->withRedirect($this->router->pathFor('home'));
@@ -572,25 +596,46 @@ class UserController extends BaseController
     public function setItemUserStatus($request, $response, $args)
     {
         $userItem = new \App\Models\UserItem($this->db);
+        $userGroup = new \App\Models\UserGroupModel($this->db);
 
+        $groupId = $_SESSION['group'];
+        $userId  = $_SESSION['login']['id'];
+        $user = $userGroup->findUser('group_id', $groupId, 'user_id', $userId);
         $setItem = $userItem->setStatusItems($args['id']);
-        $findGroup = $userItem->find('id', $args['id']);
-        $groupId = $findGroup['group_id'];
+        // $findGroup = $userItem->find('id', $args['id']);
+        // var_dump($groupId);die();
 
-        return $response->withRedirect($this->router
-                        ->pathFor('user.item.group', ['id' =>$groupId]));
+        if ($user['status'] == 1) {
+
+            return $response->withRedirect($this->router
+            ->pathFor('pic.item.group', ['id' =>$groupId]));
+        } elseif ($user['status'] == 0) {
+
+            return $response->withRedirect($this->router
+            ->pathFor('user.item.group', ['id' =>$groupId]));
+        }
     }
 
     public function restoreItemUserStatus($request, $response, $args)
     {
         $userItem = new \App\Models\UserItem($this->db);
+        $userGroup = new \App\Models\UserGroupModel($this->db);
 
         $setItem = $userItem->resetStatusItems($args['id']);
-        $findGroup = $userItem->find('id', $args['id']);
-        $groupId = $findGroup['group_id'];
+        // $findGroup = $userItem->find('id', $args['id']);
+        $groupId = $_SESSION['group'];
+        $userId  = $_SESSION['login']['id'];
+        $user = $userGroup->findUser('group_id', $groupId, 'user_id', $userId);
 
-        return $response->withRedirect($this->router
-                        ->pathFor('user.item.group', ['id' =>$groupId]));
+        if ($user['status'] == 1) {
+
+            return $response->withRedirect($this->router
+            ->pathFor('pic.item.group', ['id' =>$groupId]));
+        } elseif ($user['status'] == 0) {
+
+            return $response->withRedirect($this->router
+            ->pathFor('user.item.group', ['id' =>$groupId]));
+        }
     }
 
     public function getChangePassword($request, $response)

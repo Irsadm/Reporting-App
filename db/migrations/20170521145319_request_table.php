@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class UserItemTable extends AbstractMigration
+class RequestTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,14 +27,15 @@ class UserItemTable extends AbstractMigration
      */
     public function change()
     {
-        $items = $this->table('user_item');
-        $items->addColumn('item_id', 'integer')
-                ->addColumn('user_id', 'integer')
+        $request = $this->table('requests');
+        $request->addColumn('user_id', 'integer')
+                ->addColumn('user2_id', 'integer')
                 ->addColumn('group_id', 'integer')
-                ->addColumn('reported_at', 'timestamp')
+                ->addColumn('message', 'string')
                 ->addColumn('status', 'integer', ['default' => '0'])
+                ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
                 ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->addForeignKey('item_id', 'items', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+                ->addForeignKey('user2_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
                 ->create();
     }

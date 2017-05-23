@@ -169,7 +169,7 @@ class GroupController extends BaseController
 						]);
 
 		if ($this->validator->validate()) {
-			if (!empty($file)) {
+			if (!empty($_FILES['image']['name'])) {
 
 				$storage = new \Upload\Storage\FileSystem('assets/images');
 				$file = new \Upload\File('image', $storage);
