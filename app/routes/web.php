@@ -99,7 +99,7 @@ $app->group('', function() use ($app, $container) {
     });
 
     $app->group('/user', function(){
-        $this->get('read/{id}', 'App\Controllers\web\ArticleController:readArticle')
+        $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
         ->setName('user.article-read');
         $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')
         ->setName('user.item.group');
@@ -120,7 +120,28 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.item.create.post');
     });
 
-
+    $app->group('/article/', function() {
+        $this->get('add', 'App\Controllers\web\ArticleController:getAdd')
+        ->setName('article-add');
+        $this->post('add', 'App\Controllers\web\ArticleController:add');
+        $this->get('edit/{id}', 'App\Controllers\web\ArticleController:getUpdate')
+        ->setName('article-edit');
+        $this->post('edit/{id}', 'App\Controllers\web\ArticleController:update');
+        $this->get('list/active', 'App\Controllers\web\ArticleController:getActiveArticle')
+        ->setName('article-list-active');
+        $this->post('list/active', 'App\Controllers\web\ArticleController:setInactive');
+        $this->get('list/in-active', 'App\Controllers\web\ArticleController:getInactiveArticle')
+        ->setName('article-list-inactive');
+        $this->get('list/in-active/{id}', 'App\Controllers\web\ArticleController:setActive')
+        ->setName('article-restore');
+        $this->get('read/{id}', 'App\Controllers\web\ArticleController:readArticle')
+        ->setName('article-read');
+        $this->post('delete', 'App\Controllers\web\ArticleController:setDelete')
+        ->setName('article-del');
+        $this->get('search', 'App\Controllers\web\ArticleController:search')
+        ->setName('article-search');
+    });
+    
     $app->group('/guard', function(){
         $this->get('/user/{id}/item', 'App\Controllers\web\UserController:getItemUser')->setName('user.item');
         $this->get('/user/{id}/add', 'App\Controllers\web\UserController:getNotUser')->setName('get.user.add');

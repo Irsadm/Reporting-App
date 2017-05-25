@@ -38,11 +38,14 @@ class HomeController extends BaseController
             $article = new \App\Models\ArticleModel($this->db);
 
             $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-
-            $findAll = $article->getArticle()->setPaginate($page, 2);
-
-            $data = $this->view->render($response, 'index.twig', $findAll);
-
+            $search = $request->getQueryParam('search');
+            if (!empty($search)) {
+                $findAll = $article->search($request->getQueryParam('search'));
+            } else {
+                $findAll = $article->getArticle()->setPaginate($page, 2);
+            }
+            
+            $data = $this->view->render($response, 'index.twig', ['data' => $findAll]);
         }
 
         return $data;

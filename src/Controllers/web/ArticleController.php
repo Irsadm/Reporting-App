@@ -50,10 +50,13 @@ class ArticleController extends BaseController
 		$file = new \Upload\File('image', $storage);
         $file->setName(uniqid());
         $file->addValidations(array(
-            new \Upload\Validation\Mimetype(array('image/gif', 'image/png',
+            new \Upload\Validation\Mimetype(array('image/gif', 'image/jpg',
             'image/jpeg')),
+
             new \Upload\Validation\Size('5M')
+
         ));
+
         $data = array(
             'name'       => $file->getNameWithExtension(),
             'extension'  => $file->getExtension(),
@@ -70,6 +73,7 @@ class ArticleController extends BaseController
 				// ['image'],
 			]
 		];
+
 		$this->validator->rules($rules);
 		$this->validator->labels([
 		'title' 	=>	'Title',
@@ -84,10 +88,13 @@ class ArticleController extends BaseController
 			} catch (\Exception $e) {
 			    // Fail!
 			    $errors = $file->getErrors();
+
 			    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
+
 			    return $response->withRedirect($this->router->pathFor('article-add'));
 			}
 			$article->add($request->getParams(), $data['name']);
+
 			$this->flash->addMessage('succes', 'Data succesfully added');
 			return $response->withRedirect($this->router->pathFor('article-list-active'));
 		} else {
@@ -101,8 +108,13 @@ class ArticleController extends BaseController
 	public function readArticle(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
-		$data['article'] = $article->find('id', $args['id']);
-		return $this->view->render($response , 'admin/article/article-read.twig', $data);
+		if (!empty($data['article'] = $article->find('id', $args['id']))) {
+			return $this->view->render($response , 'admin/article/article-read.twig', $data);
+		} else {
+			$this->flash->addMessage('error', 'Article not found !');
+            return $response->withRedirect($this->router->pathFor('home'));
+		}
+
 	}
 
     //Edit article
@@ -135,6 +147,7 @@ class ArticleController extends BaseController
 				$file = new \Upload\File('image', $storage);
 		        $file->setName(uniqid());
 		        $file->addValidations(array(
+
 		            new \Upload\Validation\Mimetype(array('image/gif',
 		            'image/jpg', 'image/jpeg')),
 		            new \Upload\Validation\Size('5M')
@@ -147,16 +160,20 @@ class ArticleController extends BaseController
 		            'md5'        => $file->getMd5(),
 		            'dimensions' => $file->getDimensions()
 		        );
-			// Try to upload file
-			try {
-			    // Success!
-			    $file->upload();
-			} catch (\Exception $e) {
-			    // Fail!
-			    $errors = $file->getErrors();
-			    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
-			    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
-			}
+
+				// Try to upload file
+				try {
+				    // Success!
+				    $file->upload();
+				} catch (\Exception $e) {
+				    // Fail!
+				    $errors = $file->getErrors();
+
+				    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
+
+				    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
+				}
+
 		        $article->update($request->getParams(), $data['name'], $args['id']);
 			} else {
 				$article->updateData($request->getParams(), $args['id']);
@@ -178,6 +195,16 @@ class ArticleController extends BaseController
         }
 		return $response->withRedirect($this->router
 						->pathFor('article-list-inactive'));
+	}
+	//Search article
+	public function search($request, $response)
+	{
+		$article = new ArticleModel($this->db);
+		$data['search'] = $request->getQueryParam('search');
+
+		$data['article'] = $article->search($request->getQueryParam('search'));
+
+		return $this->view->render($response, 'admin/article/timeline.twig', $data);
 	}
 }
 
