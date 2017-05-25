@@ -12,7 +12,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css">
     <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png" rel="shortcut icon" type="image/x-icon" />
-
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
+    
     {% block css %} {% endblock %}
 
     <title>{% block title %} {% endblock %}</title>
@@ -131,5 +132,12 @@ $('#previewing').attr('height', '230px');
 };
 });
 </script>
+
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+  </script>
 {% block script %} {% endblock %}
 </html>
