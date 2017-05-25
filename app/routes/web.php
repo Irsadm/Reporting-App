@@ -99,7 +99,7 @@ $app->group('', function() use ($app, $container) {
     });
 
     $app->group('/user', function(){
-        $this->get('read/{id}', 'App\Controllers\web\ArticleController:readArticle')
+        $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
         ->setName('user.article-read');
         $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')
         ->setName('user.item.group');

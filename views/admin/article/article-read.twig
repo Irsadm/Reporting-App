@@ -15,7 +15,7 @@
 	  <div class="card-block">
 	    <h4 class="media-heading"> {{ article.title }} </h4>
 		<p class="fa fa-calendar"> {{ article.created_at|date('d/m/Y') }} </p>
-		<p class="fa fa-clock-o"> {{ article.created_at|date("H:m") }} </p>
+		<p class="fa fa-clock-o"> {{ article.created_at|date("H:i") }} </p>
 		<p> {{ article.content }} </p>
 	  </div>
 	</div>

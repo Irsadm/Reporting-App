@@ -44,8 +44,8 @@ class HomeController extends BaseController
             } else {
                 $findAll = $article->getArticle()->setPaginate($page, 2);
             }
-
-            $data = $this->view->render($response, 'index.twig', $findAll);
+            
+            $data = $this->view->render($response, 'index.twig', ['data' => $findAll]);
         }
 
         return $data;
