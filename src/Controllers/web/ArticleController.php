@@ -50,7 +50,7 @@ class ArticleController extends BaseController
 		$file = new \Upload\File('image', $storage);
         $file->setName(uniqid());
         $file->addValidations(array(
-            new \Upload\Validation\Mimetype(array('image/gif', 'image/jpg',
+            new \Upload\Validation\Mimetype(array('image/gif', 'image/png',
             'image/jpeg')),
             new \Upload\Validation\Size('5M')
         ));
