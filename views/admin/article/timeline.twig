@@ -12,9 +12,31 @@
         	{% if data.data %}
             	{% for article in data.data %}
 			        <div class="card">
-			            <center><img class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}"
+			            <center><img style="margin-top:10px;margin-bottom:20px;"  class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}"
 			             width="75%" height="300"  alt="Lights" alt="Card image cap"></center>
 			            <div class="card-block">
+			                <h4 class="media-heading">{{ article.title }}</h4>
+			                <p class="fa fa-calendar"> {{ article.created_at|date('d/m/Y') }} </p>
+			                <p class="fa fa-clock-o"> {{ article.created_at|date("H:i") }} </p>
+			                <p class="text-justify">{{ article.content|slice(0, 300)|raw }}
+
+			                    {% if login.status == 1 %}
+			                    <a href="{{ path_for('article-read', { id:article.id }) }}">Readmore...</a></p>
+			                    {% elseif login.status == 0 %}
+			                    <a href="{{ path_for('user.article-read', { id:article.id }) }}">Readmore...</a></p>
+			                    {% endif %}
+
+			                    <br>
+			                {% endfor %}
+			            </div>
+			        </div>
+			        <hr>
+            {% elseif data %}
+                {% for article in data %}
+                	<div class="card">
+			            <center><img class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}"
+			             width="75%" height="300"  alt="Lights" alt="Card image cap"></center>
+			            <div class="card-block" style>
 			                <h4 class="media-heading">{{ article.title }}</h4>
 			                <p class="fa fa-calendar"> {{ article.created_at|date('d/m/Y') }} </p>
 			                <p class="fa fa-clock-o"> {{ article.created_at|date("H:i") }} </p>
@@ -32,27 +54,10 @@
 			        </div>
 			        <hr>
             {% else %}
-                {% for article in data %}
-                	<div class="card">
-			            <center><img class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}"
-			             width="75%" height="300"  alt="Lights" alt="Card image cap"></center>
-			            <div class="card-block">
-			                <h4 class="media-heading">{{ article.title }}</h4>
-			                <p class="fa fa-calendar"> {{ article.created_at|date('d/m/Y') }} </p>
-			                <p class="fa fa-clock-o"> {{ article.created_at|date("H:i") }} </p>
-			                <p class="text-justify">{{ article.content|slice(0, 300)|raw }}
-
-			                    {% if login.status == 1 %}
-			                    <a href="{{ path_for('article-read', { id:article.id }) }}">Readmore...</a></p>
-			                    {% elseif login.status == 0 %}
-			                    <a href="{{ path_for('user.article-read', { id:article.id }) }}">Readmore...</a></p>
-			                    {% endif %}
-
-			                    <br>
-			                {% endfor %}
-			            </div>
-			        </div>
-			        <hr>
+                <div class="card">
+                    <center><img class="card-img-top" src="{{ base_url() }}/assets/images/not-found.jpg"
+                     width="75%" height="300"  alt="Lights" alt="Card image cap"></center>
+                </div>
         	{% endif %}
 
         <nav aria-label="...">
