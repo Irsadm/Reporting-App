@@ -489,10 +489,31 @@ class UserController extends BaseController
         $userItems = $userItem->getItem($args['id']);
         $userGuard = $guard->findGuard('guard_id', $guardId, 'user_id', $args['id']);
         $findUser = $user->find('id', $args['id']);
-        // $count = count($userItems);
         // var_dump($userItems);die();
 
         if ($userGuard && $_SESSION['guard']['status'] == 'guard' ) {
+            return $this->view->render($response, 'guardian/useritem.twig', [
+                'items' => $userItems,
+                'user' => $findUser,
+                'count'=> count($userItems),
+            ]);
+
+        } else {
+            $this->flash->addMessage('error', 'You are not allowed to access this user!');
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
+    }
+    public function getItemByadmin($request,$response, $args)
+    {
+        $user = new UserModel($this->db);
+        $item = new \App\Models\Item($this->db);
+        $userItem = new \App\Models\UserItem($this->db);
+
+        $userItems = $userItem->getItem($args['id']);
+        $findUser = $user->find('id', $args['id']);
+        // var_dump($userItems);die();
+
+        if ( $_SESSION['login']['status'] == '1' ) {
             return $this->view->render($response, 'guardian/useritem.twig', [
                 'items' => $userItems,
                 'user' => $findUser,

@@ -61,7 +61,7 @@ class UserItem extends BaseModel
 
 
         $this->query = $qb->select('it.name', 'it.description', 'it.recurrent',
-                                    'it.start_date', 'it.end_date', 'it.status')
+                                    'it.start_date', 'it.end_date')
         ->from($this->jointTable, 'it')
         ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
         ->where('ui.user_id = :user_id')
@@ -84,7 +84,7 @@ class UserItem extends BaseModel
 
         $qb1 = $this->db->createQueryBuilder();
 
-		$qb1->select('items.*')
+		$qb1->select('items.*', 'user_item.status')
 			 ->from($this->table, 'user_item')
 	 		 ->join('user_item', $jointTable, 'items', $qb1->expr()->in('items.id', $query1))
 			 ->where('deleted = 0')
@@ -100,7 +100,7 @@ class UserItem extends BaseModel
 
 
         $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description',
-            'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+            'it.recurrent', 'it.start_date', 'it.end_date')
             ->from($this->jointTable, 'it')
             ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
             ->andWhere('ui.user_group_id = :user_group_id')
@@ -117,7 +117,7 @@ class UserItem extends BaseModel
 
 
      $qb->select('it.name', 'ui.id', 'ui.reported_at', 'it.description',
-            'it.recurrent', 'it.start_date', 'it.end_date', 'it.status')
+            'it.recurrent', 'it.start_date', 'it.end_date')
         ->from($this->jointTable, 'it')
         ->join('it', $this->table, 'ui', 'ui.item_id = it.id')
         ->andWhere('ui.user_group_id = :user_group_id')
