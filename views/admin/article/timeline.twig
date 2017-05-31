@@ -31,7 +31,7 @@
 			            </div>
 			        </div>
 			        <hr>
-            {% else %}
+            {% elseif data %}
                 {% for article in data %}
                 	<div class="card">
 			            <center><img class="card-img-top" src="{{ base_url() }}/assets/images/{{ article.image }}"
@@ -53,6 +53,10 @@
 			            </div>
 			        </div>
 			        <hr>
+			{% else %}
+				<div class="card">
+					<center><img class="card-img-top" src="{{ base_url() }}/assets/images/kosong.png" width="75%" height="300" alt="Lights" alt="Card image cap"></center>
+				</div>
         	{% endif %}
 
         <nav aria-label="...">

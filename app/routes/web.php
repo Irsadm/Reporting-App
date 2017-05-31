@@ -36,6 +36,7 @@ $app->group('', function() use ($app, $container) {
             $this->post('/users', 'App\Controllers\web\GroupController:setUserGroup')->setName('user.group.set');
             $this->get('/{id}/allusers', 'App\Controllers\web\GroupController:getNotMember')->setName('all.users.get');
             $this->post('/allusers', 'App\Controllers\web\GroupController:setMemberGroup')->setName('member.group.set');
+            $this->get('/user/{id}/item', 'App\Controllers\web\UserController:getItemByadmin')->setName('user.item');
         });
 
         $app->group('/user', function(){

@@ -39,7 +39,8 @@
                         {% set i = i + 1 %}
                         <tr>
                             <td class="text-center">{{i}}</td>
-                            <td>{{data.name}}</td>
+                            <td><a href="" data-toggle="modal" data-target="#{{data.id}}"
+                                value="{{data.id}}"title="View User" >{{data.name}}</a></td>
                             <td>{{data.username}}</td>
                             <td>{{data.email}}</td>
                             <td class="text-center">
@@ -51,8 +52,7 @@
                                 data-toggle="tooltip" data-placement="top" title=" Edit Data" >
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<i class="fa fa-edit margin"></i></a>
 
-                                <a href="" data-toggle="modal" data-target="#{{data.id}}"
-                                value="{{data.id}}"title="View User" >
+                                <a href="{{ path_for('user.item', { id:data.id }) }}"title="View item" >
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<i class="fa fa-eye"></i></a>
                             </td>
                         </tr>
