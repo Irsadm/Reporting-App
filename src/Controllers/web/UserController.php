@@ -647,7 +647,7 @@ class UserController extends BaseController
         $userId  = $_SESSION['login']['id'];
         $username  = $_SESSION['login']['name'];
         $user = $userGroups->findUser('group_id', $groupId, 'user_id', $userId);
-        $item = $items->find('id', $userItem['item_id']);
+        $item = $items->find('id', $args['id']);
         $guardian = $guards->find('user_id', $userId);
         $guard = $users->find('id', $guardian['guard_id']);
         $picGroup = $userGroups->findUser('group_id', $groupId, 'status', 1);
@@ -667,11 +667,12 @@ class UserController extends BaseController
                 'content'	=>	$report,
             ];
 
+            $this->sendWebNotif($report, $guard['id']);
             $mailer->send($dataGuard);
         }
 
         if ($pic && $pic['id'] != $guard['id']) {
-            $dataPic = [
+            $data = [
                 'subject' 	=>	$username.' item report',
                 'from'      =>	'reportingmit@gmail.com',
                 'to'	    =>	$pic['email'],
@@ -680,7 +681,9 @@ class UserController extends BaseController
                 'content'	=>	$report,
             ];
 
-            $mailer->send($dataPic);
+            $this->sendWebNotif($report, $pic['id']);
+            $mailer->send($data2);
+
         }
 
         if ($user['status'] == 1) {

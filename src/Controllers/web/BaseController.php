@@ -19,7 +19,7 @@ abstract class BaseController
 		return $this->container->{$property};
 	}
 
-	protected function sendWebNotif($message, $key)
+	protected function sendWebNotif($message, $token)
     {
         $default_url = 'https://test-fcm-notif.firebaseio.com/';
         $key = 'AIzaSyD0BJ9ETP_NcrDGuQNGXVyjW8OUr32_10I';
@@ -27,12 +27,12 @@ abstract class BaseController
 
         $firebase = new \Firebase\FirebaseLib($default_url);
 
-        $dateTime = new DateTime();
+        $dateTime = date();
 
         if (!empty($message)) {
             $firebase->push($default_path , [
                 'message'  => $message,
-                'key'      => $key,
+                'key'      => $token,
                 'datatime' => $dateTime
             ]);
         }

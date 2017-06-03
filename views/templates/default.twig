@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-formhelpers/2.3.0/css/bootstrap-formhelpers.min.css">
     <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png" rel="shortcut icon" type="image/x-icon" />
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
-    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     {% block css %} {% endblock %}
 
     <title>{% block title %} {% endblock %}</title>
@@ -138,6 +138,28 @@ $('#previewing').attr('height', '230px');
     $(document).ready(function() {
         $('#summernote').summernote();
     });
+  </script>
+  <script src="https://cdn.firebase.com/js/client/2.2.3/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script src="{{ base_url() }}/assets/js/fireNotif.js"></script>
+
+  <script type="text/javascript">
+      var notify = new FireNotif();
+      var audio = new Audio('{{ base_url() }}/assets/sound/notif.mp3');
+      notify.setKey('AIzaSyD0BJ9ETP_NcrDGuQNGXVyjW8OUr32_10I')
+          .setUrl('https://test-fcm-notif.firebaseio.com/')
+          .setPath('notify');
+
+      notify.subscribe(function(data){
+          var id = '{{login.id}}';
+          if (data.key == id) {
+              audio.play();
+              toastr.options.progressBar = true;
+              toastr.options.closeButton = true;
+              toastr.info(data.message, 'Notification', {timeOut: 15000})
+          }
+      });
   </script>
 {% block script %} {% endblock %}
 </html>
