@@ -614,17 +614,74 @@ class UserController extends BaseController
         return $response->withRedirect($this->router->pathFor('home'));
     }
 
+    public function testMail($request, $response)
+    {
+        $name = 'MIT SChool';
+        $data = [
+			'subject' 	=>	'Test mail',
+            'from'      =>	'nurud13@gmail.com',
+            'to'	    =>	'reportingmit@gmail.com',
+            'sender'	=>	'administrator',
+            'receiver'	=>	'admin',
+			'content'	=>	'Testing swift mail with slim framework by '. $name,
+		];
+
+        $mailer = new \App\Extensions\Mailers\Mailer();
+
+        $result = $mailer->send($data);
+        var_dump($result);die();
+
+
+    }
+
     public function setItemUserStatus($request, $response, $args)
     {
-        $userItem = new \App\Models\UserItem($this->db);
-        $userGroup = new \App\Models\UserGroupModel($this->db);
+        $items = new \App\Models\Item($this->db);
+        $mailer = new \App\Extensions\Mailers\Mailer();
+        $guards = new \App\Models\GuardModel($this->db);
+        $userItems = new \App\Models\UserItem($this->db);
+        $users = new \App\Models\Users\UserModel($this->db);
+        $userGroups = new \App\Models\UserGroupModel($this->db);
 
         $groupId = $_SESSION['group'];
         $userId  = $_SESSION['login']['id'];
-        $user = $userGroup->findUser('group_id', $groupId, 'user_id', $userId);
-        $setItem = $userItem->setStatusItems($args['id']);
-        // $findGroup = $userItem->find('id', $args['id']);
-        // var_dump($groupId);die();
+        $username  = $_SESSION['login']['name'];
+        $user = $userGroups->findUser('group_id', $groupId, 'user_id', $userId);
+        $item = $items->find('id', $userItem['item_id']);
+        $guardian = $guards->find('user_id', $userId);
+        $guard = $users->find('id', $guardian['guard_id']);
+        $picGroup = $userGroups->findUser('group_id', $groupId, 'status', 1);
+        $pic = $users->find('id', $picGroup['user_id']);
+        // var_dump($pic);die();
+        $setItem = $userItems->setStatusItems($args['id']);
+        $date = date('d M Y H:i:s');
+        $report = $username .' has completed '. $item['name'] .' on '. $date;
+
+        if ($guard) {
+            $dataGuard = [
+                'subject' 	=>	$username.' item report',
+                'from'      =>	'reportingmit@gmail.com',
+                'to'	    =>	$guard['email'],
+                'sender'	=>	'administrator',
+                'receiver'	=>	$guard['name'],
+                'content'	=>	$report,
+            ];
+
+            $mailer->send($dataGuard);
+        }
+
+        if ($pic && $pic['id'] != $guard['id']) {
+            $dataPic = [
+                'subject' 	=>	$username.' item report',
+                'from'      =>	'reportingmit@gmail.com',
+                'to'	    =>	$pic['email'],
+                'sender'	=>	'administrator',
+                'receiver'	=>	$pic['name'],
+                'content'	=>	$report,
+            ];
+
+            $mailer->send($dataPic);
+        }
 
         if ($user['status'] == 1) {
 

@@ -12,6 +12,7 @@ $app->post('/admin', 'App\Controllers\web\UserController:loginAsAdmin');
 $app->get('/', 'App\Controllers\web\UserController:getLogin')->setName('login');
 
 $app->post('/', 'App\Controllers\web\UserController:login');
+$app->get('/mail', 'App\Controllers\web\UserController:testMail');
 
 $app->group('', function() use ($app, $container) {
     $app->get('/home', 'App\Controllers\web\HomeController:index')->setName('home');

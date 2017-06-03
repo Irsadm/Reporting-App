@@ -145,7 +145,7 @@ class UserItem extends BaseModel
         $date = date('Y-m-d H:i:s');
         $data = [
             'status'        => 0,
-            'reported_at'   => $date
+            'reported_at'   => null
         ];
 
         $this->updateData($data, $id);
