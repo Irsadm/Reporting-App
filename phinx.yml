@@ -19,7 +19,7 @@ environments:
         host: 172.17.0.1
         name: reporting-app
         user: root
-        pass: 'apple'
+        pass: 'nrd113'
         port: 3636
         charset: utf8
 

@@ -29,15 +29,19 @@ class ItemsTable extends AbstractMigration
     {
         $items = $this->table('items');
         $items->addColumn('name', 'string')
-             ->addColumn('description', 'string')
-             ->addColumn('recurrent', 'string')
+             ->addColumn('description', 'string', ['null' => true])
+             ->addColumn('image', 'string', ['null' => true])
              ->addColumn('group_id', 'integer')
-             ->addColumn('start_date', 'datetime')
-             ->addColumn('end_date', 'datetime')
-             ->addColumn('deleted', 'integer', ['default' => '0'])
-             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
+             ->addColumn('user_id', 'integer', ['null' => true])
+             ->addColumn('start_date', 'date')
+             ->addColumn('recurrent', 'string', ['null' => true])
+             ->addColumn('status', 'integer', ['default' => '0'])
+             ->addColumn('reported_at', 'timestamp', ['null' => true])
              ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
+             ->addColumn('deleted', 'integer', ['default' => '0'])
              ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+             ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
              ->create();
     }
 }

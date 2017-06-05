@@ -2,7 +2,7 @@
     <div class="user-panel">
         <div class="pull-left image">
             <img src="{{ base_url() }}/assets/images/{{ login.image }}"
-             class="img-circle" alt="User Image" style="height:50px">
+            class="img-circle" alt="User Image" style="height:50px">
         </div>
 
         <div class="pull-left info">
@@ -15,16 +15,16 @@
     <ul class="sidebar-menu">
         <li class="header">NAVIGATION MENU</li>
         <li class="treeview">
-            <a href="{{path_for('home')}}"><i class="fa ion-ios-speedometer fa-lg"></i>
-            <span>HOME</span></a>
-        </li class="treeview">
+            <a href="{{path_for('home')}}"><i class="fa ion-ios-speedometer fa-lg">
+            </i> <span>HOME</span></a>
+        </li>
 
         {% if login.status == 1 %}
         <li class="treeview">
             <a href="#"><i class="fa fa-users"></i>
                 <span>GROUP</span>
                 <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
@@ -37,7 +37,7 @@
             <a href="#"><i class="fa fa-user-circle-o"></i>
                 <span>USER</span>
                 <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
@@ -50,7 +50,7 @@
             <a href="#"><i class="fa fa-list-alt"></i>
                 <span>ARTICLE</span>
                 <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
@@ -63,7 +63,7 @@
             <a href="#"><i class="fa fa-sitemap"></i>
                 <span>ITEM</span>
                 <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
@@ -71,43 +71,15 @@
                 <li><a href="{{ path_for('item.list')}}">Item List</a></li>
                 <li><a href="{{ path_for('item.trash')}}">Trash</a></li>
             </ul>
-            {% endif %}
-
-        {% if login.status == 0 and guard.status == null %}
-
-        <li class="treeview">
-            <a href="#"><i class="fa fa-users"></i>
-                <span>GROUP</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                {% for user_group in user_group %}
-
-                <li><a href="{{ path_for('user.item.group',
-                {('id'): user_group.group_id }) }}">{{user_group.name}}</a></li>
-
-                {% endfor %}
-            </ul>
         </li>
 
-        {% elseif login.status == 0 and guard.status == 'guard'%}
-
-        <li class="treeview">
-            <a href="{{ path_for('get.user.add', {('id'): login.id }) }}"><i class="fa fa-user-plus"></i>
-                <span>ADD USER</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-        </li>
+        {% elseif login.status == 0 %}
 
         <li class="treeview">
             <a href="#"><i class="fa fa-users"></i>
                 <span>MY USER</span>
                 <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
@@ -115,23 +87,48 @@
                 {% for user in guard.user %}
 
                 <li><a href="{{ path_for('user.item', {('id'): user.id }) }}">
-                {{user.name}}</a></li>
+                    {{user.name}}</a>
+                </li>
 
                 {% endfor %}
 
             </ul>
         </li>
 
-        {% endif %}
+        <li class="treeview">
+            <a href="#"><i class="fa fa-users"></i>
+                <span>MY GROUP</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {% for user_group in user_group %}
 
-        <li>
-         <a href="{{ path_for('logout')}}"><i class="fa fa-power-off"></i>
-            <span>LOGOUT </span></a>
+                <li><a href="{{ path_for('user.item.group',
+                    {('id'): user_group.group_id }) }}">{{user_group.name}}</a>
+                </li>
+
+                {% endfor %}
+            </ul>
         </li>
 
+        <li class="treeview">
+            <a href="#"><i class="fa fa-users"></i>
+                <span>GENERAL GROUP</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                {% for user_group in user_group %}
+
+                <li><a href="{{ path_for('user.item.group',
+                    {('id'): user_group.group_id }) }}">{{user_group.name}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
     </ul>
-    </li>
-</ul>
-
-
 </section>

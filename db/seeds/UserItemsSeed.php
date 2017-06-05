@@ -14,26 +14,26 @@ class UserItemsSeed extends AbstractSeed
      */
     public function run()
     {
-        $data[] = [
-            'item_id' =>  1,
-            'user_group_id' =>  1,
-        ];
-
-        $data[] = [
-            'item_id' =>  1,
-            'user_group_id' =>  2,
-        ];
-
-        $data[] = [
-            'item_id' =>  2,
-            'user_group_id' =>  1,
-        ];
-
-        $data[] = [
-            'item_id' =>  2,
-            'user_group_id' =>  2,
-        ];
-
-        $this->insert('user_item', $data);
+        // $data[] = [
+        //     'item_id' =>  1,
+        //     'user_group_id' =>  1,
+        // ];
+        //
+        // $data[] = [
+        //     'item_id' =>  1,
+        //     'user_group_id' =>  2,
+        // ];
+        //
+        // $data[] = [
+        //     'item_id' =>  2,
+        //     'user_group_id' =>  1,
+        // ];
+        //
+        // $data[] = [
+        //     'item_id' =>  2,
+        //     'user_group_id' =>  2,
+        // ];
+        //
+        // $this->insert('user_item', $data);
     }
 }

@@ -2,7 +2,7 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class UserGroupsSeed extends AbstractSeed
+class GuardsSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -15,15 +15,15 @@ class UserGroupsSeed extends AbstractSeed
     public function run()
     {
         $data[] = [
-            'group_id' =>  '1',
+            'guard_id' =>  '2',
             'user_id'  =>  '3',
         ];
 
         $data[] = [
-            'group_id' =>  '1',
+            'guard_id' =>  '2',
             'user_id'  =>  '5',
         ];
 
-        $this->insert('user_group', $data);
+        $this->insert('guardian', $data);
     }
 }

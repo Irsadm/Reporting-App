@@ -29,17 +29,18 @@ class UsersTable extends AbstractMigration
     {
         $user = $this->table('users');
         $user->addColumn('name', 'string')
-             ->addColumn('email', 'string')
              ->addColumn('username', 'string')
              ->addColumn('password', 'string')
              ->addColumn('gender', 'string')
-             ->addColumn('address', 'string', ['null' => true])
+             ->addColumn('email', 'string')
              ->addColumn('phone', 'string')
-             ->addColumn('image', 'string', ['default' => 'avatar.png'])
-             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
-             ->addColumn('status', 'integer', ['limit' => 1, 'default' => 0])
-             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+             ->addColumn('image', 'string', ['default' => 'user.png'])
+             ->addColumn('address', 'string', ['null' => true])
+             ->addColumn('status', 'integer', ['limit' => 1, 'default' => '1'])
              ->addColumn('deleted', 'integer', ['default' => '0'])
+             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
+             ->addIndex(['phone', 'name'])
              ->create();
     }
 }

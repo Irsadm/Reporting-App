@@ -27,16 +27,16 @@ class RequestTable extends AbstractMigration
      */
     public function change()
     {
-        $request = $this->table('requests');
-        $request->addColumn('user_id', 'integer')
-                ->addColumn('user2_id', 'integer')
-                ->addColumn('group_id', 'integer')
-                ->addColumn('message', 'string')
-                ->addColumn('status', 'integer', ['default' => '0'])
-                ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
-                ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->addForeignKey('user2_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
-                ->create();
+        // $request = $this->table('requests');
+        // $request->addColumn('user_id', 'integer')
+        //         ->addColumn('user2_id', 'integer')
+        //         ->addColumn('group_id', 'integer')
+        //         ->addColumn('message', 'string')
+        //         ->addColumn('status', 'integer', ['default' => '0'])
+        //         ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
+        //         ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+        //         ->addForeignKey('user2_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+        //         ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+        //         ->create();
     }
 }

@@ -16,29 +16,28 @@ class UsersSeed extends AbstractSeed
     {
         $data[] = [
             'name'     =>  'Administrator',
-            'email'    =>  'admin@null.net',
+            'email'    =>  'reportingmit@gmail.com',
             'username' =>  'admin',
             'password' =>  password_hash('admin123', PASSWORD_DEFAULT),
             'gender'   =>  'Laki-laki',
-            'address'  =>  'Jakarta',
-            'phone'    =>  '081234567890',
+            'address'  =>  'DKI Jakarta',
+            'phone'    =>  '+6281234567890',
             'image'    =>  'admin.jpg',
             'status' =>  1,
-            'updated_at'   =>  '2017-04-30 00:00:00',
-            'created_at'   =>  '2017-05-30 00:00:00',
+            // 'updated_at'   =>  '2017-04-30 00:00:00',
+            // 'created_at'   =>  '2017-05-30 00:00:00',
         ];
 
         $data[] = [
             'name'     =>  'Budiman',
-            'email'    =>  'budi@null.net',
+            'email'    =>  'nurud@gmx.com',
             'username' =>  'budiman',
             'password' =>  password_hash('budi123', PASSWORD_DEFAULT),
             'gender'   =>  'Laki-laki',
-            'address'  =>  'Jakarta',
-            'phone'    =>  '081234567891',
-            'image'    =>  'avatar.png',
-            'updated_at'   =>  '2017-04-30 00:00:00',
-            'created_at'   =>  '2017-05-30 00:00:00',
+            'address'  =>  'Bandung, Jawa Barat',
+            'phone'    =>  '+6281234567891',
+            // 'updated_at'   =>  '2017-04-30 00:00:00',
+            // 'created_at'   =>  '2017-05-30 00:00:00',
         ];
 
         $data[] = [
@@ -47,24 +46,22 @@ class UsersSeed extends AbstractSeed
             'username'  =>  'laras',
             'password'  =>  password_hash('laras123', PASSWORD_DEFAULT),
             'gender'    =>  'Perempuan',
-            'address'   =>  'Jakarta',
-            'phone'     =>  '081234567819',
-            'image'     =>  'avatar.png',
-            'updated_at'   =>  '2017-04-30 00:00:00',
-            'created_at'   =>  '2017-05-30 00:00:00',
+            'address'   =>  'Cirebon, Jawa Barat',
+            'phone'     =>  '+6281234567819',
+            // 'updated_at'   =>  '2017-04-30 00:00:00',
+            // 'created_at'   =>  '2017-05-30 00:00:00',
         ];
 
         $data[] = [
             'name'      =>  'Dede Nurdandi',
-            'email'     =>  'dede@null.net',
-            'username'  =>  'deden',
-            'password'  =>  password_hash('dede123', PASSWORD_DEFAULT),
+            'email'     =>  'nurud13@gmail.com',
+            'username'  =>  'dandi',
+            'password'  =>  password_hash('dandi123', PASSWORD_DEFAULT),
             'gender'    =>  'Laki-laki',
-            'address'   =>  'Bogor',
-            'phone'     =>  '081234567814',
-            'image'     =>  'avatar.png',
-            'updated_at'   =>  '2017-04-30 00:00:00',
-            'created_at'   =>  '2017-05-30 00:00:00',
+            'address'   =>  'Depok, Jawa Barat',
+            'phone'     =>  '+6281234567814',
+            // 'updated_at'   =>  '2017-04-30 00:00:00',
+            // 'created_at'   =>  '2017-05-30 00:00:00',
         ];
 
         $data[] = [
@@ -73,11 +70,10 @@ class UsersSeed extends AbstractSeed
             'username'  =>  'ekawati',
             'password'  =>  password_hash('eka123', PASSWORD_DEFAULT),
             'gender'    =>  'Perempuan',
-            'address'   =>  'Bogor',
-            'phone'     =>  '081234567814',
-            'image'     =>  'avatar.png',
-            'updated_at'   =>  '2017-04-30 00:00:00',
-            'created_at'   =>  '2017-05-30 00:00:00',
+            'address'   =>  'Semarang, Jawa Tengah',
+            'phone'     =>  '+6281234567814',
+            // 'updated_at'   =>  '2017-04-30 00:00:00',
+            // 'created_at'   =>  '2017-05-30 00:00:00',
         ];
 
         $data[] = [
@@ -86,11 +82,10 @@ class UsersSeed extends AbstractSeed
             'username'  =>  'fahmi',
             'password'  =>  password_hash('fahmi123', PASSWORD_DEFAULT),
             'gender'    =>  'Laki-laki',
-            'address'   =>  'Bogor',
-            'phone'     =>  '081234567888',
-            'image'     =>  'avatar.png',
-            'updated_at'   =>  '2017-04-30 00:00:00',
-            'created_at'   =>  '2017-05-30 00:00:00',
+            'address'   =>  'Pangandaran, Jawa Barat',
+            'phone'     =>  '+6281234567888',
+            // 'updated_at'   =>  '2017-04-30 00:00:00',
+            // 'created_at'   =>  '2017-05-30 00:00:00',
         ];
 
 

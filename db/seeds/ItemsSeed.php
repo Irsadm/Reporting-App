@@ -18,34 +18,30 @@ class ItemsSeed extends AbstractSeed
             $data[] = [
                 'name'       =>  'Membaca',
                 'description'=>  'Membaca buku pelajaran',
-                'recurrent'  =>  'daily',
-                'start_date' =>  '2017-05-13 00:00:01',
-                'end_date'   =>  '2017-05-13 00:00:00',
                 'group_id'   =>  '1',
-                'updated_at'   =>  '2017-04-30 00:00:00',
-                'created_at'   =>  '2017-05-30 00:00:00',
+                'start_date' =>  '2017-06-9',
+                'recurrent'  =>  'daily',
+                // 'updated_at'   =>  '2017-04-30 00:00:00',
+                // 'created_at'   =>  '2017-05-30 00:00:00',
             ];
 
             $data[] = [
                 'name'       =>  'Upacara',
-                'description'=>  'Upacara bendera',
+                'description'=>  'Upacara bendera Hari Senin',
                 'recurrent'  =>  'weekly',
-                'start_date' =>  '2017-05-8 07:00:00',
-                'end_date'   =>  '2017-05-8 07:45:00',
+                'start_date' =>  '2017-06-4',
                 'group_id'   =>  '1',
-                'updated_at'   =>  '2017-04-30 00:00:00',
-                'created_at'   =>  '2017-05-30 00:00:00',
+                // 'updated_at'   =>  '2017-04-30 00:00:00',
+                // 'created_at'   =>  '2017-05-30 00:00:00',
             ];
 
             $data[] = [
                 'name'       =>  'Tugas Bulanan',
-                'description'=>  'Tugas akhir bulan',
-                'recurrent'  =>  'monthly',
-                'start_date' =>  '2017-05-8 07:00:00',
-                'end_date'   =>  '2017-05-8 07:45:00',
+                'start_date' =>  '2017-05-8',
+                'start_date' =>  '2017-06-4',
                 'group_id'   =>  '1',
-                'updated_at'   =>  '2017-04-30 00:00:00',
-                'created_at'   =>  '2017-05-30 00:00:00',
+                // 'updated_at'   =>  '2017-04-30 00:00:00',
+                // 'created_at'   =>  '2017-05-30 00:00:00',
             ];
 
             $this->insert('items', $data);

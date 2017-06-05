@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class ArticlesTable extends AbstractMigration
+class RegisterMigration extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,13 +27,12 @@ class ArticlesTable extends AbstractMigration
      */
     public function change()
     {
-        $articles = $this->table('articles');
-        $articles->addColumn('title', 'string')
-             ->addColumn('content', 'text')
-             ->addColumn('image', 'string', ['null' => true])
-             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP','update' => 'CURRENT_TIMESTAMP'])
-             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-             ->addColumn('deleted', 'integer', ['default' => '0'])
-             ->create();
+        $tokens = $this->table('registers');
+        $tokens ->addColumn('user_id', 'integer')
+                ->addColumn('token', 'string')
+                ->addColumn('expired_date', 'datetime')
+                ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+                ->create();
+
     }
 }
