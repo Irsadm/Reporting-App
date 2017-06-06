@@ -13,6 +13,7 @@ class UserGroupModel extends BaseModel
 		$data = [
 			'group_id' 	=> 	$data['group_id'],
 			'user_id'	=>	$data['user_id'],
+			'status'	=>	$data['status'],
 		];
 		$this->createData($data);
 
@@ -137,6 +138,35 @@ class UserGroupModel extends BaseModel
  			return $result->fetchAll();
 	}
 
+	public function generalGroup($userId)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select('groups.*', 'user_group.*')
+			 ->from('groups', 'groups')
+			 ->join('groups', $this->table, 'user_group', 'groups.id = user_group.group_id')
+			 ->where('user_group.user_id = :id')
+			 ->andWhere('user_group.status = 0')
+			 ->setParameter(':id', $userId);
+
+			 $result = $qb->execute();
+			return $result->fetchAll();
+	}
+
+	public function picGroup($userId)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select('groups.*', 'user_group.*')
+			 ->from('groups', 'groups')
+			 ->join('groups', $this->table, 'user_group', 'groups.id = user_group.group_id')
+			 ->where('user_group.user_id = :id')
+			 ->andWhere('user_group.status = 1')
+			 ->setParameter(':id', $userId);
+
+			 $result = $qb->execute();
+			return $result->fetchAll();
+	}
 }
 
 ?>

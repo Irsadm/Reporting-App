@@ -16,17 +16,20 @@ class GroupsSeed extends AbstractSeed
     {
         $data[] = [
             'name'         =>  '7E',
-            'description'  =>  'Grup khusus siswa Kelas 7E'
+            'description'  =>  'Grup khusus siswa Kelas 7E',
+            'creator'      =>  '1'
         ];
 
         $data[] = [
             'name'         =>  '8E',
-            'description'  =>  'Grup khusus siswa Kelas 8E'
+            'description'  =>  'Grup khusus siswa Kelas 8E',
+            'creator'      =>  '1'
         ];
 
         $data[] = [
             'name'         =>  '9A',
-            'description'  =>  'Grup khusus siswa Kelas 9A'
+            'description'  =>  'Grup khusus siswa Kelas 9A',
+            'creator'      =>  '1'
         ];
 
         $this->insert('groups', $data);

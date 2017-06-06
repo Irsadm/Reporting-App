@@ -73,7 +73,7 @@
             </ul>
         </li>
 
-        {% elseif login.status == 0 %}
+        {% elseif login.status == 2 %}
 
         <li class="treeview">
             <a href="#"><i class="fa fa-users"></i>
@@ -96,38 +96,21 @@
         </li>
 
         <li class="treeview">
-            <a href="#"><i class="fa fa-users"></i>
+            <a href="{{ path_for('pic.group') }}"><i class="fa fa-users"></i>
                 <span>MY GROUP</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
-            <ul class="treeview-menu">
-                {% for user_group in user_group %}
-
-                <li><a href="{{ path_for('user.item.group',
-                    {('id'): user_group.group_id }) }}">{{user_group.name}}</a>
-                </li>
-
-                {% endfor %}
-            </ul>
         </li>
 
         <li class="treeview">
-            <a href="#"><i class="fa fa-users"></i>
+            <a href="{{ path_for('user.group') }}"><i class="fa fa-users"></i>
                 <span>GENERAL GROUP</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
-            <ul class="treeview-menu">
-                {% for user_group in user_group %}
-
-                <li><a href="{{ path_for('user.item.group',
-                    {('id'): user_group.group_id }) }}">{{user_group.name}}</a>
-                </li>
-                {% endfor %}
-            </ul>
         </li>
         {% endif %}
     </ul>
