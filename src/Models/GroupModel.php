@@ -13,6 +13,7 @@ class GroupModel extends BaseModel
 			'name' 			=> 	$data['name'],
 			'description'	=>	$data['description'],
 			'image'			=>	$data['image'],
+			'creator'		=>	$data['creator'],
 		];
 		$this->createData($data);
 

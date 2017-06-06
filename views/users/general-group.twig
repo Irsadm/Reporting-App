@@ -1,0 +1,38 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} User | Group  {% endblock %}
+
+{% block headContent %} General Groups {% endblock %}
+
+{% block content %}
+    <div class="row">
+		<div class="col-md-12">
+			<div class="panel box-body">
+                <div class="row">
+                	{% for group in groups %}
+                		<div class="col-sm-2 col-md-3">
+                			<div class="thumb1">
+                			<center><img src="{{ base_url() }}/assets/images/{{ group.image }}"
+                				 height="222" width="222" style="margin-bottom:5px"></center>
+                			  	<div class="caption">
+                			    	<a href="{{ base_url() }}/admin/group/detail/{{ group.id }}"
+                			    		class="btn btn-primary btn-block btn btn-info btn-md"
+                						 style="margin-bottom:7px">
+                			    		<b>{{ group.name }}</b>
+                			    	</a>
+                			  	</div>
+                			</div>
+                	  	</div>
+                	{% endfor %}
+                </div>
+                	{% if groups == null %}
+                    <hr style="margin-top:10px;margin-bottom:10px;" >
+                	<p align="center" style="color:red">You aren't have group</p>
+                    <!-- <center><button type="submit" name="active"  class="btn btn-warning">
+                	<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Send to trash</button></center> -->
+                	{% endif %}
+                	<hr style="margin-top:10px;margin-bottom:10px;" >
+			</div>
+		</div>
+    </div>
+{% endblock %}

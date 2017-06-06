@@ -83,9 +83,13 @@ $app->group('', function() use ($app, $container) {
             $this->get('/restore/{id}', 'App\Controllers\web\ItemController:restoreItem')->setName('item.restore');
             $this->get('/trash', 'App\Controllers\web\ItemController:getTrash')->setName('item.trash');
         });
-    })->add(new \App\Middlewares\web\AdminMiddleware($container));
+    });
+    // ->add(new \App\Middlewares\web\AdminMiddleware($container));
 
     $app->group('/pic', function(){
+        $this->get('/group', 'App\Controllers\web\GroupController:getPicGroup')
+        ->setName('pic.group');
+        $this->post('/create', 'App\Controllers\web\GroupController:createByUser')->setName('pic.create.group');
         $this->get('/group/{id}/item', 'App\Controllers\web\UserController:getItemInGroup')
         ->setName('pic.item.group');
         $this->get('/detail/{id}', 'App\Controllers\web\GroupController:findGroup')
@@ -101,8 +105,11 @@ $app->group('', function() use ($app, $container) {
     });
 
     $app->group('/user', function(){
+
         $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
         ->setName('user.article-read');
+        $this->get('/group', 'App\Controllers\web\GroupController:getGeneralGroup')
+        ->setName('user.group');
         $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')
         ->setName('user.item.group');
         $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')
@@ -145,9 +152,11 @@ $app->group('', function() use ($app, $container) {
     });
 
     $app->group('/guard', function(){
+        $this->get('/user/list', 'App\Controllers\web\UserController:ListUserByGuard')->setName('list.user');
         $this->get('/user/{id}/item', 'App\Controllers\web\UserController:getItemUser')->setName('user.item');
         $this->get('/user/{id}/add', 'App\Controllers\web\UserController:getNotUser')->setName('get.user.add');
         $this->post('/user/add', 'App\Controllers\web\UserController:setGuardUser')->setName('post.user.add');
         $this->get('/user/{id}/delete', 'App\Controllers\web\UserController:delGuardUser')->setName('get.user.del');
-    })->add(new \App\Middlewares\web\GuardMiddleware($container));
+    });
+    // ->add(new \App\Middlewares\web\GuardMiddleware($container));
 })->add(new \App\Middlewares\web\AuthMiddleware($container));

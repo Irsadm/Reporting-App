@@ -244,7 +244,7 @@ class GroupController extends BaseController
 		$userGroup = new UserGroupModel($this->db);
 		$groupId = $request->getParams()['id'];
 		$pic = $userGroup->findUser('group_id', $groupId, 'user_id', $_SESSION['login']['id']);
-// var_dump($groupId);die();
+
 		if ($_SESSION['login']['status'] == 1 || $pic['status'] == 1) {
 			if (!empty($request->getParams()['pic'])) {
 				foreach ($request->getParam('user') as $key => $value) {
@@ -351,6 +351,118 @@ class GroupController extends BaseController
 		}
 	}
 
+	function getGeneralGroup($request, $response)
+	{
+		$group = new GroupModel($this->db);
+		$article = new \App\Models\ArticleModel($this->db);
+		$userGroup = new \App\Models\UserGroupModel($this->db);
+		$item = new \App\Models\Item($this->db);
+
+		$userId  = $_SESSION['login']['id'];
+		$getGroup = $userGroup->generalGroup($userId);
+		// var_dump($getGroup);die();
+
+		// $countGroup = count($getGroup);
+		// $countArticle = count($article->getAll());
+		// $countUser = count($user->getAll());
+		// $countItem = count($item->getAll());
+
+		return $this->view->render($response, 'users/general-group.twig', [
+			'groups' => $getGroup,
+			// 'counts'=> [
+			// 	'group' => $countGroup,
+			// 	'article' => $countArticle,
+			// 	'user' => $countUser,
+			// 	'item' => $countItem,
+			// ]
+		]);
+
+	}
+
+	function getPicGroup($request, $response)
+	{
+		$group = new GroupModel($this->db);
+		$article = new \App\Models\ArticleModel($this->db);
+		$userGroup = new \App\Models\UserGroupModel($this->db);
+		$item = new \App\Models\Item($this->db);
+
+		$userId  = $_SESSION['login']['id'];
+		$getGroup = $userGroup->picGroup($userId);
+		// var_dump($getGroup);die();
+
+		return $this->view->render($response, 'users/pic-group.twig', [
+			'groups' => $getGroup,
+			// 'counts'=> [
+			// 	'group' => $countGroup,
+			// 	'article' => $countArticle,
+			// 	'user' => $countUser,
+			// 	'item' => $countItem,
+			// ]
+		]);
+
+	}
+
+	//Post create group
+	public function createByUser($request, $response)
+	{
+		$storage = new \Upload\Storage\FileSystem('assets/images');
+		$image = new \Upload\File('image',$storage);
+		$image->setName(uniqid());
+		$image->addValidations(array(
+			new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+			'image/jpg', 'image/jpeg')),
+			new \Upload\Validation\Size('5M')
+		));
+
+		$dataImg = array(
+		  'name'       => $image->getNameWithExtension(),
+		  'extension'  => $image->getExtension(),
+		  'mime'       => $image->getMimetype(),
+		  'size'       => $image->getSize(),
+		  'md5'        => $image->getMd5(),
+		  'dimensions' => $image->getDimensions()
+		);
+		$rules = ['required' => [['name'], ['description']] ];
+		$this->validator->rules($rules);
+
+		$this->validator->labels([
+			'name' 			=>	'Name',
+			'description'	=>	'Description',
+			'image'			=>	'Image',
+		]);
+
+		$userId  = $_SESSION['login']['id'];
+
+		$dataGroup = [
+			'name' 			=>	$request->getParams()['name'],
+			'description'	=>	$request->getParams()['description'],
+			'image'			=>	$dataImg['name'],
+			'creator'       =>  $userId
+		];
+
+		if ($this->validator->validate()) {
+			$image->upload();
+			$group = new GroupModel($this->db);
+			$userGroup = new \App\Models\UserGroupModel($this->db);
+
+			$addGroup = $group->add($dataGroup);
+
+			$data = [
+				'group_id' 	=> 	$addGroup,
+				'user_id'	=>	$userId,
+				'status'	=>	1,
+			];
+			$userGroup->createData($data);
+
+			$this->flash->addMessage('succes', 'Group successfully created');
+
+		} else {
+			$_SESSION['old'] = $request->getParams();
+			$_SESSION['errors'] = $this->validator->errors();
+		}
+
+		return $response->withRedirect($this->router->pathFor('pic.group'));
+	}
 
 }
 
