@@ -27,7 +27,7 @@
 		 </div>
 		 <div class="form-group {{ errors.image ? 'has-error' : '' }}">
 			 <div id="image_preview"><img id="previewing"
-				 src="{{ base_url() }}/assets/images/{{ login.image }}"
+				 src="{{ base_url() }}/assets/images/file-empty.png"
 				 class="img-thumbnail" style="width:200px" ></div><br />
 
 				 <label for="image">Image</label>
@@ -38,10 +38,11 @@
 			 </div>
 		 </div>
 		 <div class="box-footer">
-			 <button type="submit" class="btn btn-primary center-block">
-				 <i class="fa fa-reply"></i> Submit</button>
-			 </div>
-		 </form>
-	 </div>
+			<button type="submit" class="btn btn-primary center-block">
+				 <i class="fa fa-reply"></i> Submit
+			</button>
+		 </div>
+	 </form>
+ </div>
 
 {% endblock %}

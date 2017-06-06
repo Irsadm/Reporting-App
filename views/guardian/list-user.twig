@@ -1,0 +1,80 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Guard | All Users {% endblock %}
+
+{% block headContent %}
+	 <i style="color:green" class="fa fa-user-circle-o">  All Users </i>
+{% endblock %}
+
+{% block content %}
+
+<form action="{{ path_for('list.user') }}" method="POST">
+<div class="row">
+	{% for user in users %}
+		<div class="col-sm-2 col-md-3">
+			<div class="panel box-body">
+			<center><img src="{{ base_url() }}/assets/images/{{ user.image }}"
+				 height="151" width="151" style="margin-bottom:5px"></center>
+			  	<div class="caption">
+			    	<a href="" data-toggle="modal" data-target="#{{user.id}}"
+                        value="{{user.id}}"title="View User"
+			    		class="btn btn-primary btn-block btn btn-info btn-md"
+						style="margin-bottom:7px">
+			    		<b>{{ user.name }}</b>
+			    	</a>
+			  	</div>
+			</div>
+	  	</div>
+	{% endfor %}
+</div>
+	{% if users == null %}
+	<hr style="margin-top:10px;margin-bottom:10px;" >
+	<p align="center" style="color:red">There are no active users !</p>
+	<hr style="margin-top:10px;margin-bottom:10px;" >
+	{% endif %}
+	<hr style="margin-top:10px;margin-bottom:10px;" >
+</form>
+
+{% for user in users %}
+
+<!-- Modal -->
+<div id="{{user.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                style="color:red">Close(&times;)</button>
+                <h3 class="modal-title text-center" style="font-family:impact">
+                    User Information</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img style="width:200px" class="img-thumbnail"
+                        src="{{ base_url() }}/assets/images/{{ user.image }}" alt="">
+                    </div>
+                    <div class="col-lg-6">
+                        <p class="text-left"><b>Name :</b> {{user.name}}<br>
+                            <b>Username :</b> {{user.username}}<br>
+                            <b>Email :</b> {{user.email}}<br>
+                            <b>Gender :</b> {{user.gender}}<br>
+                            <b>Addres :</b> {{user.address}}<br>
+                            <b>phone :</b> {{user.phone}}<br>
+                        <b>Start Registration :</b> {{user.created_at}}</p>
+                    </div>
+                    <button class="btn btn-primary btn-info btn-md" 
+                    	style="margin-left:10px">
+                    	<a href="">View Item</a>
+                    </button>
+                    <button class="btn btn-danger btn-info btn-md" 
+                    	style="margin-left:425px">
+                    	<a href="{{ path_for('get.user.del', {('id'): user.id}) }}">Delete</a>
+                    </button>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
