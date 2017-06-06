@@ -310,22 +310,21 @@ class UserController extends BaseController
             if (password_verify($request->getParam('password'),$login['password'])) {
 
                 $_SESSION['login'] = $login;
-                if ($_SESSION['login']['status'] == 0 &&
-                $request->getParam('optlogin') == 'user') {
+                if ($_SESSION['login']['status'] == 2 ) {
                     $_SESSION['user_group'] = $groups;
 
                     $this->flash->addMessage('succes', 'Successfully logged in as User');
                     return $response->withRedirect($this->router->pathFor('home'));
-                }
-                elseif ($_SESSION['login']['status'] == 0 &&
-                $request->getParam('optlogin') == 'guard') {
-                    $_SESSION['guard'] = [
-                        'user' => $users,
-                        'status'=> $request->getParam('optlogin'),
-                    ];
-
-                    $this->flash->addMessage('succes', 'Successfully logged in as Guardian');
-                    return $response->withRedirect($this->router->pathFor('home'));
+                // }
+                // elseif ($_SESSION['login']['status'] == 0 &&
+                // $request->getParam('optlogin') == 'guard') {
+                //     $_SESSION['guard'] = [
+                //         'user' => $users,
+                //         'status'=> $request->getParam('optlogin'),
+                //     ];
+                //
+                //     $this->flash->addMessage('succes', 'Successfully logged in as Guardian');
+                //     return $response->withRedirect($this->router->pathFor('home'));
                 } else {
                     $this->flash->addMessage('warning', 'You Are Not User');
                     return $response->withRedirect($this->router->pathFor('login'));

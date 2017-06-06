@@ -6,7 +6,7 @@ class HomeController extends BaseController
 {
     public function index($request, $response)
     {
-        if ($_SESSION['login']['status'] == 1) {
+        if ($_SESSION['login']['status'] == 2) {
             $article = new \App\Models\ArticleModel($this->db);
             $group = new \App\Models\GroupModel($this->db);
             $item = new \App\Models\Item($this->db);
@@ -44,7 +44,7 @@ class HomeController extends BaseController
             } else {
                 $findAll = $article->getArticle()->setPaginate($page, 2);
             }
-            
+
             $data = $this->view->render($response, 'index.twig', ['data' => $findAll]);
         }
 
