@@ -83,15 +83,8 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-
-                {% for user in guard.user %}
-
-                <li><a href="{{ path_for('user.item', {('id'): user.id }) }}">
-                    {{user.name}}</a>
+                <li><a href="{{ path_for('list.user')}}">List User</a>
                 </li>
-
-                {% endfor %}
-
             </ul>
         </li>
 

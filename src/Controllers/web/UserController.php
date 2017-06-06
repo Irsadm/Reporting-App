@@ -66,7 +66,7 @@ class UserController extends BaseController
             $register = $user->checkDuplicate($request->getParam('username'),
                         $request->getParam('email'));
 
-            if ($register == 1) {
+            if ($register == 0) {
                 $_SESSION['old'] = $request->getParams();
                 $this->flash->addMessage('warning', 'Username, already used');
 
@@ -310,22 +310,21 @@ class UserController extends BaseController
             if (password_verify($request->getParam('password'),$login['password'])) {
 
                 $_SESSION['login'] = $login;
-                if ($_SESSION['login']['status'] == 0 &&
-                $request->getParam('optlogin') == 'user') {
+                if ($_SESSION['login']['status'] == 0) {
                     $_SESSION['user_group'] = $groups;
 
                     $this->flash->addMessage('succes', 'Successfully logged in as User');
                     return $response->withRedirect($this->router->pathFor('home'));
-                }
-                elseif ($_SESSION['login']['status'] == 0 &&
-                $request->getParam('optlogin') == 'guard') {
-                    $_SESSION['guard'] = [
-                        'user' => $users,
-                        'status'=> $request->getParam('optlogin'),
-                    ];
+                // }
+                // elseif ($_SESSION['login']['status'] == 0 &&
+                // $request->getParam('optlogin') == 'guard') {
+                //     $_SESSION['guard'] = [
+                //         'user' => $users,
+                //         'status'=> $request->getParam('optlogin'),
+                //     ];
 
-                    $this->flash->addMessage('succes', 'Successfully logged in as Guardian');
-                    return $response->withRedirect($this->router->pathFor('home'));
+                //     $this->flash->addMessage('succes', 'Successfully logged in as Guardian');
+                //     return $response->withRedirect($this->router->pathFor('home'));
                 } else {
                     $this->flash->addMessage('warning', 'You Are Not User');
                     return $response->withRedirect($this->router->pathFor('login'));
@@ -464,7 +463,7 @@ class UserController extends BaseController
             $count = count($findUserItem['itemdone']);
             $reported = $request->getQueryParam('reported');
 
-            return $this->view->render($response, 'users/useritem.twig', [
+            return $this->view->render($response, 'users/user_item.twig', [
                 'itemdone' => $findUserItem['itemdone'],
                 'items' => $findUserItem['items'],
                 'status'=> $user['status'],
@@ -492,7 +491,7 @@ class UserController extends BaseController
         // var_dump($userItems);die();
 
         if ($userGuard && $_SESSION['guard']['status'] == 'guard' ) {
-            return $this->view->render($response, 'guardian/useritem.twig', [
+            return $this->view->render($response, 'guardian/user_item.twig', [
                 'items' => $userItems,
                 'user' => $findUser,
                 'count'=> count($userItems),
@@ -590,28 +589,36 @@ class UserController extends BaseController
         ->pathFor('get.user.add', ['id' => $guardId]));
     }
 
+    public function ListUserByGuard($request, $response)
+    {
+        $guard = new \App\Models\GuardModel($this->db);
+        $user = new UserModel($this->db);
+
+        $guardId = $_SESSION['login']['id'];
+        $users = $guard->findAllUser($guardId);
+        $find = $guard->find('guard_id', $guardId);
+
+        return $this->view->render($response, 'guardian/list-user.twig', ['users' => $users]);
+    }
+
     public function delGuardUser($request, $response, $args)
     {
         $guard = new \App\Models\GuardModel($this->db);
 
         $guardId = $_SESSION['login']['id'];
-        $status = $_SESSION['guard']['status'];
         $findId = $guard->findGuard('user_id', $args['id'], 'guard_id', $guardId);
         // var_dump($findId);die();
 
-        if ($findId && $status == 'guard') {
+        if ($findId) {
 
             $guard->hardDelete($findId['id']);
 
             $users = $guard->findAllUser($guardId);
 
-            $_SESSION['guard'] = [
-                'user' => $users,
-                'status'=> $status,
-                ];
+            $_SESSION['guard'] = ['user' => $users];
         }
 
-        return $response->withRedirect($this->router->pathFor('home'));
+        return $response->withRedirect($this->router->pathFor('list.user'));
     }
 
     public function testMail($request, $response)
