@@ -37,7 +37,7 @@ class HomeController extends BaseController
         } elseif ($_SESSION['login']['status'] == 0) {
             $article = new \App\Models\ArticleModel($this->db);
 
-            $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+            $page = $request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
             $search = $request->getQueryParam('search');
             if (!empty($search)) {
                 $findAll = $article->search($request->getQueryParam('search'));
