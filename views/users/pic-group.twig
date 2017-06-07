@@ -135,7 +135,7 @@ $('#create').modal('show');
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4">
-                                <img style="width:200px" class="img-thumbnail"
+                                <img style="width:175px; height:175px" class="img-thumbnail"
                                 src="{{ base_url() }}/assets/images/{{ group.image }}" alt="">
                             </div>
                             <div class="col-lg-8">
@@ -145,15 +145,13 @@ $('#create').modal('show');
                             </div>
                         </div>
                     </div>
-                        <button class="btn btn-primary btn-info btn-md"
-                        style="margin-left:10px">
-                        <a href="">View Item</a>
-                    </button>
-                    <button class="btn btn-danger btn-info btn-md"
-                    style="margin-left:425px">
-                    <a href="{{ path_for('del.pic.group', {('id'): group.group_id}) }}">Delete</a>
-                    </button>
-                    <hr style="margin-top:10px;margin-bottom:10px;" >
+                    <a href=""><button class="btn btn-primary btn-info btn-md"
+                        style="margin-left:10px">View Item</button></a>
+
+                    <a href="{{ path_for('del.pic.group', {('id'): group.group_id}) }}">
+                        <button class="btn btn-danger btn-info btn-md"
+                        style="margin-left:425px">Delete</button></a>
+                        <hr style="margin-top:10px;margin-bottom:10px;" >
             </div>
         </div>
     </div>

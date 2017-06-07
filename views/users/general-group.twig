@@ -5,7 +5,7 @@
 {% block headContent %} General Groups
 <span class="pull-right" >
 <a style="font-size:20px; color:#027f83" href="" data-toggle="modal"
-data-target="#{{login.id}}" value="{{login.id}}" title="Join to group">
+data-target="#search" value="search" title="Join to group">
 <b><u>Add Group</u></b></a></span>
 {% endblock %}
 
@@ -20,9 +20,10 @@ data-target="#{{login.id}}" value="{{login.id}}" title="Join to group">
                 			<center><img src="{{ base_url() }}/assets/images/{{ group.image }}"
                 				 height="222" width="222" style="margin-bottom:5px"></center>
                 			  	<div class="caption">
-                			    	<a href="{{ base_url() }}/admin/group/detail/{{ group.id }}"
+                                    <a href="" data-toggle="modal" data-target="#{{group.id}}"
+                                        value="{{group.id}}"title="View Group Details"
                 			    		class="btn btn-primary btn-block btn btn-info btn-md"
-                						 style="margin-bottom:7px">
+                						style="margin-bottom:7px">
                 			    		<b>{{ group.name }}</b>
                 			    	</a>
                 			  	</div>
@@ -40,4 +41,51 @@ data-target="#{{login.id}}" value="{{login.id}}" title="Join to group">
 			</div>
 		</div>
     </div>
+
+    {% for group in groups %}
+
+    <!-- Modal -->
+    <div id="{{group.id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                    style="color:red">Close(&times;)</button>
+                    <h3 class="modal-title text-left" style="font-family:impact">
+                        Group Information</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img style="width:175px; height:175px" class="img-thumbnail"
+                                src="{{ base_url() }}/assets/images/{{ group.image }}" alt="">
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="text-left">
+                                    <b>Name :<br></b> {{group.name}}<br><br>
+                                    <b>Description :<br></b> {{group.description}}</p>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:15px">
+                                <div class="col-lg-4">
+                                    <a href=""><button class="btn btn-primary btn-info btn-md"
+                                    style="margin-left:10px">View My Item</button></a>
+                            </div>
+                            <div style="text-align:center" class="col-lg-4">
+                                <a href=""><button class="btn btn-primary btn-success btn-md">
+                                    Create Item</button></a>
+                        </div>
+                        <div  style="text-align:right"class="col-lg-4">
+                            <a href="{{ path_for('del.pic.group', {('id'): group.group_id}) }}">
+                                <button class="btn btn-danger btn-info btn-md"
+                                style="margin-right:10px">Leave Group</button></a></div>
+
+                            <hr style="margin-top:10px;margin-bottom:10px;" >
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 {% endblock %}
