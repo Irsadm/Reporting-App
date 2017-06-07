@@ -339,7 +339,7 @@ class UserController extends BaseController
 
     public function logout($request, $response)
     {
-        if ($_SESSION['login']['status'] == 0) {
+        if ($_SESSION['login']['status'] == 2) {
             session_destroy();
             return $response->withRedirect($this->router->pathFor('login'));
 

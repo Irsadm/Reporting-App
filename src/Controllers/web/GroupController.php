@@ -379,6 +379,29 @@ class GroupController extends BaseController
 
 	}
 
+	function getPic($request, $response)
+	{
+		$group = new GroupModel($this->db);
+		$article = new \App\Models\ArticleModel($this->db);
+		$userGroup = new \App\Models\UserGroupModel($this->db);
+		$item = new \App\Models\Item($this->db);
+
+		$userId  = $_SESSION['login']['id'];
+		$getGroup = $userGroup->findAllUser(1);
+		// var_dump($getGroup);die();
+	var_dump($getGroup);die();
+		return $this->view->render($response, 'users/pic-group.twig', [
+			'groups' => $getGroup,
+			// 'counts'=> [
+			// 	'group' => $countGroup,
+			// 	'article' => $countArticle,
+			// 	'user' => $countUser,
+			// 	'item' => $countItem,
+			// ]
+		]);
+
+	}
+
 	function getPicGroup($request, $response)
 	{
 		$group = new GroupModel($this->db);
@@ -389,7 +412,6 @@ class GroupController extends BaseController
 		$userId  = $_SESSION['login']['id'];
 		$getGroup = $userGroup->picGroup($userId);
 		// var_dump($getGroup);die();
-
 		return $this->view->render($response, 'users/pic-group.twig', [
 			'groups' => $getGroup,
 			// 'counts'=> [
@@ -462,6 +484,26 @@ class GroupController extends BaseController
 		}
 
 		return $response->withRedirect($this->router->pathFor('pic.group'));
+	}
+
+	//Find group by id
+	function delGroup($request, $response, $args)
+	{
+		$group = new GroupModel($this->db);
+		$userGroup = new UserGroupModel($this->db);
+
+		$findGroup = $group->find('id', $args['id']);
+		$finduserGroup = $userGroup->findUsers('group_id', $args['id']);
+		$pic = $userGroup->findUser('group_id', $args['id'], 'user_id', $_SESSION['login']['id']);
+	// var_dump($args['id']);die();
+		if ($_SESSION['login']['status'] == 1 || $pic['status'] == 1) {
+			$delete = $group->hardDelete($args['id']);
+
+		} else {
+			$this->flash->addMessage('error', 'You are not allowed to delete this group!');
+		}
+			return $response->withRedirect($this->router
+					->pathFor('pic.group'));
 	}
 
 }

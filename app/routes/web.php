@@ -102,7 +102,10 @@ $app->group('', function() use ($app, $container) {
         ->setName('pic.user.group.set');
         $this->post('/allusers', 'App\Controllers\web\GroupController:setMemberGroup')
         ->setName('pic.member.group.set');
-    });
+        $this->get('/group/pic', 'App\Controllers\web\GroupController:getPic')
+        ->setName('get.pic.group');
+        $this->get('/group/{id}/del', 'App\Controllers\web\GroupController:delGroup')
+        ->setName('del.pic.group');});
 
     $app->group('/user', function(){
 

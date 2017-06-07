@@ -63,16 +63,17 @@
                             <b>phone :</b> {{user.phone}}<br>
                         <b>Start Registration :</b> {{user.created_at}}</p>
                     </div>
-                    <button class="btn btn-primary btn-info btn-md"
-                    	style="margin-left:10px">
-                    	<a href="">View Item</a>
-                    </button>
-                    <button class="btn btn-danger btn-info btn-md"
-                    	style="margin-left:425px">
-                    	<a href="{{ path_for('get.user.del', {('id'): user.id}) }}">Delete</a>
-                    </button>
-                </div>
-            </div>
+				</div>
+			</div>
+			<button class="btn btn-primary btn-info btn-md"
+			style="margin-left:10px">
+			<a href="">View Item</a>
+			</button>
+			<button class="btn btn-danger btn-info btn-md"
+			style="margin-left:425px">
+			<a href="{{ path_for('get.user.del', {('id'): user.id}) }}">Delete</a>
+			</button>
+			<hr style="margin-top:10px;margin-bottom:10px;" >
         </div>
     </div>
 </div>
