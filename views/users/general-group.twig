@@ -2,7 +2,12 @@
 
 {% block title %} User | Group  {% endblock %}
 
-{% block headContent %} General Groups {% endblock %}
+{% block headContent %} General Groups
+<span class="pull-right" >
+<a style="font-size:20px; color:#027f83" href="" data-toggle="modal"
+data-target="#{{login.id}}" value="{{login.id}}" title="Join to group">
+<b><u>Add Group</u></b></a></span>
+{% endblock %}
 
 {% block content %}
     <div class="row">

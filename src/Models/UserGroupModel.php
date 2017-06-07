@@ -158,11 +158,41 @@ class UserGroupModel extends BaseModel
 		$qb = $this->db->createQueryBuilder();
 
 		$qb->select('groups.*', 'user_group.*')
-			 ->from('groups', 'groups')
-			 ->join('groups', $this->table, 'user_group', 'groups.id = user_group.group_id')
+			 ->from($this->table, 'user_group')
+			 ->join('user_group', 'groups', 'groups', ' user_group.group_id = groups.id')
 			 ->where('user_group.user_id = :id')
 			 ->andWhere('user_group.status = 1')
 			 ->setParameter(':id', $userId);
+
+			 $result = $qb->execute();
+			return $result->fetchAll();
+	}
+
+	public function findAllPic($groupId)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select('users.*')
+			 ->from('users', 'users')
+			 ->join('users', $this->table, 'user_group', 'users.id = user_group.user_id')
+			 ->where('user_group.group_id = :id')
+			 ->andWhere('user_group.status = 1')
+			 ->setParameter(':id', $groupId);
+
+			 $result = $qb->execute();
+			return $result->fetchAll();
+	}
+
+	public function findAllUser($groupId)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select('users.*')
+			 ->from('users', 'users')
+			 ->join('users', $this->table, 'user_group', 'users.id = user_group.user_id')
+			 ->where('user_group.group_id = :id')
+			 ->andWhere('user_group.status = 0')
+			 ->setParameter(':id', $groupId);
 
 			 $result = $qb->execute();
 			return $result->fetchAll();
