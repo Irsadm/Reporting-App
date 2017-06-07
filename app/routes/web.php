@@ -154,9 +154,11 @@ $app->group('', function() use ($app, $container) {
     $app->group('/guard', function(){
         $this->get('/user/list', 'App\Controllers\web\UserController:ListUserByGuard')->setName('list.user');
         $this->get('/user/{id}/item', 'App\Controllers\web\UserController:getItemUser')->setName('user.item');
-        $this->get('/user/{id}/add', 'App\Controllers\web\UserController:getNotUser')->setName('get.user.add');
-        $this->post('/user/add', 'App\Controllers\web\UserController:setGuardUser')->setName('post.user.add');
+        // $this->get('/user/{id}/add', 'App\Controllers\web\UserController:getNotUser')->setName('get.user.add');
+        $this->get('/user/add/{id}', 'App\Controllers\web\UserController:setGuardUser')->setName('post.user.add');
         $this->get('/user/{id}/delete', 'App\Controllers\web\UserController:delGuardUser')->setName('get.user.del');
+        // $this->get('/user/search', 'App\Controllers\web\UserController:search')->setName('post.user.search');
+        $this->post('/user/search', 'App\Controllers\web\UserController:search')->setName('post.user.search');
     });
     // ->add(new \App\Middlewares\web\GuardMiddleware($container));
 })->add(new \App\Middlewares\web\AuthMiddleware($container));

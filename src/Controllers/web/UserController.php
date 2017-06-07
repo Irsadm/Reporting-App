@@ -311,7 +311,7 @@ class UserController extends BaseController
 
                 $_SESSION['login'] = $login;
 
-                if ($_SESSION['login']['status'] == 2) {
+                if ($_SESSION['login']['status'] == 0) {
                     $_SESSION['user_group'] = $groups;
 
                     $this->flash->addMessage('succes', 'Successfully logged in as User');
@@ -559,34 +559,21 @@ class UserController extends BaseController
         }
 	}
 
-    public function setGuardUser($request, $response)
+    public function setGuardUser($request, $response, $args)
     {
         $guard = new \App\Models\GuardModel($this->db);
 
         $guardId = $_SESSION['login']['id'];
-        $status = $_SESSION['guard']['status'];
 
-        if (!empty($request->getParams()['setuser'])) {
-            foreach ($request->getParam('user') as $value) {
+        $data = [
+           'guard_id' 	=> 	$guardId,
+           'user_id'	=>	$args['id'],
+            ];
 
-                $data = [
-                'guard_id' 	=> 	$guardId,
-                'user_id'	=>	$value,
-                ];
-
-                $addUser = $guard->createData($data);
-            }
-
-            $users = $guard->findAllUser($guardId);
-
-            $_SESSION['guard'] = [
-                'user' => $users,
-                'status'=> $status,
-                ];
-        }
+        $addUser = $guard->createData($data);
 
         return $response->withRedirect($this->router
-        ->pathFor('get.user.add', ['id' => $guardId]));
+        ->pathFor('list.user', ['user_id' => $args['id']]));
     }
 
     public function ListUserByGuard($request, $response)
@@ -764,5 +751,19 @@ class UserController extends BaseController
 
             return $response->withRedirect($this->router->pathFor('user.change.password', ['id' => $args['id']]));
         }
+    }
+    public function search($request, $response)
+    {
+        $user = new UserModel($this->db);
+
+        $search = $request->getParams()['search'];
+        $userId  = $_SESSION['login']['id'];
+
+        // $data['search'] = $request->getQueryParam('search');
+        $data['users'] =  $user->search($search, $userId);
+        // var_dump($data);die();
+        // $_SESSION['search'] = $data;
+
+        return $this->view->render($response, 'guardian/view-user-search.twig', $data);
     }
 }

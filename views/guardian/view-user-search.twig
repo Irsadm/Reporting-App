@@ -1,0 +1,45 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Guard | Search Users {% endblock %}
+
+{% block headContent %}
+	 <i style="color:green" class="fa fa-user-circle-o">  View Search Users </i>
+
+{% endblock %}
+
+{% block content %}
+
+<form action="{{ path_for('post.user.search') }}" method="POST">
+<div class="row">
+	{% for user in users %}
+		<div class="col-sm-2 col-md-3">
+			<div class="panel box-body">
+			<center><img src="{{ base_url() }}/assets/images/{{ user.image }}"
+				 height="151" width="151" style="margin-bottom:5px"></center>
+			  	<div class="caption">
+                    <div class="col-lg-6">
+                        <p class="text-left">
+                            <b>Username :</b> {{user.username}}<br>
+                            <b>Phone :</b> {{user.phone}}<br>
+                        </p>
+                        <br>
+                        <center>
+	                        <button class="btn btn-primary btn-info btn-md" 
+		                    	style="margin-left:10px">
+		                    	<a href="{{ path_for('post.user.add', {('id'): user.id}) }}">Add User</a>
+		                    </button>
+                        </center>
+                    </div>
+			  	</div>
+			</div>
+	  	</div>
+	{% endfor %}
+</div>
+	{% if users == null %}
+	<hr style="margin-top:10px;margin-bottom:10px;" >
+	<p align="center" style="color:red">Data not found</p>
+	<hr style="margin-top:10px;margin-bottom:10px;" >
+	{% endif %}
+	<hr style="margin-top:10px;margin-bottom:10px;" >
+</form>
+{% endblock %}

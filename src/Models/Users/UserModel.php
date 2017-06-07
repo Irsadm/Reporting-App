@@ -111,4 +111,21 @@ class UserModel extends BaseModel
         $this->updateData($dataPassword, $id);
     }
 
+    public function search($val, $id)
+    {
+        $qb = $this->db->createQueryBuilder();
+        $this->query = $qb->select('*')
+                 ->from($this->table)
+                 ->where('name LIKE :val')
+                 ->orWhere('phone LIKE :val')
+                 ->andWhere('id != '. $id)
+                 ->andWhere('status != 1')
+                 ->andWhere('deleted = 0')
+                 ->setParameter('val', '%'.$val.'%');
+
+        $result = $this->query->execute();
+
+        return $result->fetchAll();
+    }
+
 }
