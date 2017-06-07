@@ -83,7 +83,8 @@ $('#create').modal('show');
                                     class="img-thumbnail" style="width:200px" ></div><br />
                                     <div class="form-group {{ errors.image ? 'has-error' : '' }}">
                                         <label for="image">Image</label>
-                                        <input type="file" id="file" name="image" id="image" class="form-control">
+                                        <input type="file" id="file" name="image"
+                                            id="image" class="form-control">
                                         {% if errors.image %}
                                         <span class="help-block">{{errors.image | first}}</span>
                                         {% endif %}
