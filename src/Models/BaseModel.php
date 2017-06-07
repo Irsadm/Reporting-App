@@ -207,4 +207,18 @@ abstract class BaseModel
         return $this->query->execute()->fetch();
     }
 
+    public function finds($column1, $val1, $column2, $val2)
+    {
+        $param1 = ':'.$column1;
+        $param2 = ':'.$column2;
+        $qb = $this->db->createQueryBuilder();
+        $qb->select('*')
+            ->from($this->table)
+            ->setParameter($param1, $val1)
+            ->setParameter($param2, $val2)
+            ->where($column1 . ' = '. $param1 .'&&'. $column2 . ' = '. $param2);
+        $result = $qb->execute();
+        return $result->fetch();
+    }
+
 }

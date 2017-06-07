@@ -564,16 +564,22 @@ class UserController extends BaseController
         $guard = new \App\Models\GuardModel($this->db);
 
         $guardId = $_SESSION['login']['id'];
+        $findUser = $guard->finds('guard_id', $guardId, 'user_id', $args['id']);
 
         $data = [
            'guard_id' 	=> 	$guardId,
            'user_id'	=>	$args['id'],
             ];
+        if (empty($findUser)) {
+           $addUser = $guard->createData($data);
 
-        $addUser = $guard->createData($data);
-
-        return $response->withRedirect($this->router
-        ->pathFor('list.user', ['user_id' => $args['id']]));
+            return $response->withRedirect($this->router
+                            ->pathFor('list.user', ['user_id' => $args['id']]));
+        } else {
+            $this->flash->addMessage('error', 'User already exists');
+            return $response->withRedirect($this->router->pathFor('list.user'));
+        }
+        
     }
 
     public function ListUserByGuard($request, $response)
