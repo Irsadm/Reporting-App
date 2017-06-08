@@ -17,19 +17,18 @@
 			<center><img src="{{ base_url() }}/assets/images/{{ user.image }}"
 				 height="151" width="151" style="margin-bottom:5px"></center>
 			  	<div class="caption">
-                    <div class="col-lg-12">
-						<hr>
+                    <div class="col-lg-6">
                         <p class="text-left">
-                            <b>Name  : </b> {{user.name}}<br><br>
-                            <b>Phone : </b> {{user.phone}}<br>
+                            <b>Username :</b> {{user.username}}<br>
+                            <b>Phone :</b> {{user.phone}}<br>
                         </p>
-						<br>
+                        <br>
                         <center>
-							<a href="{{ path_for('post.user.add', {('id'): user.id}) }}">
-								<button class="btn btn-primary btn-info btn-md"
-								style="margin-left:10px;">Add User</button></a>
+	                        <button class="btn btn-primary btn-info btn-md" 
+		                    	style="margin-left:10px">
+		                    	<a href="{{ path_for('post.user.add', {('id'): users.id}) }}">Add User</a>
+		                    </button>
                         </center>
-						<hr>
                     </div>
 			  	</div>
 			</div>
