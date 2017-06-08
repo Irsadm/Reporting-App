@@ -561,7 +561,9 @@ class UserController extends BaseController
 
     public function setGuardUser($request, $response, $args)
     {
+        $users = new \App\Models\Users\UserModel($this->db);
         $guard = new \App\Models\GuardModel($this->db);
+        $mailer = new \App\Extensions\Mailers\Mailer();
 
         $guardId = $_SESSION['login']['id'];
         $findUser = $guard->finds('guard_id', $guardId, 'user_id', $args['id']);
@@ -570,16 +572,31 @@ class UserController extends BaseController
            'guard_id' 	=> 	$guardId,
            'user_id'	=>	$args['id'],
             ];
+
+        $guardName = $_SESSION['login']['name'];
+        $user = $users->find('id', $args['id']);
+
+        $mail = [
+            'subject'   =>  'Guardian Added You',
+            'from'      =>  'reportingmit@gmail.com',
+            'to'        =>  $user['email'],
+            'sender'    =>  'Reporting App',
+            'receiver'  =>  $user['name'],
+            'content'   =>  'You are successfully added by '. $guardName,
+        ];
+        // var_dump($mail);die();
         if (empty($findUser)) {
            $addUser = $guard->createData($data);
 
-            return $response->withRedirect($this->router
-                            ->pathFor('list.user', ['user_id' => $args['id']]));
+           $result = $mailer->send($mail);
+
+           $this->flash->addMessage('succes', 'User successfully added');
+
         } else {
-            $this->flash->addMessage('error', 'User already exists');
-            return $response->withRedirect($this->router->pathFor('list.user'));
+            $this->flash->addMessage('error', 'User already exists!');
         }
 
+        return $response->withRedirect($this->router->pathFor('list.user'));
     }
 
     public function ListUserByGuard($request, $response)
@@ -609,6 +626,8 @@ class UserController extends BaseController
             $users = $guard->findAllUser($guardId);
 
             $_SESSION['guard'] = ['user' => $users];
+
+            $this->flash->addMessage('succes', 'User successfully deleted');
         }
 
         return $response->withRedirect($this->router->pathFor('list.user'));
@@ -758,17 +777,17 @@ class UserController extends BaseController
             return $response->withRedirect($this->router->pathFor('user.change.password', ['id' => $args['id']]));
         }
     }
-    public function search($request, $response)
+
+    public function searchUser($request, $response)
     {
         $user = new UserModel($this->db);
 
         $search = $request->getParams()['search'];
         $userId  = $_SESSION['login']['id'];
 
-        // $data['search'] = $request->getQueryParam('search');
         $data['users'] =  $user->search($search, $userId);
+        $data['count'] = count($data['users']);
         // var_dump($data);die();
-        // $_SESSION['search'] = $data;
 
         return $this->view->render($response, 'guardian/view-user-search.twig', $data);
     }

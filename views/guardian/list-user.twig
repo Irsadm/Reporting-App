@@ -13,9 +13,9 @@ $('#search').modal('show');
 {% block headContent %}
 	 <i style="color:green" class="fa fa-user-circle-o">  All Users </i>
 
-  	<span class="pull-right">
-  	<button class="btn btn-primary" href="" data-toggle="modal" data-target="#search">Add user
-  		<i class="fa fa-search fa-lg"></i></button>
+  	<span style="font-size: 20px;" class="pull-right">
+  	<button class="btn btn-primary" href="" data-toggle="modal" data-target="#search">
+        <i class="fa fa-plus fa-lg"> Add User</i></button>
   	</span>
 {% endblock %}
 
@@ -81,10 +81,10 @@ $('#search').modal('show');
 			                    	<a href="">View Item</a>
 			                    </button>
 		                    </span>
-		                    <span class="pull-right">
-			                    <button class="btn btn-danger btn-info btn-md" style="margin-right:20px">
-			                    	<a href="{{ path_for('get.user.del', {('id'): user.id}) }}">Delete</a>
-			                    </button>
+                            <span class="pull-right">
+                                <a href="{{ path_for('get.user.del', {('id'): user.id}) }}">
+                                    <button class="btn btn-danger btn-info btn-md"
+                                     style="margin-right:20px">Delete </button></a>
 		                    </span>
 		                </div>
                     </div>
@@ -96,44 +96,49 @@ $('#search').modal('show');
 {% endfor %}
 <!-- Modal -->
 <div class="modal fade bs-modal-sm" id="search" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade active in" id="signin">
-            <fieldset>
-            <!-- Sign In Form -->
-            <!-- Text input-->
-            <form class="form-horizontal" action="{{ path_for('post.user.search') }}" method="POST">
-            <div class="control-group">
-              <div class="controls">
-                <input name="search" type="text" class="form-control" placeholder="Name or phone number..." required="">
-              </div>
-            </div>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- <div id="myTabContent" class="tab-content"> -->
+                <div class="tab-pane fade active in" id="signin">
+                    <fieldset>
+                        <!-- Sign In Form -->
+                        <!-- Text input-->
+                        <form class="form-horizontal"
+                         action="{{ path_for('post.user.search') }}" method="POST">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input name="search" type="text" class="form-control"
+                                     placeholder="Name or phone number..." required="">
+                                </div>
+                            </div>
 
-            <!-- Button -->
-            <div class="control-group">
-              <label class="control-label" for="search"></label>
-              <div class="controls">
-              <button href="{{ base_url() }}/guardian/view-user-search" type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
-				 <i class="fa fa-reply"></i> Search
-			</button>
-              </div>
-            </div>
-            </form>
+                            <!-- Button -->
+                            <div class="control-group">
+                                <label class="control-label" for="search"></label>
+                                <div class="controls">
+                                    <button href="{{ base_url() }}/guardian/view-user-search"
+                                     type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
 
-            <!-- Button -->
-            <div class="control-group">
-              <label class="control-label" for="signin"></label>
-              <center>
-              <div class="controls">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-              </center>
+                        <!-- Button -->
+                        <div class="control-group">
+                            <label class="control-label" for="signin"></label>
+                            <center>
+                                <div class="controls">
+                                    <button type="button" class="btn btn-default"
+                                     data-dismiss="modal">Close</button>
+                                </div>
+                            </center>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
-            </fieldset>
         </div>
-      </div>
-  </div>
+    </div>
 </div>
 {% endblock %}

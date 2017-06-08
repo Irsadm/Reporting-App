@@ -506,6 +506,65 @@ class GroupController extends BaseController
 					->pathFor('pic.group'));
 	}
 
+	public function searchGroup($request, $response)
+    {
+        $group = new GroupModel($this->db);
+
+        $search = $request->getParams()['search'];
+        $userId  = $_SESSION['login']['id'];
+
+        // $data['search'] = $request->getQueryParam('search');
+		$data['groups'] =  $group->search($search);
+        $data['count'] = count($data['groups']);
+        // var_dump($data);die();
+        // $_SESSION['search'] = $data;
+
+        return $this->view->render($response, 'users/found-group.twig', $data);
+    }
+
+
+		//Set user as member of group
+		public function joinGroup($request, $response, $args)
+		{
+			$userGroup = new UserGroupModel($this->db);
+
+			$userId =$_SESSION['login']['id'];
+
+			$findUser = $userGroup->finds('user_id', $userId, 'group_id', $args['id']);
+
+			$data = [
+				'group_id' 	=> 	$args['id'],
+				'user_id'	=>	$userId,
+			];
+
+			if ($findUser) {
+				$this->flash->addMessage('error', 'Group already exist!');
+			} else {
+				$addMember = $userGroup->createData($data);
+
+				$this->flash->addMessage('succes', 'You have successfully joined the group');
+			}
+
+			return $response->withRedirect($this->router
+			->pathFor('user.group'));
+		}
+
+		public function leaveGroup($request, $response, $args)
+		{
+			$userGroup = new UserGroupModel($this->db);
+
+			$userId = $_SESSION['login']['id'];
+
+			$group = $userGroup->finds('user_id', $userId, 'group_id', $args['id']);
+// var_dump($userGroup['id']);die();
+			$leaveGroup = $userGroup->hardDelete($group['id']);
+
+			$this->flash->addMessage('succes', 'You have left the group');
+
+			return $response->withRedirect($this->router
+			->pathFor('user.group'));
+		}
+
 }
 
 ?>
