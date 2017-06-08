@@ -130,6 +130,13 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.item.create');
         $this->post('/item/create', 'App\Controllers\web\ItemController:postCreateItem')
         ->setName('user.item.create.post');
+        $this->post('/group/search', 'App\Controllers\web\GroupController:searchGroup')
+        ->setName('post.group.search');
+        $this->get('/group/add/{id}', 'App\Controllers\web\GroupController:joinGroup')
+        ->setName('post.group.add');
+        $this->get('/group/{id}/del', 'App\Controllers\web\GroupController:leaveGroup')
+            ->setName('get.del.group');
+
     });
 
     $app->group('/article/', function() {
@@ -160,8 +167,8 @@ $app->group('', function() use ($app, $container) {
         // $this->get('/user/{id}/add', 'App\Controllers\web\UserController:getNotUser')->setName('get.user.add');
         $this->get('/user/add/{id}', 'App\Controllers\web\UserController:setGuardUser')->setName('post.user.add');
         $this->get('/user/{id}/delete', 'App\Controllers\web\UserController:delGuardUser')->setName('get.user.del');
-        // $this->get('/user/search', 'App\Controllers\web\UserController:search')->setName('post.user.search');
-        $this->post('/user/search', 'App\Controllers\web\UserController:search')->setName('post.user.search');
+        // $this->get('/user/search', 'App\Controllers\w`eb\UserController:search')->setName('post.user.search');
+        $this->post('/user/search', 'App\Controllers\web\UserController:searchUser')->setName('post.user.search');
     });
     // ->add(new \App\Middlewares\web\GuardMiddleware($container));
 })->add(new \App\Middlewares\web\AuthMiddleware($container));

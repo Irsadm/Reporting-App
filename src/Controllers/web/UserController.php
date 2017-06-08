@@ -570,16 +570,16 @@ class UserController extends BaseController
            'guard_id' 	=> 	$guardId,
            'user_id'	=>	$args['id'],
             ];
+
         if (empty($findUser)) {
            $addUser = $guard->createData($data);
+           $this->flash->addMessage('succes', 'User successfully added');
 
-            return $response->withRedirect($this->router
-                            ->pathFor('list.user', ['user_id' => $args['id']]));
         } else {
-            $this->flash->addMessage('error', 'User already exists');
-            return $response->withRedirect($this->router->pathFor('list.user'));
+            $this->flash->addMessage('error', 'User already exists!');
         }
 
+        return $response->withRedirect($this->router->pathFor('list.user'));
     }
 
     public function ListUserByGuard($request, $response)
@@ -758,7 +758,8 @@ class UserController extends BaseController
             return $response->withRedirect($this->router->pathFor('user.change.password', ['id' => $args['id']]));
         }
     }
-    public function search($request, $response)
+
+    public function searchUser($request, $response)
     {
         $user = new UserModel($this->db);
 
