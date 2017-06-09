@@ -288,4 +288,33 @@ class ItemController extends BaseController
         }
     }
 
+    public function getItemInGroup($request,$response, $args)
+    {
+        $items = new \App\Models\Item($this->db);
+        $groups = new \App\Models\GroupModel($this->db);
+        $userGroups = new \App\Models\UserGroupModel($this->db);
+
+        $picId  = $_SESSION['login']['id'];
+        $user = $userGroups->finds('group_id', $args['id'], 'user_id', $picId);
+        $groupItem = $items->getGroupItem($args['id']);
+        $group = $groups->find('id', $args['id']);
+        $member = $userGroups->getMember($args['id']);
+        $count = count($groupItem);
+        // var_dump($member);die();
+
+        if ($user[0]['status'] == 1) {
+
+            return $this->view->render($response, 'pic/groupitem.twig', [
+                'items' => $groupItem,
+                'groups' => $group,
+                'members' => $member,
+                'group_id' => $args['id'],
+                'count'=> $count,
+            ]);
+        } else {
+            $this->flash->addMessage('error', 'You are not allowed to access this group!');
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
+    }
+
 }

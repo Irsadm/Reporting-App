@@ -112,11 +112,46 @@ class UserGroupModel extends BaseModel
 			':user_id' => $userId,
 			':group_id' => $groupId
 		];
-		$qb->select('users.name', 'users.email', 'users.gender', 'users.address', 'users.image','users.phone')
+		$qb->select('users.*')
 		   ->from('users', 'users')
 		   ->join('users', $this->table, 'ug', 'ug.user_id = users.id')
 		   ->where('ug.user_id = :user_id')
 		   ->andWhere('ug.group_id = :group_id')
+		   ->setParameters($parameters);
+
+		$result = $qb->execute();
+		return $result->fetchAll();
+	}
+
+	//Get member by user id
+	public function getMember($groupId)
+	{
+		$qb = $this->db->createQueryBuilder();
+		$parameters = [
+			':group_id' => $groupId
+		];
+		$qb->select('users.*')
+		   ->from('users', 'users')
+		   ->join('users', $this->table, 'ug', 'ug.user_id = users.id')
+		   ->where('ug.group_id = :group_id')
+		   ->setParameters($parameters);
+
+		$result = $qb->execute();
+		return $result->fetchAll();
+	}
+
+	//Get user by user id & group id
+	public function getPic($groupId)
+	{
+		$qb = $this->db->createQueryBuilder();
+		$parameters = [
+			':group_id' => $groupId
+		];
+		$qb->select('users.*')
+		   ->from('users', 'users')
+		   ->join('users', $this->table, 'ug', 'ug.user_id = users.id')
+		   ->where('ug.group_id = :group_id')
+		   ->andWhere('ug.status = 1')
 		   ->setParameters($parameters);
 
 		$result = $qb->execute();

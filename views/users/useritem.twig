@@ -231,8 +231,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <center><button type="submit" class="btn btn-success">
-                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Report it </button></center>
+                            <center>
+                                {% if item.user_id == null %}
+                                <button type="submit" class="btn btn-success">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Report it </button>
+                                {% else %}
+                                <button type="submit" class="btn btn-info">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Report it </button>
+                                {% endif %}
+                            </center>
                                 <hr style="margin-top:10px;margin-bottom:10px;">
                             </form>
                         </div>

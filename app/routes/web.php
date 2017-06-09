@@ -90,7 +90,7 @@ $app->group('', function() use ($app, $container) {
         $this->get('/group', 'App\Controllers\web\GroupController:getPicGroup')
         ->setName('pic.group');
         $this->post('/create', 'App\Controllers\web\GroupController:createByUser')->setName('pic.create.group');
-        $this->get('/group/{id}/item', 'App\Controllers\web\UserController:getItemInGroup')
+        $this->get('/group/{id}/item', 'App\Controllers\web\ItemController:getItemInGroup')
         ->setName('pic.item.group');
         $this->get('/detail/{id}', 'App\Controllers\web\GroupController:findGroup')
         ->setName('pic.group.detail');

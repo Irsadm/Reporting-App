@@ -116,4 +116,20 @@ class Item extends BaseModel
         return $this->fetchAll();
     }
 
+    public function getGroupItem($id)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+        $qb->select('u.name as names', 'it.*')
+           ->from($this->table, 'it')
+           ->where('it.group_id = '. $id)
+           ->andWhere('it.deleted = 0')
+           ->join('it', 'users', 'u', 'u.id = it.creator');
+
+           $result = $qb->execute();
+
+           return $result->fetchAll();
+    }
+
+
 }
