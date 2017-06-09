@@ -44,9 +44,11 @@ $container['view'] = function ($container) {
 		$view->getEnvironment()->addGlobal('user_group', $_SESSION['user_group']);
 	}
 
-	if (@$_SESSION['guard']) {
-		$view->getEnvironment()->addGlobal('guard', $_SESSION['guard']);
-	}
+	// if (@$_SESSION['search']) {
+	// 	$view->getEnvironment()->addGlobal('search', $_SESSION['search']);
+	// 	unset($_SESSION['search']);
+
+	// }
 
 	if (@$_SESSION['group']) {
 		$view->getEnvironment()->addGlobal('group', $_SESSION['group']);

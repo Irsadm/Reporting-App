@@ -10,10 +10,11 @@ $('#create').modal('show');
 {% endblock %}
 
 {% block headContent %} My Groups
-<span class="pull-right">
-    <a  style="font-size:20px; color:#02a184" href="" data-toggle="modal" data-target="#create" value="create"
-    title="Create new group"><b><u>Create Group  </u></b></a>
-</span> {% endblock %}
+<span style="font-size: 20px;" class="pull-right" >
+    <button class="btn btn-primary" href="" data-toggle="modal" data-target="#create" title="Create Group">
+        <i class="fa fa-plus fa-lg"> Create Group</i></button>
+</span>
+{% endblock %}
 
 {% block content %}
 <div class="row">
@@ -83,7 +84,8 @@ $('#create').modal('show');
                                     class="img-thumbnail" style="width:200px" ></div><br />
                                     <div class="form-group {{ errors.image ? 'has-error' : '' }}">
                                         <label for="image">Image</label>
-                                        <input type="file" id="file" name="image" id="image" class="form-control">
+                                        <input type="file" id="file" name="image"
+                                            id="image" class="form-control">
                                         {% if errors.image %}
                                         <span class="help-block">{{errors.image | first}}</span>
                                         {% endif %}
@@ -109,15 +111,9 @@ $('#create').modal('show');
                         </div>
                     </div>
                 </div>
-                    <!-- <div class="modal-footer">
-                    title=" Remove Data" style="color:red" data-toggle="tooltip"
-                    data-placement="top">
-                    <button type="button" class="btn btn-danger">
-                    Delete This User</button></a>
-                </div> -->
+            </div>
         </div>
     </div>
-</div>
 
     {% for group in groups %}
 
@@ -135,7 +131,7 @@ $('#create').modal('show');
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4">
-                                <img style="width:200px" class="img-thumbnail"
+                                <img style="width:175px; height:175px" class="img-thumbnail"
                                 src="{{ base_url() }}/assets/images/{{ group.image }}" alt="">
                             </div>
                             <div class="col-lg-8">
@@ -145,15 +141,24 @@ $('#create').modal('show');
                             </div>
                         </div>
                     </div>
-                        <button class="btn btn-primary btn-info btn-md"
-                        style="margin-left:10px">
-                        <a href="">View Item</a>
-                    </button>
-                    <button class="btn btn-danger btn-info btn-md"
-                    style="margin-left:425px">
-                    <a href="{{ path_for('del.pic.group', {('id'): group.group_id}) }}">Delete</a>
-                    </button>
-                    <hr style="margin-top:10px;margin-bottom:10px;" >
+                    <div class="row" style="margin-top:15px">
+                        <div class="col-lg-4">
+                            <a href="{{ path_for('user.item.group', {('id'): group.group_id}) }}">
+                                <button class="btn btn-primary btn-info btn-md"
+                                 style="margin-left:10px">View My Item</button></a>
+                        </div>
+                        <div style="text-align:center" class="col-lg-4">
+                            <a href="{{ path_for('pic.item.group', {('id'): group.group_id}) }}">
+                                <button class="btn btn-primary btn-success btn-md">
+                                    View Group Item</button></a>
+                        </div>
+                        <div style="text-align:right" class="col-lg-4">
+                            <a href="{{ path_for('get.del.group', {('id'): group.group_id}) }}">
+                                <button class="btn btn-danger btn-info btn-md"
+                                 style="margin-right:10px">Leave Group</button></a>
+                </div>
+            </div>
+            <hr style="margin-top:10px;margin-bottom:10px;" >
             </div>
         </div>
     </div>

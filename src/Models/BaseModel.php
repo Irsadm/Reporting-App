@@ -181,18 +181,17 @@ abstract class BaseModel
         //count total pages
         $pages = (int) ceil($total / $limit);
         $first_page = 1;
-
         // $number = (int) $page;
         $range = $limit * ($page - 1);
         $data = $this->query->setFirstResult($range)->setMaxResults($limit);
         $data = $this->fetchAll();
         $result = [
             'total_data'=> $total,
-            'perpage'	=> $limit,
-            'current'	=> $page,
+            'perpage'   => $limit,
+            'current'   => $page,
             'total_page'=> $pages,
             'first_page'=> $first_page,
-            'data'		=> $data,
+            'data'      => $data,
         ];
         return $result;
     }
@@ -205,6 +204,20 @@ abstract class BaseModel
     public function fetch()
     {
         return $this->query->execute()->fetch();
+    }
+
+    public function finds($column1, $val1, $column2, $val2)
+    {
+        $param1 = ':'.$column1;
+        $param2 = ':'.$column2;
+        $qb = $this->db->createQueryBuilder();
+        $qb->select('*')
+            ->from($this->table)
+            ->setParameter($param1, $val1)
+            ->setParameter($param2, $val2)
+            ->where($column1 . ' = '. $param1 .'&&'. $column2 . ' = '. $param2);
+        $result = $qb->execute();
+        return $result->fetchAll();
     }
 
 }

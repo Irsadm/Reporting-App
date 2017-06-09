@@ -39,5 +39,19 @@ class GroupModel extends BaseModel
 		   ->where('id = ' . $id)
 		   ->execute();
 	}
+
+	public function search($val)
+    {
+        $qb = $this->db->createQueryBuilder();
+        $this->query = $qb->select('*')
+                 ->from($this->table)
+                 ->where('name LIKE :val')
+                 ->andWhere('deleted = 0')
+                 ->setParameter('val', '%'.$val.'%');
+
+        $result = $this->query->execute();
+
+        return $result->fetchAll();
+    }
 }
 ?>

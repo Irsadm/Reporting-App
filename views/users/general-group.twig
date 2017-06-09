@@ -3,10 +3,10 @@
 {% block title %} User | Group  {% endblock %}
 
 {% block headContent %} General Groups
-<span class="pull-right" >
-<a style="font-size:20px; color:#027f83" href="" data-toggle="modal"
-data-target="#{{login.id}}" value="{{login.id}}" title="Join to group">
-<b><u>Add Group</u></b></a></span>
+<span style="font-size: 20px;" class="pull-right" >
+<button class="btn btn-primary" href="" data-toggle="modal" data-target="#search" title="Join to group">
+    <i class="fa fa-plus fa-lg"> Add Group</i></button>
+</span>
 {% endblock %}
 
 {% block content %}
@@ -20,9 +20,10 @@ data-target="#{{login.id}}" value="{{login.id}}" title="Join to group">
                 			<center><img src="{{ base_url() }}/assets/images/{{ group.image }}"
                 				 height="222" width="222" style="margin-bottom:5px"></center>
                 			  	<div class="caption">
-                			    	<a href="{{ base_url() }}/admin/group/detail/{{ group.id }}"
+                                    <a href="" data-toggle="modal" data-target="#{{group.id}}"
+                                        value="{{group.id}}"title="View Group Details"
                 			    		class="btn btn-primary btn-block btn btn-info btn-md"
-                						 style="margin-bottom:7px">
+                						style="margin-bottom:7px">
                 			    		<b>{{ group.name }}</b>
                 			    	</a>
                 			  	</div>
@@ -39,5 +40,97 @@ data-target="#{{login.id}}" value="{{login.id}}" title="Join to group">
                 	<hr style="margin-top:10px;margin-bottom:10px;" >
 			</div>
 		</div>
+    </div>
+
+    {% for group in groups %}
+
+    <!-- Modal -->
+    <div id="{{group.id}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                    style="color:red">Close(&times;)</button>
+                    <h3 class="modal-title text-left" style="font-family:impact">
+                        Group Information</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img style="width:175px; height:175px" class="img-thumbnail"
+                                src="{{ base_url() }}/assets/images/{{ group.image }}" alt="">
+                            </div>
+                            <div class="col-lg-8">
+                                <p class="text-left">
+                                    <b>Name :<br></b> {{group.name}}<br><br>
+                                    <b>Description :<br></b> {{group.description}}</p>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:15px">
+                                <div class="col-lg-4">
+                                    <a href="{{ path_for('user.item.group', {('id'): group.group_id}) }}">
+                                        <button class="btn btn-primary btn-info btn-md"
+                                         style="margin-left:10px">View My Item</button></a>
+                                </div>
+                            <div style="text-align:center" class="col-lg-4">
+                                <a href=""><button class="btn btn-primary btn-success btn-md">
+                                    Create Item</button></a>
+                        </div>
+                        <div style="text-align:right" class="col-lg-4">
+                            <a href="{{ path_for('get.del.group', {('id'): group.group_id}) }}">
+                                <button class="btn btn-danger btn-info btn-md"
+                                style="margin-right:10px">Leave Group</button></a>
+                        </div>
+                        <hr style="margin-top:10px;margin-bottom:10px;" >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="modal fade bs-modal-sm" id="search" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- <div id="myTabContent" class="tab-content"> -->
+                    <div class="tab-pane fade active in" id="signin">
+                        <fieldset>
+                            <!-- Sign In Form -->
+                            <!-- Text input-->
+                            <form class="form-horizontal" action="{{ path_for('post.group.search') }}" method="POST">
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <input name="search" type="text" class="form-control"
+                                         placeholder="Group name ..." required="">
+                                    </div>
+                                </div>
+
+                                <!-- Button -->
+                                <div class="control-group">
+                                    <label class="control-label" for="search"></label>
+                                    <div class="controls">
+                                        <button type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
+                                            <i class="fa fa-search"></i> Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- Button -->
+                            <div class="control-group">
+                                <label class="control-label" for="signin"></label>
+                                <center>
+                                    <div class="controls">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </center>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
