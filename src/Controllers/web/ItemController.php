@@ -217,12 +217,14 @@ class ItemController extends BaseController
 
     }
 
-    public function getCreateItem($request, $response)
+    public function getCreateItem($request, $response, $args)
     {
-
-
+        $userGroup = new \App\Models\UserGroupModel($this->db);
         $group     = new \App\Models\GroupModel($this->db);
-        $findGroup = $group->find('id', $_SESSION['group']);
+
+        $userId = $_SESSION['login']['id'];
+        $findUserGroup = $userGroup->finds('group_id', $args['id'], 'user_id', $userId);
+        $findGroup = $group->find('id', $args['id']);
 
         $data['groups'] = $findGroup['name'];
         return $this->view->render($response, 'users/createitem.twig', $data);

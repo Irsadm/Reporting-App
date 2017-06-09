@@ -113,8 +113,8 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.article-read');
         $this->get('/group', 'App\Controllers\web\GroupController:getGeneralGroup')
         ->setName('user.group');
-        $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')
-        ->setName('user.item.group');
+        // $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')
+        // ->setName('user.item.group');
         $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')
         ->setName('user.item.status');
         $this->get('/item/reset/{id}', 'App\Controllers\web\UserController:restoreItemUserStatus')
@@ -126,7 +126,7 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.item.all');
         $this->post('/item/add', 'App\Controllers\web\ItemController:setItem')
         ->setName('user.item.add');
-        $this->get('/item/create', 'App\Controllers\web\ItemController:getCreateItem')
+        $this->get('/{id}/item/create', 'App\Controllers\web\ItemController:getCreateItem')
         ->setName('user.item.create');
         $this->post('/item/create', 'App\Controllers\web\ItemController:postCreateItem')
         ->setName('user.item.create.post');
@@ -135,8 +135,9 @@ $app->group('', function() use ($app, $container) {
         $this->get('/group/add/{id}', 'App\Controllers\web\GroupController:joinGroup')
         ->setName('post.group.add');
         $this->get('/group/{id}/del', 'App\Controllers\web\GroupController:leaveGroup')
-            ->setName('get.del.group');
-
+        ->setName('get.del.group');
+        $this->get('/group/{id}/item', 'App\Controllers\web\UserController:getItemsUser')
+        ->setName('user.item.group');
     });
 
     $app->group('/article/', function() {

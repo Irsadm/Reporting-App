@@ -69,20 +69,21 @@
                             </div>
                             <div class="row" style="margin-top:15px">
                                 <div class="col-lg-4">
-                                    <a href=""><button class="btn btn-primary btn-info btn-md"
-                                    style="margin-left:10px">View My Item</button></a>
-                            </div>
+                                    <a href="{{ path_for('user.item.group', {('id'): group.group_id}) }}">
+                                        <button class="btn btn-primary btn-info btn-md"
+                                         style="margin-left:10px">View My Item</button></a>
+                                </div>
                             <div style="text-align:center" class="col-lg-4">
                                 <a href=""><button class="btn btn-primary btn-success btn-md">
                                     Create Item</button></a>
                         </div>
                         <div style="text-align:right" class="col-lg-4">
-                            <a href="{{ path_for('get.del.group', {('id'): group.id}) }}">
+                            <a href="{{ path_for('get.del.group', {('id'): group.group_id}) }}">
                                 <button class="btn btn-danger btn-info btn-md"
-                                style="margin-right:10px">Leave Group</button></a></div>
-
-                            <hr style="margin-top:10px;margin-bottom:10px;" >
+                                style="margin-right:10px">Leave Group</button></a>
                         </div>
+                        <hr style="margin-top:10px;margin-bottom:10px;" >
+                    </div>
                 </div>
             </div>
         </div>

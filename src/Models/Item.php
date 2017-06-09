@@ -71,4 +71,49 @@ class Item extends BaseModel
            return $result->fetchAll();
     }
 
+    public function getUserItem($userId, $groupId)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+        $query1 = $qb->select('item_id')
+        ->from('reported_item')
+        ->where('user_id =' . $userId)
+        ->execute();
+
+        $qb1 = $this->db->createQueryBuilder();
+
+        if ($query1->fetchAll()[0] != NULL) {
+
+            $this->query = $qb1->select('i.*')
+            ->from($this->table, 'i')
+            ->join('i', 'reported_item', 'r', $qb1->expr()->notIn('i.id', $query1))
+            ->where('i.user_id = '. $userId .'&&'. 'i.group_id = '. $groupId)
+            ->orWhere('i.group_id = '. $groupId)
+            ->andWhere('i.deleted = 0 && i.status = 0')
+            ->groupBy('i.id');
+        } else {
+
+            $this->query = $qb1->select('*')
+            ->from($this->table)
+            ->where('user_id = '. $userId .'&&'. 'group_id = '. $groupId)
+            ->orWhere('group_id = '. $groupId)
+            ->andWhere('deleted = 0 && status = 0');
+        }
+
+        return $this->fetchAll();
+    }
+
+    public function getItemDone($userId, $groupId)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+            $this->query = $qb->select('*')
+            ->from($this->table)
+            ->where('user_id = '. $userId .'&&'. 'group_id = '. $groupId)
+            ->orWhere('group_id = '. $groupId)
+            ->andWhere('deleted = 0 && status = 1');
+
+        return $this->fetchAll();
+    }
+
 }

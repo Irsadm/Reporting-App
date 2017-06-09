@@ -360,21 +360,12 @@ class GroupController extends BaseController
 
 		$userId  = $_SESSION['login']['id'];
 		$getGroup = $userGroup->generalGroup($userId);
-		// var_dump($getGroup);die();
 
-		// $countGroup = count($getGroup);
-		// $countArticle = count($article->getAll());
-		// $countUser = count($user->getAll());
-		// $countItem = count($item->getAll());
 
 		return $this->view->render($response, 'users/general-group.twig', [
 			'groups' => $getGroup,
 			// 'counts'=> [
-			// 	'group' => $countGroup,
-			// 	'article' => $countArticle,
-			// 	'user' => $countUser,
-			// 	'item' => $countItem,
-			// ]
+
 		]);
 
 	}
@@ -392,12 +383,7 @@ class GroupController extends BaseController
 	var_dump($getGroup);die();
 		return $this->view->render($response, 'users/pic-group.twig', [
 			'groups' => $getGroup,
-			// 'counts'=> [
-			// 	'group' => $countGroup,
-			// 	'article' => $countArticle,
-			// 	'user' => $countUser,
-			// 	'item' => $countItem,
-			// ]
+
 		]);
 
 	}
@@ -411,15 +397,10 @@ class GroupController extends BaseController
 
 		$userId  = $_SESSION['login']['id'];
 		$getGroup = $userGroup->picGroup($userId);
-		// var_dump($getGroup);die();
+
 		return $this->view->render($response, 'users/pic-group.twig', [
 			'groups' => $getGroup,
-			// 'counts'=> [
-			// 	'group' => $countGroup,
-			// 	'article' => $countArticle,
-			// 	'user' => $countUser,
-			// 	'item' => $countItem,
-			// ]
+
 		]);
 
 	}
@@ -522,48 +503,53 @@ class GroupController extends BaseController
         return $this->view->render($response, 'users/found-group.twig', $data);
     }
 
+	//Set user as member of group
+	public function joinGroup($request, $response, $args)
+	{
+		$userGroup = new UserGroupModel($this->db);
 
-		//Set user as member of group
-		public function joinGroup($request, $response, $args)
-		{
-			$userGroup = new UserGroupModel($this->db);
+		$userId =$_SESSION['login']['id'];
 
-			$userId =$_SESSION['login']['id'];
+		$findUser = $userGroup->finds('user_id', $userId, 'group_id', $args['id']);
 
-			$findUser = $userGroup->finds('user_id', $userId, 'group_id', $args['id']);
+		$data = [
+			'group_id' 	=> 	$args['id'],
+			'user_id'	=>	$userId,
+		];
 
-			$data = [
-				'group_id' 	=> 	$args['id'],
-				'user_id'	=>	$userId,
-			];
+		if ($findUser[0]) {
+			$this->flash->addMessage('error', 'Group already exist!');
+		} else {
+			$addMember = $userGroup->createData($data);
 
-			if ($findUser) {
-				$this->flash->addMessage('error', 'Group already exist!');
-			} else {
-				$addMember = $userGroup->createData($data);
-
-				$this->flash->addMessage('succes', 'You have successfully joined the group');
-			}
-
-			return $response->withRedirect($this->router
-			->pathFor('user.group'));
+			$this->flash->addMessage('succes', 'You have successfully joined the group');
 		}
 
-		public function leaveGroup($request, $response, $args)
-		{
-			$userGroup = new UserGroupModel($this->db);
+		return $response->withRedirect($this->router
+		->pathFor('user.group'));
+	}
 
-			$userId = $_SESSION['login']['id'];
+	public function leaveGroup($request, $response, $args)
+	{
+		$userGroup = new UserGroupModel($this->db);
 
-			$group = $userGroup->finds('user_id', $userId, 'group_id', $args['id']);
-// var_dump($userGroup['id']);die();
-			$leaveGroup = $userGroup->hardDelete($group['id']);
+		$userId = $_SESSION['login']['id'];
+
+		$group = $userGroup->finds('user_id', $userId, 'group_id', $args['id']);
+		// var_dump($group[0]);die();
+		if ($group[0]) {
+
+			$leaveGroup = $userGroup->hardDelete($group[0]['id']);
 
 			$this->flash->addMessage('succes', 'You have left the group');
+		} else {
+			$this->flash->addMessage('error', 'You not allowed to access this group!');
 
-			return $response->withRedirect($this->router
-			->pathFor('user.group'));
 		}
+
+		return $response->withRedirect($this->router
+		->pathFor('user.group'));
+	}
 
 }
 

@@ -314,7 +314,7 @@ class UserController extends BaseController
                 if ($_SESSION['login']['status'] == 2) {
                     $_SESSION['user_group'] = $groups;
 
-                    $this->flash->addMessage('succes', 'Successfully logged in as User');
+                    $this->flash->addMessage('succes', 'Welcome to the reporting app, '. $login['name']);
                     return $response->withRedirect($this->router->pathFor('home'));
                 // }
                 // elseif ($_SESSION['login']['status'] == 0 &&
@@ -502,6 +502,7 @@ class UserController extends BaseController
             return $response->withRedirect($this->router->pathFor('home'));
         }
     }
+
     public function getItemByadmin($request,$response, $args)
     {
         $user = new UserModel($this->db);
@@ -585,7 +586,7 @@ class UserController extends BaseController
             'content'   =>  'You are successfully added by '. $guardName,
         ];
         // var_dump($mail);die();
-        if (empty($findUser)) {
+        if (empty($findUser[0])) {
            $addUser = $guard->createData($data);
 
            $result = $mailer->send($mail);
@@ -790,5 +791,37 @@ class UserController extends BaseController
         // var_dump($data);die();
 
         return $this->view->render($response, 'guardian/view-user-search.twig', $data);
+    }
+
+    public function getItemsUser($request,$response, $args)
+    {
+        $users = new UserModel($this->db);
+        $items = new \App\Models\Item($this->db);
+        $guards = new \App\Models\GuardModel($this->db);
+        $userGroups = new \App\Models\UserGroupModel($this->db);
+
+        $userId  = $_SESSION['login']['id'];
+        $userGroup = $userGroups->finds('group_id', $args['id'], 'user_id', $userId);
+        $userItem = $items->getUserItem($userId, $args['id']);
+        $itemDone = $items->getItemDone($userId, $args['id']);
+        $userGuard = $guards->finds('guard_id', $userId, 'user_id', $args['user']);
+
+        $reported = $request->getQueryParam('reported');
+        $count = count($itemDone);
+        // var_dump($userItem);die();
+
+        if ($userGroup[0] || $userGuard[0]) {
+            return $this->view->render($response, 'users/useritem.twig', [
+                'items' => $userItem,
+                'itemdone' => $itemDone,
+                'group_id' => $args['id'],
+                'reported'=> $reported,
+                'count'=> $count,
+            ]);
+
+        } else {
+            $this->flash->addMessage('error', 'You are not allowed to access this group!');
+            return $response->withRedirect($this->router->pathFor('home'));
+        }
     }
 }

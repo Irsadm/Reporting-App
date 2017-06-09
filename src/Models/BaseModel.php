@@ -217,7 +217,7 @@ abstract class BaseModel
             ->setParameter($param2, $val2)
             ->where($column1 . ' = '. $param1 .'&&'. $column2 . ' = '. $param2);
         $result = $qb->execute();
-        return $result->fetch();
+        return $result->fetchAll();
     }
 
 }
