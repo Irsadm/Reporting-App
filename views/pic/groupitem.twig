@@ -5,7 +5,7 @@
 {% block headContent %}
         <i style="color:green" class="fa fa-list-alt">  Group Items  </i>
         <span style="font-size: 20px;" class="pull-right" >
-        <button class="btn btn-primary" href="" data-toggle="modal" data-target="#create" title="Join to group">
+        <button class="btn btn-primary" href="" data-toggle="modal" data-target="#create" title="Create Item to group">
             <i class="fa fa-plus fa-lg"> Add Item to Group</i></button>
         </span>
 {% endblock %}
@@ -134,9 +134,7 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-6 col-md-5">
                                     <div class="form-group {{ errors.image ? 'has-error' : '' }}">
-                                        <div id="image_preview"><img id="previewing"
-                                            src="{{ base_url() }}/assets/images/{{ login.image }}"
-                                            class="img-thumbnail" style="width:200px" ></div><br />
+
                                             <label>Image :</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
@@ -147,7 +145,10 @@
                                             </div>
                                             {% if errors.image %}
                                             <span class="help-block">{{errors.image | first}}</span>
-                                            {% endif %}
+                                            {% endif %}<br />
+                                            <div id="image_preview"><img id="previewing"
+                                                src="{{ base_url() }}/assets/images/{{ login.image }}"
+                                                class="img-thumbnail" style="width:200px" ></div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-7">
@@ -158,7 +159,6 @@
                                             <span class="help-block">{{ errors.start_date | first }}</span>
                                             {% endif %}
                                             <input type="hidden" name="group_id" value="{{ groups.id }}">
-
                                             <center>
                                                 <br>
                                                 <button  style="margin-top:30px;margin-bottom:10px;"
