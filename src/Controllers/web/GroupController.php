@@ -280,14 +280,18 @@ class GroupController extends BaseController
 	public function getMemberGroup($request, $response, $args)
 	{
 		$userGroup = new UserGroupModel($this->db);
+		$users = new \App\Models\Users\UserModel($this->db);
 
-		$page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-		$users = $userGroup->findAll($args['id'])->setPaginate($page, 10);
-		$pic = $userGroup->findUser('group_id', $args['id'], 'user_id', $_SESSION['login']['id']);
+		// $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+		// $users = $userGroup->findAll($args['id'])->setPaginate($page, 10);
+		$user= $_SESSION['login'];
+		$pic = $userGroup->finds('group_id', $args['id'], 'user_id', $userId['id']);
+		$member = $userGroup->getMember($args['id']);
+		$member = $userGroup->getMember($args['id']);
 
-		if ($_SESSION['login']['status'] == 1 || $pic['status'] == 1) {
+		if ($user['status'] == 1 || $pic['status'] == 1) {
 			return $this->view->render($response, 'admin/group/member.twig', [
-				'users' => $users['data'],
+				'members' => $member,
 				'group_id'	=> $args['id']
 			]);
 		} else {
@@ -391,9 +395,9 @@ class GroupController extends BaseController
 	function getPicGroup($request, $response)
 	{
 		$group = new GroupModel($this->db);
+		$item = new \App\Models\Item($this->db);
 		$article = new \App\Models\ArticleModel($this->db);
 		$userGroup = new \App\Models\UserGroupModel($this->db);
-		$item = new \App\Models\Item($this->db);
 
 		$userId  = $_SESSION['login']['id'];
 		$getGroup = $userGroup->picGroup($userId);

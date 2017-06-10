@@ -95,7 +95,7 @@ $app->group('', function() use ($app, $container) {
         $this->get('/detail/{id}', 'App\Controllers\web\GroupController:findGroup')
         ->setName('pic.group.detail');
         $this->get('/{id}/users', 'App\Controllers\web\GroupController:getMemberGroup')
-        ->setName('pic.user.group.get');
+        ->setName('pic.member.group.get');
         $this->get('/{id}/allusers', 'App\Controllers\web\GroupController:getNotMember')
         ->setName('pic.all.users.get');
         $this->post('/users', 'App\Controllers\web\GroupController:setUserGroup')
