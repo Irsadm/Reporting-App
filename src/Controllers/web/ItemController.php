@@ -289,19 +289,22 @@ class ItemController extends BaseController
                 $imageName = '';
             }
 
-            $itemData = [
-                'name'         => $request->getParams()['name'],
-                'description'  => $request->getParams()['description'],
-                'recurrent'    => $request->getParams()['recurrent'],
-                'start_date'   => $request->getParams()['start_date'],
-                'group_id'     => $request->getParams()['group_id'],
-                'user_id '     => $request->getParams()['user_id'],
-                'image '       => $imageName,
-                'creator'      => $_SESSION['login']['id'],
-            ];
+        $itemData = [
+            'name'         => $request->getParams()['name'],
+            'description'  => $request->getParams()['description'],
+            'recurrent'    => $request->getParams()['recurrent'],
+            'start_date'   => $request->getParams()['start_date'],
+            'group_id'     => $request->getParams()['group_id'],
+            'user_id'      => $request->getParams()['user_id'],
+            'image '       => $imageName,
+            'creator'      => $_SESSION['login']['id'],
+        ];
             $item  = new Item($this->db);
             $newItem = $item->create($itemData);
-            // var_dump($newItem); die();
+
+            // var_dump($itemData); die();
+
+
             $this->flash->addMessage('succes', 'New item successfully added');
             return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
         } else {
@@ -315,7 +318,7 @@ class ItemController extends BaseController
     //Create item in group by user
     public function createItemByUser($request, $response)
     {
-        // var_dump($request->getParams());die();
+        // var_dump($request->getParams()['group_id']);die();
         $storage = new \Upload\Storage\FileSystem('assets/images');
         $image = new \Upload\File('image',$storage);
         $image->setName(uniqid());
@@ -435,5 +438,25 @@ class ItemController extends BaseController
             return $response->withRedirect($this->router
             ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
         }
+    }
+
+    public function deleteItemByPic($request, $response, $args)
+    {
+        $item = new Item($this->db);
+        $findItem = $item->find('id', $args['id']);
+        $deleteItem = $item->hardDelete($args['id']);
+        $this->flash->addMessage('succes', 'Item deleted');
+        return $response->withRedirect($this->router->pathFor('pic.item.group',
+                                ['id' => $findItem['group_id'] ]));
+    }
+
+    public function deleteItemByUser($request, $response, $args)
+    {
+        $item = new Item($this->db);
+        $findItem = $item->find('id', $args['id']);
+        $deleteItem = $item->hardDelete($args['id']);
+        $this->flash->addMessage('succes', 'Item deleted');
+        return $response->withRedirect($this->router->pathFor('user.item.group',
+                                ['id' => $findItem['group_id'] ]));
     }
 }

@@ -19,7 +19,6 @@ $app->group('', function() use ($app, $container) {
     $app->post('/setting', 'App\Controllers\web\UserController:settingAccount');
 
     $app->group('/admin', function() use ($app, $container) {
-
         $app->group('/group', function(){
             $this->get('', 'App\Controllers\web\GroupController:index')->setName('group.list');
             $this->get('/inactive', 'App\Controllers\web\GroupController:inActive')->setName('group.inactive');
@@ -105,10 +104,11 @@ $app->group('', function() use ($app, $container) {
         ->setName('del.pic.group');
         $this->post('/item/create', 'App\Controllers\web\ItemController:createItemByPic')
         ->setName('pic.create.item');
+        $this->get('/delete/item/{id}', 'App\Controllers\web\ItemController:deleteItemByPic')
+        ->setName('pic.delete.item');
     });
 
     $app->group('/user', function(){
-
         $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
         ->setName('user.article-read');
         $this->get('/group', 'App\Controllers\web\GroupController:getGeneralGroup')
@@ -138,6 +138,8 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.item.group');
         $this->post('/item/report', 'App\Controllers\web\ItemController:reportItem')
         ->setName('user.item.report');
+        $this->get('/item/delete/{id}', 'App\Controllers\web\ItemController:deleteItemByUser')
+        ->setName('user.item.delete');
     });
 
     $app->group('/article/', function() {
