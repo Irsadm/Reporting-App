@@ -376,7 +376,7 @@ class ItemController extends BaseController
             'recurrent'    => $request->getParams()['recurrent'],
             'start_date'   => $request->getParams()['start_date'],
             'group_id'     => $request->getParams()['group_id'],
-            'user_id '     => $request->getParams()['user_id'],
+            'user_id'      => $request->getParams()['user_id'],
             'image '       => $imageName,
             'creator'      => $_SESSION['login']['id'],
         ];
@@ -384,7 +384,7 @@ class ItemController extends BaseController
 
             $newItem = $item->create($itemData);
 
-            // var_dump($newItem); die();
+            // var_dump($itemData); die();
 
             $this->flash->addMessage('succes', 'New item successfully added');
 
