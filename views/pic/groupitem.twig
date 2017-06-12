@@ -1,9 +1,15 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} Reporting App {% endblock %}
-
+{% block script %}
+{% if errors %}
+<script type="text/javascript">
+$('#create').modal('show');
+</script>
+{% endif %}
+{% endblock %}
 {% block headContent %}
-        <i style="color:green" class="fa fa-list-alt">  Group Items  </i>
+        <i style="color:green" class="fa fa-list-alt">Group Items  </i>
         <span style="font-size: 20px;" class="pull-right" >
         <button class="btn btn-primary" href="" data-toggle="modal" data-target="#create" title="Create Item to group">
             <i class="fa fa-plus fa-lg"> Add Item to Group</i></button>
@@ -53,9 +59,10 @@
                                     </td>
                                     <td class="text-center">{{ item.reported_at }}</td>
                                     <td>
-                                        {% if item.names == login.name %}
-                                        delete
-                                        {% endif %}
+                                        <a href="{{ path_for('item.soft.delete', {('id'): item.id})}}"
+                                        title="Remove item" data-placement="top">
+                                        <button class="btn btn-danger btn-md"
+                                        style="margin-right:10px">Delete</button></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -68,9 +75,7 @@
 </div>
 
 
-{% for item in items %}
 
-<!-- Modal -->
 <div id="create" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -79,7 +84,7 @@
                 <div class="panel panel-heading"><h3 class="panel-title">
                     <strong>Create item to {{ groups.name }}</strong></h3></div>
                     <div class="panel-body">
-                        <form  action="{{path_for('item.update.post', {('id'): item.id })}}" method="post">
+                        <form  action="{{path_for('pic.create.item')}}" method="post" enctype="multipart/form-data">
                             {% if errors %}
                             <div class="alert alert-danger">
                                 <a class="close" data-dismiss="alert" href="#">x</a> Please fill out the form
@@ -141,20 +146,20 @@
                                 <div class="col-xs-12 col-sm-6 col-md-5">
                                     <div class="form-group {{ errors.image ? 'has-error' : '' }}">
 
-                                            <label>Image :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-image"></i>
-                                                </div>
-                                                <input type="file" id="file" class="form-control"
-                                                name="image" placeholder="Item image">
+                                        <label>Image :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-image"></i>
                                             </div>
-                                            {% if errors.image %}
-                                            <span class="help-block">{{errors.image | first}}</span>
-                                            {% endif %}<br />
-                                            <div id="image_preview"><img id="previewing"
-                                                src="{{ base_url() }}/assets/images/{{ login.image }}"
-                                                class="img-thumbnail" style="width:200px" ></div>
+                                            <input type="file" id="file" class="form-control"
+                                            name="image" placeholder="Item image">
+                                        </div>
+                                        {% if errors.image %}
+                                        <span class="help-block">{{errors.image | first}}</span>
+                                        {% endif %}<br />
+                                        <div id="image_preview"><img id="previewing"
+                                            src="{{ base_url() }}/assets/images/{{ login.image }}"
+                                            class="img-thumbnail" style="width:200px" ></div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-7">
@@ -168,20 +173,18 @@
                                             <center>
                                                 <br>
                                                 <button  style="margin-top:30px;margin-bottom:10px;"
-                                                 type="submit" class="btn btn-success">
-                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i> Create
-                                                </button>
-                                                </center>
-                                        </div>
+                                                type="submit" class="btn btn-success">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Create
+                                            </button>
+                                        </center>
                                     </div>
                                 </div>
-
-                                </form>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

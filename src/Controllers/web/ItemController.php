@@ -245,8 +245,75 @@ class ItemController extends BaseController
         }
     }
 
+    public function createItemByPic($request, $response)
+    {
+        $storage = new \Upload\Storage\FileSystem('assets/images');
+        $image = new \Upload\File('image',$storage);
+        $image->setName(uniqid());
+        $image->addValidations(array(
+            new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+            'image/jpg', 'image/jpeg')),
+            new \Upload\Validation\Size('5M')
+        ));
+        $dataImg = array(
+            'name'       => $image->getNameWithExtension(),
+            'extension'  => $image->getExtension(),
+            'mime'       => $image->getMimetype(),
+            'size'       => $image->getSize(),
+            'md5'        => $image->getMd5(),
+            'dimensions' => $image->getDimensions()
+        );
+        $rules = [
+            'required'  => [
+                ['name'],
+                ['description'],
+                ['start_date']
+            ],
+            'dateformat' => [
+                ['start_date', 'Y-m-d']
+            ]
+        ];
+        $this->validator->rules($rules);
+        // var_dump($request->getParams()); die();
+        $this->validator->labels([
+            'name'         => 'Name',
+            'recurrent'    => 'Recurrent',
+            'description'  => 'Description',
+            'start_date'   => 'Start date',
+        ]);
+        if ($this->validator->validate()) {
+            if (!empty($_FILES['image']['name'])) {
+                $image->upload();
+                $imageName = $dataImg['name'];
+            } else {
+                $imageName = '';
+            }
+
+            $itemData = [
+                'name'         => $request->getParams()['name'],
+                'description'  => $request->getParams()['description'],
+                'recurrent'    => $request->getParams()['recurrent'],
+                'start_date'   => $request->getParams()['start_date'],
+                'group_id'     => $request->getParams()['group_id'],
+                'user_id '     => $request->getParams()['user_id'],
+                'image '       => $imageName,
+                'creator'      => $_SESSION['login']['id'],
+            ];
+            $item  = new Item($this->db);
+            $newItem = $item->create($itemData);
+            // var_dump($newItem); die();
+            $this->flash->addMessage('succes', 'New item successfully added');
+            return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+        } else {
+            $_SESSION['errors'] = $this->validator->errors();
+            $_SESSION['old']  = $request->getParams();
+            // var_dump($_SESSION['old']); die();
+            return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+        }
+    }
+
     //Create item in group by user
-    public function createUserItem($request, $response)
+    public function createItemByUser($request, $response)
     {
         // var_dump($request->getParams());die();
         $storage = new \Upload\Storage\FileSystem('assets/images');
@@ -257,14 +324,13 @@ class ItemController extends BaseController
             'image/jpg', 'image/jpeg')),
             new \Upload\Validation\Size('5M')
         ));
-
         $dataImg = array(
-          'name'       => $image->getNameWithExtension(),
-          'extension'  => $image->getExtension(),
-          'mime'       => $image->getMimetype(),
-          'size'       => $image->getSize(),
-          'md5'        => $image->getMd5(),
-          'dimensions' => $image->getDimensions()
+            'name'       => $image->getNameWithExtension(),
+            'extension'  => $image->getExtension(),
+            'mime'       => $image->getMimetype(),
+            'size'       => $image->getSize(),
+            'md5'        => $image->getMd5(),
+            'dimensions' => $image->getDimensions()
         );
         $rules = ['required' => [
             ['name'],
@@ -272,91 +338,76 @@ class ItemController extends BaseController
         ],
         'dateformat' => [
             ['start_date', 'Y-m-d'],
-            ]
-        ];
-
-        $this->validator->rules($rules);
-
-        $this->validator->labels([
-            'name' 			=>	'Name',
-            'description'	=>	'Description',
-            'start_date'	=>	'Start date',
-        ]);
-
-        $userId  = $_SESSION['login']['id'];
-
-
-        if ($this->validator->validate()) {
-            if (!empty($_FILES['image']['name'])) {
-                $image->upload();
-                $imgName = $dataImg['name'];
-            } else {
-                $imgName = '';
-            }
-
-            $data = [
-                'name' 			=>	$request->getParams()['name'],
-                'description'	=>	$request->getParams()['description'],
-                'recurrent'	    =>	$request->getParams()['recurrent'],
-                'start_date'	=>	$request->getParams()['start_date'],
-                'group_id'	    =>	$request->getParams()['group_id'],
-                'user_id'	    =>	$request->getParams()['user_id'],
-                'creator'	    =>	$userId,
-                'image'			=>	$imgName,
+        ]
+    ];
+    $this->validator->rules($rules);
+    $this->validator->labels([
+        'name' 			=>	'Name',
+        'description'	=>	'Description',
+        'start_date'	=>	'Start date',
+    ]);
+    $userId  = $_SESSION['login']['id'];
+    if ($this->validator->validate()) {
+        if (!empty($_FILES['image']['name'])) {
+            $image->upload();
+            $imgName = $dataImg['name'];
+        } else {
+            $imgName = '';
+        }
+        $data = [
+            'name' 			=>	$request->getParams()['name'],
+            'description'	=>	$request->getParams()['description'],
+            'recurrent'	    =>	$request->getParams()['recurrent'],
+            'start_date'	=>	$request->getParams()['start_date'],
+            'group_id'	    =>	$request->getParams()['group_id'],
+            'user_id'	    =>	$request->getParams()['user_id'],
+            'creator'	    =>	$userId,
+            'image'			=>	$imgName,
             ];
-
             $items = new Item($this->db);
             $addItems = $items->createData($data);
-
             $this->flash->addMessage('succes', 'Item successfully created');
-
             return $response->withRedirect($this->router
             ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
-
         } else {
             $_SESSION['old'] = $request->getParams();
             $_SESSION['errors'] = $this->validator->errors();
             return $response->withRedirect($this->router
-             ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
+            ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
         }
     }
 
     //Create item in group by user
     public function reportItem($request, $response)
     {
-        var_dump($request->getParams());die();
+        // var_dump($request->getParams());die();
         $items = new Item($this->db);
         $storage = new \Upload\Storage\FileSystem('assets/images');
         $image = new \Upload\File('image',$storage);
         $image->setName(uniqid());
         $image->addValidations(array(
-            new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
-            'image/jpg', 'image/jpeg')),
-            new \Upload\Validation\Size('5M')
+        new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+        'image/jpg', 'image/jpeg')),
+        new \Upload\Validation\Size('5M')
         ));
-
         $dataImg = array(
-          'name'       => $image->getNameWithExtension(),
-          'extension'  => $image->getExtension(),
-          'mime'       => $image->getMimetype(),
-          'size'       => $image->getSize(),
-          'md5'        => $image->getMd5(),
-          'dimensions' => $image->getDimensions()
+        'name'       => $image->getNameWithExtension(),
+        'extension'  => $image->getExtension(),
+        'mime'       => $image->getMimetype(),
+        'size'       => $image->getSize(),
+        'md5'        => $image->getMd5(),
+        'dimensions' => $image->getDimensions()
         );
-
         $this->validator->rules($rules);
-
         $this->validator->labels([
-            'name' 			=>	'Name',
-            'description'	=>	'Description',
-            'start_date'	=>	'Start date',
+        'name' 			=>	'Name',
+        'description'	=>	'Description',
+        'start_date'	=>	'Start date',
         ]);
-
         $itemId = $request->getParams()['item_id'];
         $userId  = $_SESSION['login']['id'];
         $dateNow = date('Y-m-d H:i:s');
         $item = $items->find('id', $itemId);
-
         if ($this->validator->validate()) {
             if (!empty($request->getParams()['group'])) {
                 # code...
@@ -367,27 +418,22 @@ class ItemController extends BaseController
             } else {
                 $imgName = '';
             }
-
             $data = [
-                'description'	=>	$request->getParams()['description'],
-                'image'			=>	$imgName,
-                'reported_at'	=>	$dateNow,
-                'status'		=>	1,
+            'description'	=>	$request->getParams()['description'],
+            'image'			=>	$imgName,
+            'reported_at'	=>	$dateNow,
+            'status'		=>	1,
             ];
-
             $items = new Item($this->db);
             $addItems = $items->updateData($data, $itemId);
-
             $this->flash->addMessage('succes', 'Item successfully reported');
-
             return $response->withRedirect($this->router
             ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
-
         } else {
             $_SESSION['old'] = $request->getParams();
             $_SESSION['errors'] = $this->validator->errors();
             return $response->withRedirect($this->router
-             ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
+            ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
         }
     }
 }

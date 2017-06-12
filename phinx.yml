@@ -17,9 +17,9 @@ environments:
     development:
         adapter: mysql
         host: 172.17.0.1
-        name: reporting-app
+        name: reporting_app
         user: root
-        pass: 'nrd113'
+        pass: '1234'
         port: 3636
         charset: utf8
 

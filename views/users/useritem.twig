@@ -134,12 +134,10 @@ $('#create').modal('show');
                         type="checkbox"  onclick="this.form.submit();"> -->
                     </td>
                     <td class="text-center">
-                        {% if item.user_id != null %}
                         <a href="{{ path_for('item.soft.delete', {('id'): item.id})}}"
                         title="Remove item" data-placement="top">
                         <button class="btn btn-danger btn-md"
                         style="margin-right:10px">Delete</button></a>
-                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
