@@ -1,17 +1,23 @@
 <?php
+
+// $app->get('/mail', 'App\Controllers\web\UserController:testMail');
+// $app->get('/test', 'App\Controllers\web\UserController:activateAccount')->setName('activate.acount');
+
 $app->get('/register', 'App\Controllers\web\UserController:getRegister')->setName('register');
 $app->post('/register', 'App\Controllers\web\UserController:postRegister');
+$app->get('/activateaccount/{token}', 'App\Controllers\web\UserController:activateAccount')->setName('activate.account');
 $app->get('/admin', 'App\Controllers\web\UserController:getLoginAsAdmin')->setName('login.admin');
 $app->post('/admin', 'App\Controllers\web\UserController:loginAsAdmin');
 $app->get('/', 'App\Controllers\web\UserController:getLogin')->setName('login');
 $app->post('/', 'App\Controllers\web\UserController:login');
-$app->get('/mail', 'App\Controllers\web\UserController:testMail');
+
 $app->group('', function() use ($app, $container) {
     $app->get('/home', 'App\Controllers\web\HomeController:index')->setName('home');
     $app->get('/logout', 'App\Controllers\web\UserController:logout')->setName('logout');
     $app->get('/profile', 'App\Controllers\web\UserController:viewProfile')->setName('user.profile');
     $app->get('/setting', 'App\Controllers\web\UserController:getSettingAccount')->setName('user.setting');
     $app->post('/setting', 'App\Controllers\web\UserController:settingAccount');
+
     $app->group('/admin', function() use ($app, $container) {
         $app->group('/group', function(){
             $this->get('', 'App\Controllers\web\GroupController:index')->setName('group.list');
@@ -28,6 +34,7 @@ $app->group('', function() use ($app, $container) {
             $this->get('/{id}/allusers', 'App\Controllers\web\GroupController:getNotMember')->setName('all.users.get');
             $this->post('/allusers', 'App\Controllers\web\GroupController:setMemberGroup')->setName('member.group.set');
         });
+
         $app->group('/user', function(){
             $this->get('/list', 'App\Controllers\web\UserController:listUser')->setName('user.list.all');
             $this->get('/trash', 'App\Controllers\web\UserController:trashUser')->setName('user.trash');
@@ -40,6 +47,7 @@ $app->group('', function() use ($app, $container) {
             $this->post('/edit/{id}', 'App\Controllers\web\UserController:postUpdateData')->setName('user.edit.data');
             $this->get('/user/{id}/item', 'App\Controllers\web\UserController:getItemByadmin')->setName('user.item.admin');
         });
+
         $app->group('/article/', function() {
             $this->get('add', 'App\Controllers\web\ArticleController:getAdd')
             ->setName('article-add');
@@ -59,6 +67,7 @@ $app->group('', function() use ($app, $container) {
             $this->post('delete', 'App\Controllers\web\ArticleController:setDelete')
             ->setName('article-del');
         });
+
         $app->group('/item', function(){
             $this->get('', 'App\Controllers\web\ItemController:index')->setName('item.list');
             $this->get('/add', 'App\Controllers\web\ItemController:getAdd')->setName('item.add');
@@ -72,6 +81,7 @@ $app->group('', function() use ($app, $container) {
         });
     });
     // ->add(new \App\Middlewares\web\AdminMiddleware($container));
+
     $app->group('/pic', function(){
         $this->get('/group', 'App\Controllers\web\GroupController:getPicGroup')
         ->setName('pic.group');
@@ -97,6 +107,7 @@ $app->group('', function() use ($app, $container) {
         $this->get('/delete/item/{id}', 'App\Controllers\web\ItemController:deleteItemByPic')
         ->setName('pic.delete.item');
     });
+
     $app->group('/user', function(){
         $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
         ->setName('user.article-read');
@@ -130,6 +141,7 @@ $app->group('', function() use ($app, $container) {
         $this->get('/item/delete/{id}', 'App\Controllers\web\ItemController:deleteItemByUser')
         ->setName('user.item.delete');
     });
+
     $app->group('/article/', function() {
         $this->get('add', 'App\Controllers\web\ArticleController:getAdd')
         ->setName('article-add');
@@ -151,6 +163,7 @@ $app->group('', function() use ($app, $container) {
         $this->get('search', 'App\Controllers\web\ArticleController:search')
         ->setName('article-search');
     });
+
     $app->group('/guard', function(){
         $this->get('/user/list', 'App\Controllers\web\UserController:ListUserByGuard')->setName('list.user');
         $this->get('/user/{id}/item', 'App\Controllers\web\UserController:getItemUser')->setName('user.item');

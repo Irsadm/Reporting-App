@@ -224,6 +224,9 @@ class UserController extends BaseController
 
         if ($this->validator->validate()) {
             $user = new UserModel($this->db);
+            $mailer = new \App\Extensions\Mailers\Mailer();
+            $registers = new \App\Models\RegisterModel($this->db);
+
             $register = $user->checkDuplicate($request->getParam('username'),
                         $request->getParam('email'));
 
@@ -236,11 +239,40 @@ class UserController extends BaseController
                 $this->flash->addMessage('warning', 'Email, already used');
                 return $response->withRedirect($this->router->pathFor('register'));
             } else {
-                $registers = $request->getParams();
-                $user->register($registers);
-                $this->flash->addMessage('succes', 'Register Succes, Please Login');
+                $newUser = $user->register($request->getParams());
+                $token = md5(openssl_random_pseudo_bytes(8));
+                $findUser = $user->find('id', $newUser);
+                $tokenId = $registers->setToken($newUser, $token);
+                $userToken = $registers->find('id', $tokenId);
+
+                $base = $request->getUri()->getBaseUrl();
+                $keyToken = $userToken['token'];
+                $activateUrl = '<a href ='.$base ."/activateaccount/".$keyToken.'><h3>ACTIVATE ACCOUNT</h3></a>';
+                $content = "Thank you for registering your Reporting App account.
+                To finally activate your account please click the following link. <br /> <br />"
+                .$activateUrl.
+                "<br /> <br /> If clicking the link doesn't work, you can copy the link into your browser window
+                or type it there directly. <br /><br /> "
+                .$base ."/activateaccount/".$keyToken.
+                " <br /><br /> Regards, <br /><br /> Reporting App Team";
+
+                $mail = [
+                    'subject'   =>  'Reporting App - Email validation',
+                    'from'      =>  'reportingmit@gmail.com',
+                    'to'        =>  $findUser['email'],
+                    'sender'    =>  'Reporting App',
+                    'receiver'  =>  $findUser['name'],
+                    'content'   =>  $content,
+                ];
+
+                $result = $mailer->send($mail);
+
+                $this->flash->addMessage('succes', 'Register Succes,
+                                Please check your email to activate your account');
+
                 return $response->withRedirect($this->router->pathFor('register'));
             }
+
         } else {
             $_SESSION['errors'] = $this->validator->errors();
             $_SESSION['old'] = $request->getParams();
@@ -316,15 +348,6 @@ class UserController extends BaseController
 
                     $this->flash->addMessage('succes', 'Welcome to the reporting app, '. $login['name']);
                     return $response->withRedirect($this->router->pathFor('home'));
-                // }
-                // elseif ($_SESSION['login']['status'] == 0 &&
-                // $request->getParam('optlogin') == 'guard') {
-                //     $_SESSION['guard'] = [
-                //         'user' => $users,
-                //         'status'=> $request->getParam('optlogin'),
-                //     ];
-                //     $this->flash->addMessage('succes', 'Successfully logged in as Guardian');
-                //     return $response->withRedirect($this->router->pathFor('home'));
                 } else {
                     $this->flash->addMessage('warning', 'You Are Not User');
                     return $response->withRedirect($this->router->pathFor('login'));
@@ -788,7 +811,6 @@ class UserController extends BaseController
 
         $data['users'] =  $user->search($search, $userId);
         $data['count'] = count($data['users']);
-        // var_dump($data);die();
 
         return $this->view->render($response, 'guardian/view-user-search.twig', $data);
     }
@@ -810,7 +832,6 @@ class UserController extends BaseController
 
         $reported = $request->getQueryParam('reported');
         $count = count($itemDone);
-        // var_dump($userItem);die();
 
         if ($userGroup[0] || $userGuard[0]) {
             return $this->view->render($response, 'users/useritem.twig', [
@@ -826,5 +847,30 @@ class UserController extends BaseController
             $this->flash->addMessage('error', 'You are not allowed to access this group!');
             return $response->withRedirect($this->router->pathFor('home'));
         }
+    }
+
+    public function activateAccount($request, $response, $args)
+    {
+        $users = new UserModel($this->db);
+        $registers = new \App\Models\RegisterModel($this->db);
+
+        $userToken = $registers->find('token', $args['token']);
+        $base = $request->getUri()->getBaseUrl();
+        $now = date('Y-m-d H:i:s');
+        // var_dump($findId);die();
+        if ($userToken && $userToken['expired_date'] > $now) {
+
+            $user = $users->setActive($userToken['user_id']);
+
+            $this->flash->addMessage('succes', 'Your account has been successfully activated');
+
+        }elseif ($userToken['expired_date'] > $now) {
+            $this->flash->addMessage('error', 'Your token has been expired');
+
+        } else{
+            $this->flash->addMessage('error', 'You have not signed up yet');
+        }
+
+        return $response->withRedirect($this->router->pathFor('login'));
     }
 }
