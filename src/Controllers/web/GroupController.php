@@ -244,27 +244,27 @@ class GroupController extends BaseController
 		$userGroup = new UserGroupModel($this->db);
 		$groupId = $request->getParams()['id'];
 		$pic = $userGroup->findUser('group_id', $groupId, 'user_id', $_SESSION['login']['id']);
-
+// var_dump($request->getParam('user'));die();
 		if ($_SESSION['login']['status'] == 1 || $pic['status'] == 1) {
 			if (!empty($request->getParams()['pic'])) {
 				foreach ($request->getParam('user') as $key => $value) {
-					$finduserGroup = $userGroup->findUser('id', $value, 'group_id', $groupId);
+					$finduserGroup = $userGroup->findUser('user_id', $value, 'group_id', $groupId);
 					$userGroup->setPic($finduserGroup['id']);
 				}
 			} elseif (!empty($request->getParams()['member'])) {
 				foreach ($request->getParam('user') as $key => $value) {
-					$finduserGroup = $userGroup->findUser('id', $value, 'group_id', $groupId);
+					$finduserGroup = $userGroup->findUser('user_id', $value, 'group_id', $groupId);
 					$userGroup->setUser($finduserGroup['id']);
 				}
 			} elseif (!empty($request->getParams()['delete'])) {
 				foreach ($request->getParam('user') as $key => $value) {
-					$finduserGroup = $userGroup->findUser('id', $value, 'group_id', $groupId);
+					$finduserGroup = $userGroup->findUser('user_id', $value, 'group_id', $groupId);
 					$userGroup->hardDelete($finduserGroup['id']);
 				}
 			}
 
-			if ($_SESSION['login']['status'] == 0 && $pic['status'] == 1) {
-				return $response->withRedirect($this->router->pathFor('pic.user.group.get', ['id' => $groupId]));
+			if ($_SESSION['login']['status'] == 2 && $pic['status'] == 1) {
+				return $response->withRedirect($this->router->pathFor('pic.member.group.get', ['id' => $groupId]));
 			}
 
 			return $response->withRedirect($this->router->pathFor('user.group.get', ['id' => $groupId]));
@@ -280,19 +280,21 @@ class GroupController extends BaseController
 	public function getMemberGroup($request, $response, $args)
 	{
 		$userGroup = new UserGroupModel($this->db);
+		$groups = new GroupModel($this->db);
 		$users = new \App\Models\Users\UserModel($this->db);
-
 		// $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 		// $users = $userGroup->findAll($args['id'])->setPaginate($page, 10);
 		$user= $_SESSION['login'];
-		$pic = $userGroup->finds('group_id', $args['id'], 'user_id', $userId['id']);
+		$pic = $userGroup->finds('group_id', $args['id'], 'user_id', $user['id']);
 		$member = $userGroup->getMember($args['id']);
-		$member = $userGroup->getMember($args['id']);
-
-		if ($user['status'] == 1 || $pic['status'] == 1) {
-			return $this->view->render($response, 'admin/group/member.twig', [
+		$group = $groups->find('id', $args{'id'});
+		// $member = $userGroup->getMember($args['id']);
+// var_dump($member);die();
+		if ($user['status'] == 1 || $pic[0]['status'] == 1) {
+			return $this->view->render($response, 'pic/groupmember.twig', [
 				'members' => $member,
-				'group_id'	=> $args['id']
+				'group_id'	=> $args['id'],
+				'group'		=> $group['name'],
 			]);
 		} else {
 			$this->flash->addMessage('error', 'You are not allowed to access this member group!');

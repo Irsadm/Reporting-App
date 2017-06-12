@@ -797,6 +797,7 @@ class UserController extends BaseController
     {
         $users = new UserModel($this->db);
         $items = new \App\Models\Item($this->db);
+        $groups = new \App\Models\GroupModel($this->db);
         $guards = new \App\Models\GuardModel($this->db);
         $userGroups = new \App\Models\UserGroupModel($this->db);
 
@@ -805,6 +806,7 @@ class UserController extends BaseController
         $userItem = $items->getUserItem($userId, $args['id']);
         $itemDone = $items->getItemDone($userId, $args['id']);
         $userGuard = $guards->finds('guard_id', $userId, 'user_id', $args['user']);
+        $group = $groups->find('id', $args['id']);
 
         $reported = $request->getQueryParam('reported');
         $count = count($itemDone);
@@ -815,6 +817,7 @@ class UserController extends BaseController
                 'items' => $userItem,
                 'itemdone' => $itemDone,
                 'group_id' => $args['id'],
+                'group' => $group['name'],
                 'reported'=> $reported,
                 'count'=> $count,
             ]);

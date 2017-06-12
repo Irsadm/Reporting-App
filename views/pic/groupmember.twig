@@ -3,7 +3,7 @@
 {% block title %} Group | All Users {% endblock %}
 
 {% block headContent %}
-	All Users<i style="color:green" class="fa fa-check-square-o"></i>
+<i style="color:green" class="fa fa-check-square-o">All users of the {{ group }}</i>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
 			<div class="panel-body">
 				{% if login.status == 1 %}
 				<form action="{{ path_for('user.group.set') }}" method="POST">
-				{% elseif login.status == 0 %}
+				{% elseif login.status == 2 %}
 				<form action="{{ path_for('pic.user.group.set') }}" method="POST">
 				{% endif %}
 					<table id="example2" class="table table-bordered table-striped table-hover">
@@ -31,10 +31,10 @@
 								<th style="width: 40px">Select</th>
 							</tr>
 						</thead>
-						{% for user in users %}
-						{% if (user.status == 0) %}
+						{% for user in members %}
+						{% if (user.user_status == 0) %}
 						{% set status = 'Member' %}
-						{% elseif (user.status == 1) %}
+						{% elseif (user.user_status == 1) %}
 						{% set  status = 'PIC' %}
 						{% endif %}
 						<tr>

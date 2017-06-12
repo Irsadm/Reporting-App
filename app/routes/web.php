@@ -113,8 +113,6 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.article-read');
         $this->get('/group', 'App\Controllers\web\GroupController:getGeneralGroup')
         ->setName('user.group');
-        // $this->get('/group/{id}/item', 'App\Controllers\web\UserController:enterGroup')
-        // ->setName('user.item.group');
         $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')
         ->setName('user.item.status');
         $this->get('/item/reset/{id}', 'App\Controllers\web\UserController:restoreItemUserStatus')
@@ -128,7 +126,7 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.item.add');
         $this->get('/{id}/item/create', 'App\Controllers\web\ItemController:getCreateItem')
         ->setName('user.item.create');
-        $this->post('/item/create', 'App\Controllers\web\ItemController:postCreateItem')
+        $this->post('/item/create', 'App\Controllers\web\ItemController:createUserItem')
         ->setName('user.item.create.post');
         $this->post('/group/search', 'App\Controllers\web\GroupController:searchGroup')
         ->setName('post.group.search');
@@ -138,6 +136,8 @@ $app->group('', function() use ($app, $container) {
         ->setName('get.del.group');
         $this->get('/group/{id}/item', 'App\Controllers\web\UserController:getItemsUser')
         ->setName('user.item.group');
+        $this->post('/item/report', 'App\Controllers\web\ItemController:reportItem')
+        ->setName('user.item.report');
     });
 
     $app->group('/article/', function() {

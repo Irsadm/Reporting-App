@@ -30,6 +30,7 @@
                                     <th>Create By</th>
                                     <th>Status</th>
                                     <th class="text-center">Reported at</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,6 +52,11 @@
                                         {% endif %}
                                     </td>
                                     <td class="text-center">{{ item.reported_at }}</td>
+                                    <td>
+                                        {% if item.names == login.name %}
+                                        delete
+                                        {% endif %}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

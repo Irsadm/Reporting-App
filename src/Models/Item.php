@@ -16,9 +16,12 @@ class Item extends BaseModel
             'description' => $data['description'],
             'recurrent'   => $data['recurrent'],
             'start_date'  => $data['start_date'],
-            'end_date'    => $data['end_date'],
+            'image'       => $data['image'],
             'group_id'    => $data['group_id'],
-            'updated_at'  => $date
+            'user_id'     => $data['user_id'],
+            'creator'     => $data['creator'],
+            'status'      => $data['status'],
+            // 'updated_at'  => $date
         ];
 
         $this->createData($data);
