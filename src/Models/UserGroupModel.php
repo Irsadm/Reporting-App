@@ -130,7 +130,7 @@ class UserGroupModel extends BaseModel
 		$parameters = [
 			':group_id' => $groupId
 		];
-		$qb->select('users.*')
+		$qb->select('users.*','ug.status as user_status')
 		   ->from('users', 'users')
 		   ->join('users', $this->table, 'ug', 'ug.user_id = users.id')
 		   ->where('ug.group_id = :group_id')
