@@ -94,6 +94,8 @@ $app->group('', function() use ($app, $container) {
         ->setName('del.pic.group');
         $this->post('/item/create', 'App\Controllers\web\ItemController:createItemByPic')
         ->setName('pic.create.item');
+        $this->get('/delete/item/{id}', 'App\Controllers\web\ItemController:deleteItemByPic')
+        ->setName('pic.delete.item');
     });
     $app->group('/user', function(){
         $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
