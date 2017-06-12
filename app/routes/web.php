@@ -105,7 +105,10 @@ $app->group('', function() use ($app, $container) {
         $this->get('/group/pic', 'App\Controllers\web\GroupController:getPic')
         ->setName('get.pic.group');
         $this->get('/group/{id}/del', 'App\Controllers\web\GroupController:delGroup')
-        ->setName('del.pic.group');});
+        ->setName('del.pic.group');
+        $this->post('/item/create', 'App\Controllers\web\ItemController:createItemByPic')
+        ->setName('pic.create.item');
+    });
 
     $app->group('/user', function(){
 

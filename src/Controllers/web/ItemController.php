@@ -317,4 +317,85 @@ class ItemController extends BaseController
         }
     }
 
+    public function createItemByPic($request, $response)
+    {
+        $storage = new \Upload\Storage\FileSystem('assets/images');
+        $image = new \Upload\File('image',$storage);
+        $image->setName(uniqid());
+        $image->addValidations(array(
+            new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+            'image/jpg', 'image/jpeg')),
+            new \Upload\Validation\Size('5M')
+        ));
+
+        $dataImg = array(
+          'name'       => $image->getNameWithExtension(),
+          'extension'  => $image->getExtension(),
+          'mime'       => $image->getMimetype(),
+          'size'       => $image->getSize(),
+          'md5'        => $image->getMd5(),
+          'dimensions' => $image->getDimensions()
+        );
+
+        $rules = [
+            'required'  => [
+                ['name'],
+                ['description'],
+                ['recurrent'],
+                ['start_date']
+            ],
+            'dateformat' => [
+                ['start_date', 'Y-m-d']
+            ]
+
+        ];
+
+        $this->validator->rules($rules);
+        // var_dump($request->getParams()); die();
+        $this->validator->labels([
+            'name'         => 'Name',
+            'recurrent'    => 'Recurrent',
+            'description'  => 'Description',
+            'start_date'   => 'Start date',
+        ]);
+
+
+
+
+        if ($this->validator->validate()) {
+            if (!empty($_FILES['image']['name'])) {
+            $image->upload();
+            $imageName = $dataImg['name'];
+        } else {
+            $imageName = '';
+        }
+
+        $itemData = [
+            'name'         => $request->getParams()['name'],
+            'description'  => $request->getParams()['description'],
+            'recurrent'    => $request->getParams()['recurrent'],
+            'start_date'   => $request->getParams()['start_date'],
+            'group_id'     => $request->getParams()['group_id'],
+            'user_id '     => $request->getParams()['user_id'],
+            'image '       => $imageName,
+            'creator'      => $_SESSION['login']['id'],
+        ];
+            $item  = new Item($this->db);
+
+            $newItem = $item->create($itemData);
+
+            // var_dump($newItem); die();
+
+            $this->flash->addMessage('succes', 'New item successfully added');
+
+            return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+        } else {
+
+            $_SESSION['old']  = $request->getParams();
+            $_SESSION['errors'] = $this->validator->errors();
+            // var_dump($_SESSION['old']); die();
+            return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+        }
+    }
+
 }

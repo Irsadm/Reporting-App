@@ -62,9 +62,7 @@
 </div>
 
 
-{% for item in items %}
 
-<!-- Modal -->
 <div id="create" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -73,7 +71,7 @@
                 <div class="panel panel-heading"><h3 class="panel-title">
                     <strong>Create item to {{ groups.name }}</strong></h3></div>
                     <div class="panel-body">
-                        <form  action="{{path_for('item.update.post', {('id'): item.id })}}" method="post">
+                        <form  action="{{path_for('pic.create.item')}}" method="post" enctype="multipart/form-data">
                             {% if errors %}
                             <div class="alert alert-danger">
                                 <a class="close" data-dismiss="alert" href="#">x</a> Please fill out the form
@@ -135,20 +133,20 @@
                                 <div class="col-xs-12 col-sm-6 col-md-5">
                                     <div class="form-group {{ errors.image ? 'has-error' : '' }}">
 
-                                            <label>Image :</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-image"></i>
-                                                </div>
-                                                <input type="file" id="file" class="form-control"
-                                                name="image" placeholder="Item image">
+                                        <label>Image :</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-image"></i>
                                             </div>
-                                            {% if errors.image %}
-                                            <span class="help-block">{{errors.image | first}}</span>
-                                            {% endif %}<br />
-                                            <div id="image_preview"><img id="previewing"
-                                                src="{{ base_url() }}/assets/images/{{ login.image }}"
-                                                class="img-thumbnail" style="width:200px" ></div>
+                                            <input type="file" id="file" class="form-control"
+                                            name="image" placeholder="Item image">
+                                        </div>
+                                        {% if errors.image %}
+                                        <span class="help-block">{{errors.image | first}}</span>
+                                        {% endif %}<br />
+                                        <div id="image_preview"><img id="previewing"
+                                            src="{{ base_url() }}/assets/images/{{ login.image }}"
+                                            class="img-thumbnail" style="width:200px" ></div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-7">
@@ -162,20 +160,18 @@
                                             <center>
                                                 <br>
                                                 <button  style="margin-top:30px;margin-bottom:10px;"
-                                                 type="submit" class="btn btn-success">
-                                                    <i class="fa fa-check-square-o" aria-hidden="true"></i> Create
-                                                </button>
-                                                </center>
-                                        </div>
+                                                type="submit" class="btn btn-success">
+                                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Create
+                                            </button>
+                                        </center>
                                     </div>
                                 </div>
-
-                                </form>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}
