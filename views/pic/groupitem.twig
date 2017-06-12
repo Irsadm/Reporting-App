@@ -1,7 +1,13 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} Reporting App {% endblock %}
-
+{% block script %}
+{% if errors %}
+<script type="text/javascript">
+$('#create').modal('show');
+</script>
+{% endif %}
+{% endblock %}
 {% block headContent %}
         <i style="color:green" class="fa fa-list-alt">  Group Items  </i>
         <span style="font-size: 20px;" class="pull-right" >
