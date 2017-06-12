@@ -128,4 +128,13 @@ class UserModel extends BaseModel
         return $result->fetchAll();
     }
 
+    //Set active user account
+    public function setActive($id)
+    {
+        $qb = $this->db->createQueryBuilder();
+        $qb->update($this->table)
+        ->set('status', 2)
+        ->where('id = ' . $id)
+        ->execute();
+    }
 }

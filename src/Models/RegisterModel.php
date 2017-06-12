@@ -7,51 +7,45 @@ class RegisterModel extends BaseModel
 	protected $table = 'registers';
 	protected $column = ['user_id', 'token', 'expired_date'];
 
-	public function add(array $data)
-	{
-		$data = [
-			'user_id'	 	=> 	$data['user_id'],
-			'token'			=>	$data['token'],
-			'expired_date'	=>	$data['expired'],
-		];
-		$this->createData($data);
-
-		return $this->db->lastInsertId();
-	}
-
-	public function update(array $data, $images, $id)
-	{
-		$data = [
-			'title' 	=> 	$data['title'],
-			'content'	=>	$data['content'],
-			'image'		=>	$images,
-		];
-		$this->updateData($data, $id);
-	}
-
-	public function getArticle()
+    public function setToken($id, $token)
     {
-        $qb = $this->db->createQueryBuilder();
+        $data = [
+            'user_id' => $id,
+            'token' => $token,
+            'expired_date' => date('Y-m-d H:i:s', strtotime('+7 day'))
+        ];
 
-		$this->query =$qb->select('*')
-            ->from($this->table)
-            ->where('deleted = 0');
+            $this->createData($data);
 
-        return $this;
+			return $this->db->lastInsertId();
     }
 
-    public function search($title)
+
+    public function update(array $data, $column, $value)
     {
-    	$qb = $this->db->createQueryBuilder();
-        $this->query = $qb->select('*')
-                 ->from($this->table)
-                 ->where('title LIKE :title')
-                 ->andWhere('deleted = 0')
-                 ->setParameter('title', '%'.$title.'%');
+        $columns = [];
+        $paramData = [];
+        $qb = $this->db->createQueryBuilder();
+        $qb->update($this->table);
+        foreach ($data as $key => $values) {
+            $columns[$key] = ':'.$key;
+            $paramData[$key] = $values;
+            $qb->set($key, $columns[$key]);
+        }
+        $qb->where( $column.'='. $value)
+           ->setParameters($paramData)
+           ->execute();
+    }
 
-        $result = $this->query->execute();
+    public function delete($columnId, $id)
+    {
+        $param = ':'.$columnId;
 
-        return $result->fetchAll();
+        $qb = $this->db->createQueryBuilder();
+        $qb->delete($this->table)
+           ->where($columnId.' = '. $param)
+           ->setParameter($param, $id)
+           ->execute();
     }
 
 }

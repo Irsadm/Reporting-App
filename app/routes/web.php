@@ -1,18 +1,15 @@
 <?php
 
+// $app->get('/mail', 'App\Controllers\web\UserController:testMail');
+// $app->get('/test', 'App\Controllers\web\UserController:activateAccount')->setName('activate.acount');
 
 $app->get('/register', 'App\Controllers\web\UserController:getRegister')->setName('register');
-
 $app->post('/register', 'App\Controllers\web\UserController:postRegister');
-
+$app->get('/activateaccount/{token}', 'App\Controllers\web\UserController:activateAccount')->setName('activate.account');
 $app->get('/admin', 'App\Controllers\web\UserController:getLoginAsAdmin')->setName('login.admin');
-
 $app->post('/admin', 'App\Controllers\web\UserController:loginAsAdmin');
-
 $app->get('/', 'App\Controllers\web\UserController:getLogin')->setName('login');
-
 $app->post('/', 'App\Controllers\web\UserController:login');
-$app->get('/mail', 'App\Controllers\web\UserController:testMail');
 
 $app->group('', function() use ($app, $container) {
     $app->get('/home', 'App\Controllers\web\HomeController:index')->setName('home');
