@@ -374,7 +374,18 @@ class UserController extends BaseController
 
     public function viewProfile($request, $response)
     {
-        return  $this->view->render($response, '/users/profile.twig');
+        $user = new UserModel($this->db);
+        $guardian = new \App\Models\GuardModel($this->db);
+        $group  = new \App\Models\GroupModel($this->db);
+        $userGroup = new \App\Models\UserGroupModel($this->db);
+
+        $data['guardian'] = $user->getUserGuardian($_SESSION['login']['id']);
+        $data['group1'] = $group->getUserGroup($_SESSION['login']['id'],0);
+        $data['group2'] = $group->getUserGroup($_SESSION['login']['id'],1);
+
+        // var_dump($data['guardian']); die();
+
+        return  $this->view->render($response, '/users/profile.twig', $data);
     }
 
     public function getSettingAccount($request, $response)
@@ -872,5 +883,21 @@ class UserController extends BaseController
         }
 
         return $response->withRedirect($this->router->pathFor('login'));
+    }
+
+    public function deleteGuardian($request, $response, $args)
+    {
+        $guardian = new \App\Models\GuardModel($this->db);
+
+        $findGuardian = $guardian->findGuard('guard_id', $args['id'], 'user_id', $_SESSION['login']['id']);
+
+        if ($findGuardian) {
+            $guardian->hardDelete($findGuardian['id']);
+
+            $this->flash->addMessage('succes', 'Guardian succesfully deleted');
+        }
+
+        return $response->withRedirect($this->router->pathFor('user.profile'));
+
     }
 }
