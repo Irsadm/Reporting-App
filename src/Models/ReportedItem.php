@@ -2,23 +2,17 @@
 
 namespace App\Models;
 
-class reportedItem extends BaseModel
+class ReportedItem extends BaseModel
 {
-    protected $table = 'item_reported';
+    protected $table = 'reported_item';
     protected $column = ['id', 'name'];
     protected $joinTable = 'groups';
 
     public function create($data)
     {
-        $date = date('Y-m-d H:i:s');
         $data = [
-            'name'        => $data['name'],
-            'description' => $data['description'],
-            'reported_at' => $data['reported_at'],
-            'group_id'    => $data['group_id'],
-            'user_id'     => $data['user_id'],
-            'image'       => $data['image'],
-            // 'updated_at'  => $date
+            'item_id' => $data['item_id'],
+            'user_id' => $data['user_id'],
         ];
 
         $this->createData($data);

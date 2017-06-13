@@ -176,7 +176,7 @@ class UserController extends BaseController
     public function trashUser($request, $response)
     {
         $user = new UserModel($this->db);
-        $datauser = $user->trash();
+        $datauser = $user->getInActiveUser();
         $data['usertrash'] = $datauser;
         return $this->view->render($response, 'admin/users/trash.twig', $data);
     }
@@ -301,7 +301,8 @@ class UserController extends BaseController
                 $login['password'])) {
                 $_SESSION['login'] = $login;
                 if ($_SESSION['login']['status'] == 1) {
-                    // $this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
+                    // var_dump($_SESSION['login']['status']);die();
+                    $this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
                     return $response->withRedirect($this->router->pathFor('home'));
                 } else {
                     if (isset($_SESSION['login']['status'])) {
@@ -530,11 +531,9 @@ class UserController extends BaseController
     {
         $user = new UserModel($this->db);
         $item = new \App\Models\Item($this->db);
-        $userItem = new \App\Models\UserItem($this->db);
 
-        $userItems = $userItem->getItem($args['id']);
+        $userItems = $item->finds('user_id', $args['id'], 'user_id', $args['id']);
         $findUser = $user->find('id', $args['id']);
-        // var_dump($userItems);die();
 
         if ( $_SESSION['login']['status'] == '1' ) {
             return $this->view->render($response, 'guardian/useritem.twig', [
@@ -623,7 +622,7 @@ class UserController extends BaseController
         return $response->withRedirect($this->router->pathFor('list.user'));
     }
 
-    public function ListUserByGuard($request, $response)
+    public function listUserByGuard($request, $response)
     {
         $guard = new \App\Models\GuardModel($this->db);
         $user = new UserModel($this->db);
@@ -812,7 +811,14 @@ class UserController extends BaseController
         $data['users'] =  $user->search($search, $userId);
         $data['count'] = count($data['users']);
 
-        return $this->view->render($response, 'guardian/view-user-search.twig', $data);
+        if (!empty($request->getParams()['guard'])) {
+
+            return $this->view->render($response, 'guardian/view-user-search.twig', $data);
+
+        } elseif (!empty($request->getParams()['group'])) {
+
+            return $this->view->render($response, 'admin/group/not-member.twig', $data);
+        }
     }
 
     public function getItemsUser($request,$response, $args)
@@ -861,6 +867,7 @@ class UserController extends BaseController
         if ($userToken && $userToken['expired_date'] > $now) {
 
             $user = $users->setActive($userToken['user_id']);
+            $registers->hardDelete($userToken['id']);
 
             $this->flash->addMessage('succes', 'Your account has been successfully activated');
 

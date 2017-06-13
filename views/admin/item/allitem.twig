@@ -20,9 +20,9 @@
                                 <th>Group</th>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>Recurrent</th>
+                                <th>Recurring</th>
                                 <th>Start Date</th>
-                                <th>End Date</th>
+                                <th>Status</th>
                                 <th>Option</th>
                             </tr>
                         </thead>
@@ -32,10 +32,20 @@
                                 <td>{{ item.groups }}</td>
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.description }}</td>
-                                <td>{{ item.recurrent }}</td>
+                                <td>{% if item.recurrent == null %}
+                                    no recurring
+                                    {% else %}
+                                    {{ item.recurrent }}
+                                    {% endif %}
+                                </td>
                                 <td>{{ item.start_date }}</td>
-                                <td>{{ item.end_date }}</td>
                                 <td>
+                                {% if item.status == 1 %}
+                                reported
+                                {% else %}
+                                unreported
+                                {% endif %}
+                                </td><td>
                                     <a href="{{ path_for('item.soft.delete', {('id'): item.id})}}"
                                      title="Remove item" style="color:red" data-toggle="tooltip"
                                      data-placement="top"><i class="fa fa-trash-o"></i></a>

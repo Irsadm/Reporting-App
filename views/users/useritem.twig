@@ -24,22 +24,25 @@ $('#create').modal('show');
         <div class="panel panel-default">
             <div class="panel-body">
                 {% for item in items %}
-                <!-- <form action="{{ path_for('user.item.status', { ('id'): item.id })}}" method="get"> -->
                     {% endfor %}
                     <table id="" class="example2 table table-condensed table-bordered table-striped"
                     width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th class="text-center">Report it</th>
                             <th class="text-center">Delete</th>
-
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in items %}
                         <tr>
+                            <td class="text-center">
+                                <img src="{{ base_url() }}/assets/images/{{ item.image }}"
+                                     height="100" width="100" style="margin-bottom:5px">
+                            </td>
                             <td>{{ item.name }}</td>
                             <td>{{ item.description }}</td>
                             <td class="text-center">
@@ -49,8 +52,6 @@ $('#create').modal('show');
                                 <button class="btn btn-info btn-md"
                                 style="margin-right:10px">Report</button>
                             </a>
-                            <!-- <input class="custom-control-input" id="checkbox"
-                            type="checkbox"  onclick="this.form.submit();"> -->
                         </td>
                         <td class="text-center">
                             {% if item.user_id != null %}
@@ -115,6 +116,7 @@ $('#create').modal('show');
                 width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Description</th>
                         <th class="text-center">Reported At</th>
@@ -125,6 +127,10 @@ $('#create').modal('show');
                 <tbody>
                     {% for item in itemdone %}
                     <tr>
+                        <td class="text-center">
+                            <img src="{{ base_url() }}/assets/images/{{ item.image }}"
+                                 height="100" width="100" style="margin-bottom:5px">
+                        </td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.description }}</td>
                         <td class="text-center">
@@ -211,7 +217,7 @@ $('#create').modal('show');
                                             </button>
                                             {% else %}
                                             <button  style="margin-top:30px;margin-bottom:10px;"
-                                            type="submit" name="group" value="2" class="btn btn-success">
+                                            type="submit" name="group" value="2" class="btn btn-info">
                                             <i class="fa fa-check-square-o" aria-hidden="true"></i> Report
                                         </button>
                                         {% endif %}

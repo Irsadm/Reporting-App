@@ -3,7 +3,11 @@
 {% block title %} Group | All Users {% endblock %}
 
 {% block headContent %}
-<i style="color:green" class="fa fa-check-square-o">All users of the {{ group }}</i>
+	<i style="color:green" class="fa fa-check-square-o">All users of the {{ group }}</i>
+	<span style="font-size: 20px;" class="pull-right">
+	<button class="btn btn-primary" href="" data-toggle="modal" data-target="#search">
+		<i class="fa fa-plus fa-lg"> Add User</i></button>
+	</span>
 {% endblock %}
 
 {% block content %}
@@ -62,6 +66,54 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="search" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- <div id="myTabContent" class="tab-content"> -->
+                <div class="tab-pane fade active in" id="signin">
+                    <fieldset>
+                        <!-- Sign In Form -->
+                        <!-- Text input-->
+                        <form class="form-horizontal"
+                         action="{{ path_for('post.user.search') }}" method="POST">
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input name="search" type="text" class="form-control"
+                                     placeholder="Name or phone number..." required="">
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="control-group">
+                                <label class="control-label" for="search"></label>
+                                <div class="controls">
+									<input type="hidden" name="group" value="1">
+                                    <button 
+                                     type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Button -->
+                        <div class="control-group">
+                            <label class="control-label" for="signin"></label>
+                            <center>
+                                <div class="controls">
+                                    <button type="button" class="btn btn-default"
+                                     data-dismiss="modal">Close</button>
+                                </div>
+                            </center>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

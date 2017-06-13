@@ -6,7 +6,7 @@ class HomeController extends BaseController
 {
     public function index($request, $response)
     {
-        if ($_SESSION['login']['status'] == 2) {
+        if ($_SESSION['login']['status'] == 1) {
             $article = new \App\Models\ArticleModel($this->db);
             $group = new \App\Models\GroupModel($this->db);
             $item = new \App\Models\Item($this->db);
@@ -34,15 +34,26 @@ class HomeController extends BaseController
     			]
     		]);
 
-        } elseif ($_SESSION['login']['status'] == 0) {
+        } elseif ($_SESSION['login']['status'] == 2) {
             $article = new \App\Models\ArticleModel($this->db);
 
-            $page = $request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+            $allArticle = count($article->getAll());
+            // var_dump($allArticle);die();
             $search = $request->getQueryParam('search');
+
+            if ($allArticle < 3) {
+
+                $page = 1;
+
+            }else {
+
+                $page = $request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+            }
+
             if (!empty($search)) {
                 $findAll = $article->search($request->getQueryParam('search'));
             } else {
-                $findAll = $article->getArticle()->setPaginate($page, 2);
+                $findAll = $article->getArticle()->setPaginate($page, 3);
             }
 
             $data = $this->view->render($response, 'index.twig', ['data' => $findAll]);

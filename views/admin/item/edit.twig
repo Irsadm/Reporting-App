@@ -84,16 +84,6 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-6 col-md-5">
-                            <div class="form-group {{ errors.end_date ? 'has-error' : '' }}">
-                                <label for="end_date">End date</label>
-                                <input type="text" name="end_date" class="form-control"
-                                 value="{{ item.end_date}}">
-                                {% if errors.end_date %}
-                                    <span class="help-block">{{ errors.end_date | first }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
                     </div>
                     <center><button type="submit" class="btn btn-success">
                         <i class="fa fa-pencil-square" aria-hidden="true"></i> UPDATE </button></center>

@@ -3,7 +3,7 @@
 {% block title %} Reporting App {% endblock %}
 
 {% block headContent %}
-    <i style="color:green" class="fa  fa-file-text-o">  Create Item</i>
+<i style="color:green" class="fa  fa-file-text-o">  Create Item</i>
 {% endblock %}
 
 {% block content %}
@@ -11,103 +11,121 @@
 <div class="box box-info" style="margin-top:30px">
     <div class="panel panel-default">
         <div class="panel panel-heading"><h3 class="panel-title"><strong>Create Item</strong></h3></div>
-            <div class="panel-body">
-                <form  action="{{path_for('item.add.post')}}" method="post">
-                    {% if errors %}
-                        <div class="alert alert-danger">
-                            <a class="close" data-dismiss="alert" href="#">x</a> Please fill out the form
-                        </div>
-                    {% endif %}
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-5 col-md-7">
-                            <div class="form-group {{ errors.group_id ? 'has-error' : '' }}">
-                                <label for="group_id">Group</label>
-                                <select class="form-control" name="group_id" value="">
-                                    <option value="">Select Group</option>
-                                    {% for data in group %}
-                                        <option value="{{ data.id }}"{% if  old.group_id == data.id %}
-                                         selected="selected"{% endif %}>{{ data.name }}</option>
-                                    {% endfor %}
-                                </select>
-                                {% if errors.group_id %}
-                                    <span class="help-block">{{ errors.group_id | first }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-4 col-md-5">
-                            <div class="form-group {{ errors.name ? 'has-error' : '' }}">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" placeholder="Name"
-                                 class="form-control"  value="{{ old.name }}">
-                                {% if errors.name %}
-                                    <span class="help-block">{{ errors.name | first }}</span>
-                                {% endif %}
-                            </div>
+        <div class="panel-body">
+            <form  action="{{path_for('item.add.post')}}" method="post" enctype="multipart/form-data">
+                {% if errors %}
+                <div class="alert alert-danger">
+                    <a class="close" data-dismiss="alert" href="#">x</a> Please fill out the form
+                </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-5">
+                        <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                            <label for="name">Name :</label>
+                            <input type="text" name="name" class="form-control">
+                            {% if errors.name %}
+                            <span class="help-block">{{ errors.name | first }}</span>
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-7">
+                        <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                            <label for="description">Description :</label>
+                            <input type="text" name="description" class="form-control">
+                            {% if errors.description %}
+                            <span class="help-block">{{ errors.description | first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 col-md-5">
+                        <div class="form-group {{ errors.group_id ? 'has-error' : '' }}">
+                            <label for="group_id">Item to :</label>
+                            <select class="form-control" name="user_id" >
+                                <option value="">Select Group</option>
+                                {% for group in groups %}
+                                <option value="{{ group.id }}">{{ group.name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if errors.group_id %}
+                            <span class="help-block">{{ errors.group_id | first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-7">
+                        <div class="form-group {{ errors.recurrent ? 'has-error' : '' }}">
+                            <label for="recurrent">Recurring :</label>
+                            <select class="form-control" name="recurrent" value="">
+                                <option value="">No Recurring</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monhtly">Monthly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                            {% if errors.recurrent %}
+                            <span class="help-block">{{ errors.recurrent | first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-5 col-md-5">
+                        <div class="form-group {{ errors.user_id ? 'has-error' : '' }}">
+                            <label for="user_id">Item to :</label>
+                            <select class="form-control" name="user_id" >
+                                <option value="">All Member</option>
+                                {% for member in users %}
+                                <option value="{{ member.id }}">{{ member.name }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if errors.user_id %}
+                            <span class="help-block">{{ errors.user_id | first }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-7">
+                        <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
+                            <label for="start_date">Start date :</label>
+                            <input type="date" name="start_date" class="form-control">
+                            {% if errors.start_date %}
+                            <span class="help-block">{{ errors.start_date | first }}</span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-5">
+                        <div id="image_preview"><img id="previewing"
+                            src="{{ base_url() }}/assets/images/{{ login.image }}"
+                            class="img-thumbnail" style="width:200px" ></div>
+                        </div>
                         <div class="col-xs-12 col-sm-6 col-md-7">
-                            <div class="form-group {{ errors.description ? 'has-error' : '' }}">
-                                <label for="description">Description</label>
-                                <input type="text" name="description" placeholder="Description"
-                                 class="form-control"  value="{{ old.description }}">
-                                {% if errors.description %}
-                                    <span class="help-block">{{ errors.description | first }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-5">
-                            <div class="form-group {{ errors.recurrent ? 'has-error' : '' }}">
-                                <label for="recurrent">Recurrent</label>
-                                <select class="form-control" name="recurrent" >
-                                    <option value="">Select Recurrent</option>
-                                    <option value="daily" {% if  old.recurrent == "daily" %}
-                                     selected="selected"{% endif %}>Daily</option>
-                                    <option value="weekly"{% if  old.recurrent == "weekly" %}
-                                     selected="selected"{% endif %}>Weekly</option>
-                                    <option value="monthly"{% if  old.recurrent == "monthly" %}
-                                     selected="selected"{% endif %}>Monthly</option>
-                                    <option value="yearly"{% if  old.recurrent == "yearly" %}
-                                     selected="selected"{% endif %}>Yearly</option>
-                                </select>
-                                {% if errors.recurrent %}
-                                    <span class="help-block">{{ errors.recurrent | first }}</span>
-                                {% endif %}
-                            </div>
+                            <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                                <label>Image :</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-image"></i>
+                                    </div>
+                                    <input type="file" id="file" class="form-control"
+                                    name="image" placeholder="Item image">
+                                </div>
+                                {% if errors.image %}
+                                <span class="help-block">{{errors.image | first}}</span>
+                                {% endif %}<br />
+
+                                    <br>
+                                    <button  style="margin-top:30px;margin-bottom:10px;"
+                                    type="submit" class="btn btn-success">
+                                    <i class="fa fa-check-square-o" aria-hidden="true"></i> Create
+                                </button>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-7">
-                            <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
-                                <label for="start_date">Start date</label>
-                                <input type="datetime" placeholder="yyyy-mm-dd hh:mm:ss"
-                                name="start_date" class="form-control"  value="{{ old.start_date }}">
-                                {% if errors.start_date %}
-                                    <span class="help-block">{{ errors.start_date | first }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-5">
-                            <div class="form-group {{ errors.end_date ? 'has-error' : '' }}">
-                                <label for="end_date">End date</label>
-                                <input type="datetime" placeholder="yyyy-mm-dd hh:mm:ss"
-                                name="end_date" class="form-control"  value="{{ old.end_date }}">
-                                {% if errors.end_date %}
-                                    <span class="help-block">{{ errors.end_date | first }}</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <center><button type="submit" class="btn btn-success">
-                        <i class="fa fa-file-o" aria-hidden="true"></i> CREATE </button></center>
-                    <hr style="margin-top:10px;margin-bottom:10px;">
-
-                </form>
-
-            </div>
-
+                </div>
+            </form>
+        </div>
     </div>
-
 </div>
 
 {% endblock %}

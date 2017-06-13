@@ -70,14 +70,26 @@ class UserModel extends BaseModel
     }
 
     public function getAllUser()
-        {
-            $qb = $this->db->createQueryBuilder();
-                $qb->select('*')
-                         ->from($this->table)
-                         ->where('status = 0 && deleted = 0');
-                $query = $qb->execute();
-                return $query->fetchAll();
-        }
+    {
+        $qb = $this->db->createQueryBuilder();
+        $qb->select('*')
+        ->from($this->table)
+        ->where('status = 2 && deleted = 0');
+
+        $query = $qb->execute();
+        return $query->fetchAll();
+    }
+
+    public function getInActiveUser()
+    {
+        $qb = $this->db->createQueryBuilder();
+        $qb->select('*')
+        ->from($this->table)
+        ->where('status = 3 || deleted = 1');
+
+        $query = $qb->execute();
+        return $query->fetchAll();
+    }
 
     public function checkDuplicate($username, $email)
     {

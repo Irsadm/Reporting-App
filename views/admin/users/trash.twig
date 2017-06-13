@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block headContent %}
-    <i class="fa fa-trash-o">   Trash User </i> {% endblock %}
+    <i class="fa fa-trash-o"> Trash User</i> {% endblock %}
 
 {% block content %}
 
@@ -37,6 +37,7 @@ swal("Succes!", "Data Berhasil Di Delete !", "success")
                             <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
+                            <th>Status</th>
                             <th class="text-center">Option</th>
                         </tr>
                     </thead>
@@ -48,14 +49,23 @@ swal("Succes!", "Data Berhasil Di Delete !", "success")
                             <td>{{data.name}}</td>
                             <td>{{data.username}}</td>
                             <td>{{data.email}}</td>
+                            <td>
+                                {% if data.status == 3 %}
+                                Not activated
+                                {% elseif data.deleted == 1 %}
+                                Inactivated
+                                {% endif %}
+                            </td>
                             <td class="text-center">
                                 <a href="{{path_for('user.delt' , {('id'): data.id})}}"
                                 title=" Delete Data" style="color:red" data-toggle="tooltip"
                                 data-placement="top"><i class="fa fa-times"></i></a>
 
+                                {% if data.deleted == 1 %}
                                 <a href="{{path_for('user.restore' , {('id'): data.id})}}"
                                 data-toggle="tooltip" data-placement="top" title=" Restore Data" >
                                 <i class="fa fa-refresh margin"></i></a>
+                                {% endif %}
 
                                 <a href="" data-toggle="modal" data-target="#{{data.id}}"
                                 value="{{data.id}}"title=" View User" ><i class="fa fa-eye"></i></a>
