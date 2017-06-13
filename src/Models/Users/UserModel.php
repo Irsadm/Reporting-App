@@ -149,4 +149,25 @@ class UserModel extends BaseModel
         ->where('id = ' . $id)
         ->execute();
     }
+
+    public function getUserGuardian($userId)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+        $query1 = $qb->select('guard_id')
+                     ->from('guardian')
+                     ->where('user_id =' . $userId)
+                     ->execute();
+
+        $qb1 = $this->db->createQueryBuilder();
+
+        $this->query = $qb1->select('u.name', 'u.id', 'u.phone', 'u.email', 'u.gender', 'u.address', 'u.image')
+             ->from($this->table, 'u')
+             ->join('u', 'guardian', 'g', $qb1->expr()->in('u.id', $query1))
+             ->groupBy('u.id');
+
+             $result = $this->query->execute();
+
+        return $result->fetchAll();
+    }
 }

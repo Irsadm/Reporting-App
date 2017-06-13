@@ -53,5 +53,28 @@ class GroupModel extends BaseModel
 
         return $result->fetchAll();
     }
+
+	public function getUserGroup($userId, $status)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$query1 = $qb->select('group_id')
+					 ->from('user_group', 'ug')
+					 ->where('user_id =' . $userId)
+					 ->join('ug', 'groups', 'g', 'g.id = ug.group_id')
+					 ->andWhere('ug.status ='. $status)
+					 ->execute();
+
+		$qb1 = $this->db->createQueryBuilder();
+
+		$this->query = $qb1->select('g.name')
+			 ->from($this->table, 'g')
+			 ->join('g', 'user_group' , 'ug', $qb1->expr()->in('g.id', $query1))
+			 ->groupBy('g.id');
+
+			 $result = $this->query->execute();
+
+		return $result->fetchAll();
+	}
 }
 ?>
