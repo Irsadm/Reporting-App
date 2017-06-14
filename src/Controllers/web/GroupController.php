@@ -282,18 +282,16 @@ class GroupController extends BaseController
 		$userGroup = new UserGroupModel($this->db);
 		$groups = new GroupModel($this->db);
 		$users = new \App\Models\Users\UserModel($this->db);
-		// $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-		// $users = $userGroup->findAll($args['id'])->setPaginate($page, 10);
+
 		$user= $_SESSION['login'];
 		$pic = $userGroup->finds('group_id', $args['id'], 'user_id', $user['id']);
 		$member = $userGroup->getMember($args['id']);
 		$group = $groups->find('id', $args{'id'});
-		// $member = $userGroup->getMember($args['id']);
-// var_dump($member);die();
+
 		if ($user['status'] == 1 || $pic[0]['status'] == 1) {
 			return $this->view->render($response, 'pic/groupmember.twig', [
-				'members' => $member,
-				'group_id'	=> $args['id'],
+				'members' 	=> $member,
+				'group_id'	=> $group['id'],
 				'group'		=> $group['name'],
 			]);
 		} else {
@@ -325,31 +323,32 @@ class GroupController extends BaseController
 	}
 
 	//Set user as member of group
-	public function setMemberGroup($request, $response)
+	public function setMemberGroup($request, $response, $args)
 	{
 		$userGroup = new UserGroupModel($this->db);
 
 		$groupId = $request->getParams()['group_id'];
-		$pic = $userGroup->findUser('group_id', $groupId, 'user_id', $_SESSION['login']['id']);
+		$userId = $request->getParams()['user_id'];
+		$pic = $userGroup->finds('group_id', $groupId, 'user_id', $_SESSION['login']['id']);
+// var_dump($request->getParams());die();
+		if ($_SESSION['login']['status'] == 1 || $pic[0]['status'] == 1) {
+			$data = [
+				'group_id' 	=> 	$groupId,
+				'user_id'	=>	$userId,
+			];
 
-		if ($_SESSION['login']['status'] == 1 || $pic['status'] == 1) {
-			if (!empty($request->getParams()['member'])) {
-				foreach ($request->getParam('user') as $key => $value) {
-					$data = [
-						'group_id' 	=> 	$groupId,
-						'user_id'	=>	$value,
-					];
-					$addMember = $userGroup->add($data);
-				}
+			$addMember = $userGroup->createData($data);
 
-				if ($_SESSION['login']['status'] == 0 && $pic['status'] == 1) {
-					return $response->withRedirect($this->router
-					->pathFor('pic.all.users.get', ['id' => $groupId]));
-				}
+			if ($_SESSION['login']['status'] == 2 && $pic[0]['status'] == 1) {
+				return $response->withRedirect($this->router
+				->pathFor('pic.member.group.get', ['id' => $groupId]));
+
+			} else {
 
 				return $response->withRedirect($this->router
-				->pathFor('all.users.get', ['id' => $groupId]));
+				->pathFor('user.group.get', ['id' => $groupId]));
 			}
+
 		} else {
 			$this->flash->addMessage('error', 'You are not allowed to set member of this group!');
 			return $response->withRedirect($this->router

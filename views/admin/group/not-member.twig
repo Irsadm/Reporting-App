@@ -17,16 +17,20 @@
 				 height="151" width="151" style="margin-bottom:5px"></center>
 			  	<div class="caption">
                     <div class="col-lg-12">
-                        <p class="text-left">
-                            <b>Username :</b> {{user.username}}<br>
-                            <b>Phone :</b> {{user.phone}}<br>
-                        </p>
-                        <br>
+                        <p class="text-center">
+							<b>{{user.name}}</b><br><br>
+							<i class="fa fa-phone" aria-hidden="true"></i> {{user.phone}}<br>
+						</p>
+						<br>
                         <center>
-	                        <button class="btn btn-primary btn-info btn-md"
-		                    	style="margin-left:10px">
-		                    	<a href="{{ path_for('post.user.add', {('id'): user.id}) }}">Add User</a>
-		                    </button>
+							<form action="{{ path_for('pic.member.group.set') }}" method="POST">
+							<input type="hidden" name="group_id" value="{{ group_id }}">
+							<button type="submit" name="user_id" value="{{ user.id }}" class="btn btn-primary">
+								<i class="fa fa-plus-o" aria-hidden="{{ user.id }}"></i>
+								Add user to group
+								</button>
+							</a>
+							</form>
                         </center>
                     </div>
 			  	</div>

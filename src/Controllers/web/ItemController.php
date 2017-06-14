@@ -225,6 +225,7 @@ class ItemController extends BaseController
             return $response->withRedirect($this->router->pathFor('user.item.create'));
         }
     }
+
     public function getItemInGroup($request,$response, $args)
     {
         $items = new \App\Models\Item($this->db);
@@ -391,7 +392,11 @@ class ItemController extends BaseController
     public function reportItem($request, $response)
     {
         $items = new Item($this->db);
+        $mailer = new \App\Extensions\Mailers\Mailer();
+        $guards = new \App\Models\GuardModel($this->db);
+        $users = new \App\Models\Users\UserModel($this->db);
         $itemDone = new \App\Models\ReportedItem($this->db);
+        $userGroups = new \App\Models\UserGroupModel($this->db);
         $storage = new \Upload\Storage\FileSystem('assets/images');
         $image = new \Upload\File('image',$storage);
 
@@ -410,59 +415,80 @@ class ItemController extends BaseController
             $imgName = '';
         }
 
-        // $this->validator->rules($rules);
-        // $this->validator->labels([
-        //     'name' 			=>	'Name',
-        //     'description'	=>	'Description',
-        //     'start_date'	=>	'Start date',
-        // ]);
-
         $itemId = $request->getParams()['item_id'];
+        $username  = $_SESSION['login']['name'];
         $userId  = $_SESSION['login']['id'];
         $dateNow = date('Y-m-d H:i:s');
         $item = $items->find('id', $itemId);
+        $guardian = $guards->find('user_id', $userId);
+        $guard = $users->find('id', $guardian['guard_id']);
+        $picGroup = $userGroups->finds('group_id', $item['group_id'], 'status', '1');
+        $pic = $users->find('id', $picGroup[0]['user_id']);
 
-        if ($this->validator->validate()) {
+        $data = [
+            'description'	=>	$request->getParams()['description'],
+            'image'			=>	$imgName,
+            'reported_at'	=>	$dateNow,
+            'status'		=>	1,
+        ];
 
-            $data = [
-                'description'	=>	$request->getParams()['description'],
-                'image'			=>	$imgName,
-                'reported_at'	=>	$dateNow,
-                'status'		=>	1,
-            ];
+        if (!empty($request->getParams()['group'])) {
 
-            if (!empty($request->getParams()['group'])) {
-
-                $newItem = $items->create($item);
-                $addItems = $items->updateData($data, $newItem);
-
-                $itemDone->createData([
-                'item_id' 	=>	$newItem,
-                'user_id'	=>	$userId,
-                ]);
-
-            } elseif (!empty($request->getParams()['user'])) {
-
-                $addItems = $items->updateData($data, $itemId);
-
-            }
+            $newItem = $items->create($item);
+            $addItems = $items->updateData($data, $newItem);
 
             $itemDone->createData([
-                'item_id' 	=>	$itemId,
+                'item_id' 	=>	$newItem,
                 'user_id'	=>	$userId,
             ]);
 
-            $this->flash->addMessage('succes', 'Item successfully reported');
+        } elseif (!empty($request->getParams()['user'])) {
 
-            return $response->withRedirect($this->router
-            ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
+            $addItems = $items->updateData($data, $itemId);
 
-        } else {
-            $_SESSION['old'] = $request->getParams();
-            $_SESSION['errors'] = $this->validator->errors();
-            return $response->withRedirect($this->router
-            ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
         }
+
+        $itemDone->createData([
+            'item_id' 	=>	$itemId,
+            'user_id'	=>	$userId,
+        ]);
+
+        $date = date('d M Y H:i:s');
+        $content = $username .' has completed '. $item['name'] .' on '. $date;
+
+        if ($guard) {
+            $dataGuard = [
+                'subject' 	=>	$username.' item report',
+                'from'      =>	'reportingmit@gmail.com',
+                'to'	    =>	$guard['email'],
+                'sender'	=>	'Reporting App',
+                'receiver'	=>	$guard['name'],
+                'content'	=>	$content,
+            ];
+
+            $this->sendWebNotif($report, $guard['id']);
+            $mailer->send($dataGuard);
+        }
+
+        if ($pic && $pic['id'] != $guard['id']) {
+            $dataPic = [
+                'subject' 	=>	$username.' item report',
+                'from'      =>	'reportingmit@gmail.com',
+                'to'	    =>	$pic['email'],
+                'sender'	=>	'Reporting App',
+                'receiver'	=>	$pic['name'],
+                'content'	=>	$content,
+            ];
+
+            $this->sendWebNotif($report, $pic['id']);
+            $mailer->send($dataPic);
+        }
+
+        $this->flash->addMessage('succes', 'Item successfully reported');
+
+        return $response->withRedirect($this->router
+        ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
+
     }
 
     public function deleteItemByPic($request, $response, $args)

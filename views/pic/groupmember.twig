@@ -78,7 +78,7 @@
                         <!-- Sign In Form -->
                         <!-- Text input-->
                         <form class="form-horizontal"
-                         action="{{ path_for('post.user.search') }}" method="POST">
+                         action="{{ path_for('user.search') }}" method="POST">
                             <div class="control-group">
                                 <div class="controls">
                                     <input name="search" type="text" class="form-control"
@@ -90,8 +90,8 @@
                             <div class="control-group">
                                 <label class="control-label" for="search"></label>
                                 <div class="controls">
-									<input type="hidden" name="group" value="1">
-                                    <button 
+									<input type="hidden" name="group" value="{{ group_id }}">
+                                    <button
                                      type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
                                         <i class="fa fa-search"></i> Search
                                     </button>

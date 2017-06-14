@@ -690,8 +690,8 @@ class UserController extends BaseController
         $items = new \App\Models\Item($this->db);
         $mailer = new \App\Extensions\Mailers\Mailer();
         $guards = new \App\Models\GuardModel($this->db);
-        $userItems = new \App\Models\UserItem($this->db);
         $users = new \App\Models\Users\UserModel($this->db);
+        $userItems = new \App\Models\UserItem($this->db);
         $userGroups = new \App\Models\UserGroupModel($this->db);
 
         $groupId = $_SESSION['group'];
@@ -817,9 +817,11 @@ class UserController extends BaseController
         $user = new UserModel($this->db);
 
         $search = $request->getParams()['search'];
+
         $userId  = $_SESSION['login']['id'];
 
-        $data['users'] =  $user->search($search, $userId);
+        $data['group_id'] = $request->getParams()['group'];
+        $data['users'] = $user->search($search, $userId);
         $data['count'] = count($data['users']);
 
         if (!empty($request->getParams()['guard'])) {
