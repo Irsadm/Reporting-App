@@ -232,13 +232,14 @@ class ItemController extends BaseController
         $userGroups = new \App\Models\UserGroupModel($this->db);
 
         $picId  = $_SESSION['login']['id'];
+        $admin  = $_SESSION['login']['status'];
         $user = $userGroups->finds('group_id', $args['id'], 'user_id', $picId);
         $groupItem = $items->getGroupItem($args['id']);
         $group = $groups->find('id', $args['id']);
         $member = $userGroups->getMember($args['id']);
         $count = count($groupItem);
         // var_dump($member);die();
-        if ($user[0]['status'] == 1) {
+        if ($user[0]['status'] == 1 || $admin == 1 ) {
             return $this->view->render($response, 'pic/groupitem.twig', [
                 'items' => $groupItem,
                 'groups' => $group,
