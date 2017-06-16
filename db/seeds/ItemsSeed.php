@@ -19,10 +19,9 @@ class ItemsSeed extends AbstractSeed
                 'name'       =>  'Membaca',
                 'description'=>  'Membaca buku pelajaran',
                 'group_id'   =>  '1',
+                'creator'   =>  '1',
                 'start_date' =>  '2017-06-9',
                 'recurrent'  =>  'daily',
-                // 'updated_at'   =>  '2017-04-30 00:00:00',
-                // 'created_at'   =>  '2017-05-30 00:00:00',
             ];
 
             $data[] = [
@@ -30,18 +29,16 @@ class ItemsSeed extends AbstractSeed
                 'description'=>  'Upacara bendera Hari Senin',
                 'recurrent'  =>  'weekly',
                 'start_date' =>  '2017-06-4',
+                'creator'   =>  '1',
                 'group_id'   =>  '1',
-                // 'updated_at'   =>  '2017-04-30 00:00:00',
-                // 'created_at'   =>  '2017-05-30 00:00:00',
             ];
 
             $data[] = [
                 'name'       =>  'Tugas Bulanan',
                 'start_date' =>  '2017-05-8',
                 'start_date' =>  '2017-06-4',
+                'creator'   =>  '1',
                 'group_id'   =>  '1',
-                // 'updated_at'   =>  '2017-04-30 00:00:00',
-                // 'created_at'   =>  '2017-05-30 00:00:00',
             ];
 
             $this->insert('items', $data);

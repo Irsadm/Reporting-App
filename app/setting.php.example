@@ -16,7 +16,7 @@ return [
 
 	//setting db (with doctrine)
 	'db'	=> [
-		'url'	=> 'mysql://root:password@db/db_name',
+		'url'	=> 'mysql://root:nrd113@db/reporting-app',
 	],
 
 	'determineRouteBeforeAppMiddleware' => true,
@@ -25,4 +25,12 @@ return [
 	'lang'	=> [
 		'default'	=> 'en',
 	],
-	];
+
+	// Setting View
+	'view' => [
+		'path'	=>	__DIR__ . '/../views',
+		'twig'	=> 	[
+			'cache'	=>	false,
+		]
+	],
+];

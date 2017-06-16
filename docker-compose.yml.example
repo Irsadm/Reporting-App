@@ -1,7 +1,7 @@
 php:
-    image: default
+    image: php:7.0
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - ./:/var/www/html
     links:
@@ -12,13 +12,13 @@ db:
     ports:
       - "3636:3306"
     environment:
-       MYSQL_ROOT_PASSWORD: password
+       MYSQL_ROOT_PASSWORD: nrd113
     volumes:
       - ./mysql_directory:/var/lib/mysql
 
 phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8888:80"
+      - "8881:80"
     links:
       - db

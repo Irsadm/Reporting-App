@@ -325,34 +325,39 @@ class GroupController extends BaseController
 	//Set user as member of group
 	public function setMemberGroup($request, $response, $args)
 	{
-		$userGroup = new UserGroupModel($this->db);
+		$userGroups = new UserGroupModel($this->db);
 
 		$groupId = $request->getParams()['group_id'];
 		$userId = $request->getParams()['user_id'];
-		$pic = $userGroup->finds('group_id', $groupId, 'user_id', $_SESSION['login']['id']);
-// var_dump($request->getParams());die();
-		if ($_SESSION['login']['status'] == 1 || $pic[0]['status'] == 1) {
-			$data = [
-				'group_id' 	=> 	$groupId,
-				'user_id'	=>	$userId,
-			];
+		$pic = $userGroups->finds('group_id', $groupId, 'user_id', $_SESSION['login']['id']);
+		$userGroup = $userGroups->finds('group_id', $groupId, 'user_id', $userId);
+		// var_dump($request->getParams());die();
+		if ($userGroup) {
+			$this->flash->addMessage('error', 'Member already exist!');
 
-			$addMember = $userGroup->createData($data);
+		}else {
+			if ($_SESSION['login']['status'] == 1 || $pic[0]['status'] == 1) {
+				$data = [
+					'group_id' 	=> 	$groupId,
+					'user_id'	=>	$userId,
+				];
 
-			if ($_SESSION['login']['status'] == 2 && $pic[0]['status'] == 1) {
-				return $response->withRedirect($this->router
-				->pathFor('pic.member.group.get', ['id' => $groupId]));
-
+				$addMember = $userGroups->createData($data);
 			} else {
-
+				$this->flash->addMessage('error', 'You are not allowed to set member of this group!');
 				return $response->withRedirect($this->router
-				->pathFor('user.group.get', ['id' => $groupId]));
+				->pathFor('home'));
 			}
+		}
+
+		if ($_SESSION['login']['status'] == 2 && $pic[0]['status'] == 1) {
+			return $response->withRedirect($this->router
+			->pathFor('pic.member.group.get', ['id' => $groupId]));
 
 		} else {
-			$this->flash->addMessage('error', 'You are not allowed to set member of this group!');
+
 			return $response->withRedirect($this->router
-			->pathFor('home'));
+			->pathFor('user.group.get', ['id' => $groupId]));
 		}
 	}
 

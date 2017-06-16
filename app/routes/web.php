@@ -2,6 +2,8 @@
 
 $app->get('/register', 'App\Controllers\web\UserController:getRegister')->setName('register');
 $app->post('/register', 'App\Controllers\web\UserController:postRegister');
+$app->get('/activateaccount/{token}', 'App\Controllers\web\UserController:activateAccount')->setName('register');
+
 $app->get('/admin', 'App\Controllers\web\UserController:getLoginAsAdmin')->setName('login.admin');
 $app->post('/admin', 'App\Controllers\web\UserController:loginAsAdmin');
 $app->get('/', 'App\Controllers\web\UserController:getLogin')->setName('login');
@@ -30,6 +32,7 @@ $app->group('', function() use ($app, $container) {
             $this->post('/users', 'App\Controllers\web\GroupController:setUserGroup')->setName('user.group.set');
             $this->get('/{id}/allusers', 'App\Controllers\web\GroupController:getNotMember')->setName('all.users.get');
             $this->post('/allusers', 'App\Controllers\web\GroupController:setMemberGroup')->setName('member.group.set');
+            $this->get('/{id}/item', 'App\Controllers\web\ItemController:getItemInGroup')->setName('get.group.item');
         });
 
         $app->group('/user', function(){

@@ -233,13 +233,14 @@ class ItemController extends BaseController
         $userGroups = new \App\Models\UserGroupModel($this->db);
 
         $picId  = $_SESSION['login']['id'];
+        $admin  = $_SESSION['login']['status'];
         $user = $userGroups->finds('group_id', $args['id'], 'user_id', $picId);
         $groupItem = $items->getGroupItem($args['id']);
         $group = $groups->find('id', $args['id']);
         $member = $userGroups->getMember($args['id']);
         $count = count($groupItem);
         // var_dump($member);die();
-        if ($user[0]['status'] == 1) {
+        if ($user[0]['status'] == 1 || $admin == 1 ) {
             return $this->view->render($response, 'pic/groupitem.twig', [
                 'items' => $groupItem,
                 'groups' => $group,
@@ -255,22 +256,12 @@ class ItemController extends BaseController
 
     public function createItemByPic($request, $response)
     {
-        $storage = new \Upload\Storage\FileSystem('assets/images');
-        $image = new \Upload\File('image',$storage);
-        $image->setName(uniqid());
-        $image->addValidations(array(
-            new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
-            'image/jpg', 'image/jpeg')),
-            new \Upload\Validation\Size('5M')
-        ));
-        $dataImg = array(
-            'name'       => $image->getNameWithExtension(),
-            'extension'  => $image->getExtension(),
-            'mime'       => $image->getMimetype(),
-            'size'       => $image->getSize(),
-            'md5'        => $image->getMd5(),
-            'dimensions' => $image->getDimensions()
-        );
+        if ($request->getParams()['user_id'] === "") {
+            $user_id = NULL;
+        }else {
+            $user_id = $request->getParams()['user_id'];
+        }
+
         $rules = [
             'required'  => [
                 ['name'],
@@ -282,7 +273,6 @@ class ItemController extends BaseController
             ]
         ];
         $this->validator->rules($rules);
-        // var_dump($request->getParams()); die();
         $this->validator->labels([
             'name'         => 'Name',
             'recurrent'    => 'Recurrent',
@@ -291,6 +281,23 @@ class ItemController extends BaseController
         ]);
         if ($this->validator->validate()) {
             if (!empty($_FILES['image']['name'])) {
+                $storage = new \Upload\Storage\FileSystem('assets/images');
+                $image = new \Upload\File('image',$storage);
+                $image->setName(uniqid());
+                $image->addValidations(array(
+                    new \Upload\Validation\Mimetype(array('image/png', 'image/gif',
+                    'image/jpg', 'image/jpeg')),
+                    new \Upload\Validation\Size('5M')
+                ));
+                $dataImg = array(
+                    'name'       => $image->getNameWithExtension(),
+                    'extension'  => $image->getExtension(),
+                    'mime'       => $image->getMimetype(),
+                    'size'       => $image->getSize(),
+                    'md5'        => $image->getMd5(),
+                    'dimensions' => $image->getDimensions()
+                );
+
                 $image->upload();
                 $imageName = $dataImg['name'];
             } else {
@@ -303,18 +310,25 @@ class ItemController extends BaseController
             'recurrent'    => $request->getParams()['recurrent'],
             'start_date'   => $request->getParams()['start_date'],
             'group_id'     => $request->getParams()['group_id'],
-            'user_id'      => $request->getParams()['user_id'],
-            'image '       => $imageName,
+            'user_id'      => $user_id,
+            'image'       => $imageName,
             'creator'      => $_SESSION['login']['id'],
         ];
             $item  = new Item($this->db);
             $newItem = $item->create($itemData);
 
-            // var_dump($itemData); die();
 
 
             $this->flash->addMessage('succes', 'New item successfully added');
-            return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+
+
+            if ($_SESSION['login']['status'] = 1){
+
+                return $response->withRedirect($this->router->pathFor('get.group.item', ['id' => $request->getParams()['group_id'] ]));
+            } else {
+
+                return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+            }
         } else {
             $_SESSION['errors'] = $this->validator->errors();
             $_SESSION['old']  = $request->getParams();
@@ -515,9 +529,15 @@ class ItemController extends BaseController
 
             $this->flash->addMessage('error', 'You are not allowed to delete this item');
         }
+        if ($_SESSION['login']['status'] = 1){
 
-        return $response->withRedirect($this->router->pathFor('pic.item.group',
-        ['id' => $findItem['group_id'] ]));
+            return $response->withRedirect($this->router->pathFor('get.group.item', ['id' => $findItem['group_id'] ]));
+        } else {
+
+            return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $findItem['group_id'] ]));
+        }
+        // return $response->withRedirect($this->router->pathFor('pic.item.group',
+        // ['id' => $findItem['group_id'] ]));
     }
 
     public function deleteItemByUser($request, $response, $args)
