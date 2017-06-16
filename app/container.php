@@ -39,24 +39,11 @@ $container['view'] = function ($container) {
 	if (@$_SESSION['login']) {
 		$view->getEnvironment()->addGlobal('login', $_SESSION['login']);
 	}
-	// 
-	// if (@$_SESSION['user_group']) {
-	// 	$view->getEnvironment()->addGlobal('user_group', $_SESSION['user_group']);
-	// }
 
-	// if (@$_SESSION['search']) {
-	// 	$view->getEnvironment()->addGlobal('search', $_SESSION['search']);
-	// 	unset($_SESSION['search']);
-
-	// }
-	//
-	// if (@$_SESSION['group']) {
-	// 	$view->getEnvironment()->addGlobal('group', $_SESSION['group']);
-	// }
-	//
-	// if (@$_SESSION['pic']) {
-	// 	$view->getEnvironment()->addGlobal('pic', $_SESSION['pic']);
-	// }
+	if (@$_SESSION['search']) {
+		$view->getEnvironment()->addGlobal('search', $_SESSION['search']);
+		unset($_SESSION['search']);
+	}
 
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
