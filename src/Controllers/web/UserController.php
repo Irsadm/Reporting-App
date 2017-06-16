@@ -334,6 +334,7 @@ class UserController extends BaseController
         $login = $user->find('username', $request->getParam('username'));
         $users = $guardian->findAllUser($login['id']);
         $groups = $group->findAllGroup($login['id']);
+        // var_dump($login);die();
 
         if (empty($login)) {
             $this->flash->addMessage('warning', 'Username is not registered!');
@@ -665,24 +666,6 @@ class UserController extends BaseController
         }
 
         return $response->withRedirect($this->router->pathFor('list.user'));
-    }
-
-    public function testMail($request, $response)
-    {
-        $name = 'MIT SChool';
-        $data = [
-			'subject' 	=>	'Test mail',
-            'from'      =>	'nurud13@gmail.com',
-            'to'	    =>	'reportingmit@gmail.com',
-            'sender'	=>	'administrator',
-            'receiver'	=>	'admin',
-			'content'	=>	'Testing swift mail with slim framework by '. $name,
-		];
-
-        $mailer = new \App\Extensions\Mailers\Mailer();
-
-        $result = $mailer->send($data);
-        var_dump($result);die();
     }
 
     public function setItemUserStatus($request, $response, $args)

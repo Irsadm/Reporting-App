@@ -321,11 +321,11 @@ class ItemController extends BaseController
 
             $this->flash->addMessage('succes', 'New item successfully added');
 
-
-            if ($_SESSION['login']['status'] = 1){
+// var_dump($_SESSION['login']);die();
+            if ($_SESSION['login']['status'] == 1){
 
                 return $response->withRedirect($this->router->pathFor('get.group.item', ['id' => $request->getParams()['group_id'] ]));
-            } else {
+            } elseif ($_SESSION['login']['status'] == 2) {
 
                 return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
             }
@@ -510,13 +510,14 @@ class ItemController extends BaseController
         $item = new Item($this->db);
         $itemDone = new \App\Models\ReportedItem($this->db);
         $userGroups = new \App\Models\UserGroupModel($this->db);
+        var_dump($_SESSION['login']);die();
 
         $userId  = $_SESSION['login']['id'];
         $findItem = $item->find('id', $args['id']);
         $findItemDone = $itemDone->finds('item_id', $args['id'], 'user_id', $userId);
         $userGroup = $userGroups->finds('group_id', $findItem['group_id'], 'user_id', $userId);
 
-        if ($userGroup[0]['status'] = 1) {
+        if ($userGroup[0]['status'] == 1) {
 
             $deleteItem = $item->hardDelete($args['id']);
 
@@ -529,7 +530,7 @@ class ItemController extends BaseController
 
             $this->flash->addMessage('error', 'You are not allowed to delete this item');
         }
-        if ($_SESSION['login']['status'] = 1){
+        if ($_SESSION['login']['status'] == 1){
 
             return $response->withRedirect($this->router->pathFor('get.group.item', ['id' => $findItem['group_id'] ]));
         } else {
@@ -551,7 +552,7 @@ class ItemController extends BaseController
         $findItemDone = $itemDone->finds('item_id', $args['id'], 'user_id', $userId);
         $userGroup = $userGroups->finds('group_id', $findItem['group_id'], 'user_id', $userId);
 
-        if ($userGroup[0] || $findItem['creator'] = $userId) {
+        if ($userGroup[0] || $findItem['creator'] == $userId) {
 
             $deleteItem = $item->hardDelete($args['id']);
 
