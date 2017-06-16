@@ -23,9 +23,7 @@ class UsersSeed extends AbstractSeed
             'address'  =>  'DKI Jakarta',
             'phone'    =>  '+6281234567890',
             'image'    =>  'admin.jpg',
-            'status' =>  1,
-            // 'updated_at'   =>  '2017-04-30 00:00:00',
-            // 'created_at'   =>  '2017-05-30 00:00:00',
+            'status'   =>  1,
         ];
 
         $data[] = [
@@ -36,8 +34,7 @@ class UsersSeed extends AbstractSeed
             'gender'   =>  'Laki-laki',
             'address'  =>  'Bandung, Jawa Barat',
             'phone'    =>  '+6281234567891',
-            // 'updated_at'   =>  '2017-04-30 00:00:00',
-            // 'created_at'   =>  '2017-05-30 00:00:00',
+            'status'    =>  2,
         ];
 
         $data[] = [
@@ -48,8 +45,7 @@ class UsersSeed extends AbstractSeed
             'gender'    =>  'Perempuan',
             'address'   =>  'Cirebon, Jawa Barat',
             'phone'     =>  '+6281234567819',
-            // 'updated_at'   =>  '2017-04-30 00:00:00',
-            // 'created_at'   =>  '2017-05-30 00:00:00',
+            'status'    =>  2,
         ];
 
         $data[] = [
@@ -60,8 +56,7 @@ class UsersSeed extends AbstractSeed
             'gender'    =>  'Laki-laki',
             'address'   =>  'Depok, Jawa Barat',
             'phone'     =>  '+6281234567814',
-            // 'updated_at'   =>  '2017-04-30 00:00:00',
-            // 'created_at'   =>  '2017-05-30 00:00:00',
+            'status'    =>  2,
         ];
 
         $data[] = [
@@ -72,8 +67,7 @@ class UsersSeed extends AbstractSeed
             'gender'    =>  'Perempuan',
             'address'   =>  'Semarang, Jawa Tengah',
             'phone'     =>  '+6281234567814',
-            // 'updated_at'   =>  '2017-04-30 00:00:00',
-            // 'created_at'   =>  '2017-05-30 00:00:00',
+            'status'    =>  2,
         ];
 
         $data[] = [
@@ -84,8 +78,7 @@ class UsersSeed extends AbstractSeed
             'gender'    =>  'Laki-laki',
             'address'   =>  'Pangandaran, Jawa Barat',
             'phone'     =>  '+6281234567888',
-            // 'updated_at'   =>  '2017-04-30 00:00:00',
-            // 'created_at'   =>  '2017-05-30 00:00:00',
+            'status'    =>  2,
         ];
 
 

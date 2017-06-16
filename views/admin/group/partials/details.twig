@@ -19,9 +19,6 @@
 </div>
 <div class="caption" style="padding:20px;">
 	{% if login.status == 1 %}
-	<a href="{{ base_url() }}/admin/group/{{ group.id }}/allusers"
-		class="btn btn-primary btn btn-info btn-md" style="margin-bottom:7px">
-		<b>Add member to group</b></a>
 
 	<a href="{{ base_url() }}/admin/group/{{ group.id }}/users"
 	class="btn btn-primary btn btn-info btn-md" style="margin-bottom:7px">
@@ -31,7 +28,7 @@
 	class="btn btn-primary btn btn-info btn-md" style="margin-bottom:7px">
 	<b>View Items</b></a>
 
-	{% elseif login.status == 0 %}
+	{% elseif login.status == 2 %}
 	<a href="{{ base_url() }}/pic/{{ group.id }}/allusers"
 		class="btn btn-primary btn btn-info btn-md" style="margin-bottom:7px">
 		<b>Add member to group</b></a>

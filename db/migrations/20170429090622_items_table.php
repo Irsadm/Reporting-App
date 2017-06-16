@@ -33,6 +33,7 @@ class ItemsTable extends AbstractMigration
              ->addColumn('image', 'string', ['null' => true])
              ->addColumn('group_id', 'integer')
              ->addColumn('user_id', 'integer', ['null' => true])
+             ->addColumn('creator', 'integer')
              ->addColumn('start_date', 'date')
              ->addColumn('recurrent', 'string', ['null' => true])
              ->addColumn('status', 'integer', ['default' => '0'])
@@ -42,6 +43,7 @@ class ItemsTable extends AbstractMigration
              ->addColumn('deleted', 'integer', ['default' => '0'])
              ->addForeignKey('group_id', 'groups', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
              ->addForeignKey('user_id', 'users', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
+             ->addForeignKey('creator', 'users', 'id', ['delete' => 'NO_ACTION', 'update' => 'NO_ACTION'])
              ->create();
     }
 }
