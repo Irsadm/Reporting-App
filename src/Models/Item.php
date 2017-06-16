@@ -108,4 +108,16 @@ class Item extends BaseModel
            $result = $qb->execute();
            return $result->fetchAll();
     }
+
+
+    public function userItem($id)
+    {
+        $qb = $this->db->createQueryBuilder();
+        $qb->select('*')
+           ->from($this->table)
+           ->where('user_id = '. $id);
+
+           $result = $qb->execute();
+           return $result->fetchAll();
+    }
 }

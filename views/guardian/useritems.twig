@@ -1,0 +1,53 @@
+{% extends 'templates/default.twig' %}
+
+{% block title %} Reporting App {% endblock %}
+
+{% block headContent %}
+<i style="color:green" class="fa fa-list-alt">  Item   </i>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {% for item in items %}
+                    {% endfor %}
+                    <table id="" class="example2 table table-condensed table-bordered table-striped"
+                    width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th class="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td class="text-center">
+                                <img src="{{ base_url() }}/assets/images/{{ item.image }}"
+                                     height="100" width="100" style="margin-bottom:5px">
+                            </td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.description }}</td>
+                            <td class="text-center">
+                                {% if item.status == 0 %}
+                                Unreported
+                                {% else %}
+                                Reported
+                                {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}

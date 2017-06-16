@@ -518,17 +518,16 @@ class UserController extends BaseController
         $user = new UserModel($this->db);
         $item = new \App\Models\Item($this->db);
         $guard = new \App\Models\GuardModel($this->db);
-        $userItem = new \App\Models\UserItem($this->db);
 
         $guardId = $_SESSION['login']['id'];
-        $userItems = $userItem->getItem($args['id']);
+        // $userItems = $userItem->getItem($args['id']);
         $userGuard = $guard->findGuard('guard_id', $guardId, 'user_id', $args['id']);
-        $findUser = $user->find('id', $args['id']);
-        // var_dump($userItems);die();
+        $data = $item->userItem($args['id']);
+        // var_dump($findUser);die();
 
-        if ($userGuard && $_SESSION['guard']['status'] == 'guard' ) {
-            return $this->view->render($response, 'guardian/user_item.twig', [
-                'items' => $userItems,
+        if ($userGuard) {
+            return $this->view->render($response, 'guardian/useritems.twig', [
+                'items' => $data,
                 'user' => $findUser,
                 'count'=> count($userItems),
             ]);

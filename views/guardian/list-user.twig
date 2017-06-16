@@ -77,9 +77,11 @@ $('#search').modal('show');
                         <b>Start Registration :</b> {{user.created_at}}</p>
 		                <div class="row">
 		                    <span class="pull-left">
-			                    <button class="btn btn-primary btn-info btn-md"
-			                    	<a href="{{ path_for('user.item', {('id'): user.id}) }}">View Item</a>
-			                    </button>
+                                <a href="{{ path_for('user.item', {('id'): user.id}) }}">
+                                    <button class="btn btn-info  btn-md"
+                                     style="margin-right:20px">View Item
+                                    </button>
+                                </a>
 		                    </span>
                             <span class="pull-right">
                                 <a href="{{ path_for('get.user.del', {('id'): user.id}) }}">
