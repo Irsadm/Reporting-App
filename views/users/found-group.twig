@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} User | Search Groups {% endblock %}
+{% block title %} User | Cari Grup {% endblock %}
 
 {% block headContent %}
-	 <i style="color:green" class="fa fa-users"> Search Groups ({{ count }} found)</i>
+	 <i style="color:green" class="fa fa-users"> ({{ count }} grup ditemukan)</i>
 
 {% endblock %}
 
@@ -19,14 +19,14 @@
                     <div class="col-lg-12">
 						<hr>
                         <p class="text-left">
-                            <b>Name  : </b> {{group.name}}<br><br>
-                            <b>Description : </b> {{group.description}}<br>
+                            <b>Nama  : </b> {{group.name}}<br><br>
+                            <b>Deskripsi : </b> {{group.description}}<br>
                         </p>
 						<br>
                         <center>
 							<a href="{{ path_for('post.group.add', {('id'): group.id}) }}">
 								<button class="btn btn-primary btn-info btn-md"
-								style="margin-left:10px;"><b>Join to Group</b></button></a>
+								style="margin-left:10px;"><b>Gabung Grup</b></button></a>
                         </center>
 						<hr>
                     </div>

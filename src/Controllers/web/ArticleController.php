@@ -108,7 +108,9 @@ class ArticleController extends BaseController
 	public function readArticle(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
-		if (!empty($data['article'] == $article->find('id', $args['id']))) {
+        $data['article'] = $article->find('id', $args['id']);
+// var_dump($data);die();
+		if (!empty($data)) {
 			return $this->view->render($response , 'admin/article/article-read.twig', $data);
 		} else {
 			$this->flash->addMessage('error', 'Article not found !');

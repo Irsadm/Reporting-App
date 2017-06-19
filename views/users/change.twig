@@ -3,19 +3,21 @@
 
     <div class="panel-body">
         <div class="box box-info">
-          <a href="{{path_for('user.setting')}}"><button type="submit" class="btn btn-social-button btn-github pull-right pull-right" style="margin:10px"><i class="fa fa-refresh"></i> Back</button></a>
+          <a href="{{path_for('user.setting')}}"><button type="submit"
+              class="btn btn-social-button btn-github pull-right pull-right" style="margin:10px">
+              <i class="fa fa-refresh"></i> Kembali</button></a>
 
-        <a href="#"><h4 class="text-center"><i class="fa fa-user-secret">  Change &nbsp;Password</i></h4></a>
+        <a href="#"><h4 class="text-center"><i class="fa fa-user-secret">  Ubah &nbsp;Password</i></h4></a>
                 <div class="box-header">
         <form action="{{ path_for('user.change.password', {id:login.id} ) }}" method="POST">
          <div class="form-group {{ errors.password ? 'has-error' : '' }}">
-                    <label>Old Password:</label>
+                    <label>Password lama:</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-lock"></i>
                         </div>
                         <input type="password" class="form-control input-medium bfh-password"
-                         name="password" value="" placeholder="Old password">
+                         name="password" value="" placeholder="Password lama">
                     </div>
                     {% if errors.password %}
                         <span class="help-block">{{errors.password | first}}</span>
@@ -23,13 +25,13 @@
                 </div>
 
              <div class="form-group {{ errors.new_password ? 'has-error' : '' }}">
-                    <label>New Password:</label>
+                    <label>Password Baru:</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-lock"></i>
                         </div>
                         <input type="password" class="form-control input-medium bfh-password"
-                         name="new_password" value="" placeholder="New password">
+                         name="new_password" value="" placeholder="Password baru">
                     </div>
                     {% if errors.new_password %}
                         <span class="help-block">{{errors.new_password | first}}</span>
@@ -37,20 +39,20 @@
                 </div>
 
                  <div class="form-group {{ errors.new_password ? 'has-error' : '' }}">
-                    <label>Retype Password:</label>
+                    <label>Ulangi Password:</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-lock"></i>
                         </div>
                         <input type="password" class="form-control input-medium bfh-password"
-                         name="retype_password" value="" placeholder="Retype password">
+                         name="retype_password" value="" placeholder="Ulangi password">
                     </div>
                     {% if errors.new_password %}
                         <span class="help-block">{{errors.new_password | first}}</span>
                     {% endif %}
                 </div>
                 <button type="submit" class="btn btn-default" style="margin:10px">
-                    <i class="fa fa-cog"></i> update</button>
+                    <i class="fa fa-cog"></i> Simpan perubahan</button>
     </form>
         </div>
     </div>

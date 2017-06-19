@@ -443,6 +443,7 @@ class ItemController extends BaseController
             'description'	=>	$request->getParams()['description'],
             'image'			=>	$imgName,
             'reported_at'	=>	$dateNow,
+            'user_id'	    =>	$userId,
             'status'		=>	1,
         ];
 
@@ -481,7 +482,7 @@ class ItemController extends BaseController
             ];
 
             $this->sendWebNotif($report, $guard['id']);
-            $mailer->send($dataGuard);
+            // $mailer->send($dataGuard);
         }
 
         if ($pic && $pic['id'] != $guard['id']) {
@@ -495,7 +496,7 @@ class ItemController extends BaseController
             ];
 
             $this->sendWebNotif($report, $pic['id']);
-            $mailer->send($dataPic);
+            // $mailer->send($dataPic);
         }
 
         $this->flash->addMessage('succes', 'Item successfully reported');
@@ -510,7 +511,7 @@ class ItemController extends BaseController
         $item = new Item($this->db);
         $itemDone = new \App\Models\ReportedItem($this->db);
         $userGroups = new \App\Models\UserGroupModel($this->db);
-        var_dump($_SESSION['login']);die();
+        // var_dump($_SESSION['login']);die();
 
         $userId  = $_SESSION['login']['id'];
         $findItem = $item->find('id', $args['id']);
@@ -537,8 +538,7 @@ class ItemController extends BaseController
 
             return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $findItem['group_id'] ]));
         }
-        // return $response->withRedirect($this->router->pathFor('pic.item.group',
-        // ['id' => $findItem['group_id'] ]));
+
     }
 
     public function deleteItemByUser($request, $response, $args)

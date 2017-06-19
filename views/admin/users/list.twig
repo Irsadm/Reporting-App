@@ -1,5 +1,5 @@
 {% extends 'templates/default.twig' %}
-{% block title %} List User {% endblock %}
+{% block title %} Daftar User {% endblock %}
 
 {% block css %}
 <style>
@@ -10,13 +10,13 @@
 {% endblock %}
 
 {% block headContent %}
-    <i class="fa fa-list">  List User</i>{% endblock %}
+    <i class="fa fa-list">  Daftar User</i>{% endblock %}
 
     {% block content %}
 
     {% if flash.getMessage('remove') %}
     <script>
-    swal("Succes!", "Data Berhasil Di Remove !", "success")
+    swal("Succes!", "Data Berhasil Dihapus !", "success")
     </script>
 {% endif %}
 
@@ -27,11 +27,11 @@
                 <table id="example2" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-1 text-center">No</th>
-                            <th>Name</th>
+                            <th class="col-md-1 text-center">No.</th>
+                            <th>Nama</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th class="text-center">Option</th>
+                            <th class="text-center">Opsi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,9 +73,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
-                style="color:red">Close(&times;)</button>
+                style="color:red">Tutup(&times;)</button>
                 <h3 class="modal-title text-center" style="font-family:impact">
-                    User Information</h3>
+                    Detail User</h3>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -87,10 +87,10 @@
                         <p class="text-left"><b>Name :</b> {{data.name}}<br>
                             <b>Username :</b> {{data.username}}<br>
                             <b>Email :</b> {{data.email}}<br>
-                            <b>Gender :</b> {{data.gender}}<br>
-                            <b>Addres :</b> {{data.address}}<br>
-                            <b>Phone :</b> {{data.phone}}<br>
-                            <b>Registered on :</b> {{data.created_at}}</p>
+                            <b>JEnis kelamin :</b> {{data.gender}}<br>
+                            <b>Alamat :</b> {{data.address}}<br>
+                            <b>Telepon :</b> {{data.phone}}<br>
+                            <b>Tanggal terdaftar :</b> {{data.created_at}}</p>
                         </div>
                     </div>
                 </div>

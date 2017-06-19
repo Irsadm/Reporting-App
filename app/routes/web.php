@@ -106,6 +106,8 @@ $app->group('', function() use ($app, $container) {
         ->setName('pic.create.item');
         $this->get('/delete/item/{id}', 'App\Controllers\web\ItemController:deleteItemByPic')
         ->setName('pic.delete.item');
+        $this->get('/edit/{id}', 'App\Controllers\web\GroupController:getUpdate')
+        ->setName('pic.edit.group.get');
     });
 
     $app->group('/user', function(){

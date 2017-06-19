@@ -16,13 +16,13 @@
 
 {% if flash.getMessage('restore') %}
 <script language="javascript">
-swal("Succes!", "Data Berhasil Di Restore !", "success")
+swal("Succes!", "Data Berhasil Dipulihkan !", "success")
 </script>
 {% endif %}
 
 {% if flash.getMessage('delete') %}
 <script language="javascript">
-swal("Succes!", "Data Berhasil Di Delete !", "success")
+swal("Succes!", "Data Berhasil Dihapus !", "success")
 </script>
 {% endif %}
 
@@ -33,12 +33,12 @@ swal("Succes!", "Data Berhasil Di Delete !", "success")
                 <table id="example2" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="col-md-1 text-center">No</th>
-                            <th>Name</th>
+                            <th class="col-md-1 text-center">No.</th>
+                            <th>Nama</th>
                             <th>Username</th>
                             <th>Email</th>
                             <th>Status</th>
-                            <th class="text-center">Option</th>
+                            <th class="text-center">Opsi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,9 +51,9 @@ swal("Succes!", "Data Berhasil Di Delete !", "success")
                             <td>{{data.email}}</td>
                             <td>
                                 {% if data.status == 3 %}
-                                Not activated
+                                Belum diaktivasi
                                 {% elseif data.deleted == 1 %}
-                                Inactivated
+                                Dinonaktifkan
                                 {% endif %}
                             </td>
                             <td class="text-center">
@@ -85,21 +85,21 @@ swal("Succes!", "Data Berhasil Di Delete !", "success")
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" style="color:red">&times;</button>
-                <center><h3 class="modal-title" style="font-family:impact">D a t a  U s e r</h4></center>
+                <center><h3 class="modal-title" style="font-family:impact">Sekilas User</h4></center>
                 </div>
             <div class="modal-body">
                 <center><img style="width:250px" class="pull-left"
                     src="https://cdn1.iconfinder.com/data/icons/metro-ui-dock-icon-set--icons-by-dakirby/128/User_No-Frame_mirror.png" alt=""></center>
-                <p><b>Name :</b> {{data.name}}</p>
+                <p><b>Nama :</b> {{data.name}}</p>
                 <p><b>Username :</b> {{data.username}}</p>
                 <p><b>Email :</b> {{data.email}}</p>
-                <p><b>Gender :</b> {{data.gender}}</p>
-                <p><b>Addres :</b> {{data.address}}</p>
-                <p><b>phone :</b> {{data.phone}}</p>
-                <p><b>Start Registration :</b> {{data.created_at}}</p>
+                <p><b>Jenis kelamin :</b> {{data.gender}}</p>
+                <p><b>Alamat :</b> {{data.address}}</p>
+                <p><b>Telepon :</b> {{data.phone}}</p>
+                <p><b>Tanggal terdaftar :</b> {{data.created_at}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>

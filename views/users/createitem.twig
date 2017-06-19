@@ -3,32 +3,32 @@
 {% block title %} Reporting App {% endblock %}
 
 {% block headContent %}
-    <i style="color:green" class="fa  fa-file-text-o">  Create Item </i>
+    <i style="color:green" class="fa  fa-file-text-o">  Buat Item </i>
 {% endblock %}
 
 {% block content %}
 
 <div class="box box-info" style="margin-top:30px">
     <div class="panel panel-default">
-        <div class="panel panel-heading"><h3 class="panel-title"><strong>Create Item</strong></h3></div>
+        <div class="panel panel-heading"><h3 class="panel-title"><strong>Buat Item</strong></h3></div>
             <div class="panel-body">
                 <form  action="{{path_for('user.item.create.post')}}" method="post">
                     {% if errors %}
                         <div class="alert alert-danger">
-                            <a class="close" data-dismiss="alert" href="#">x</a> Please fill out the form
+                            <a class="close" data-dismiss="alert" href="#">x</a> Mohon isi form dengan benar
                         </div>
                     {% endif %}
                     <div class="row">
                         <div class="col-xs-12 col-sm-5 col-md-7">
                             <div class="form-group {{ errors.group_id ? 'has-error' : '' }}">
-                                <label for="group_id">Group</label>
+                                <label for="group_id">Grup</label>
                                 <input type="text" class="form-control"  value="{{ groups }}" readonly >
                                 <input type="hidden"  name="group_id" value="{{ group }}" >
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-4 col-md-5">
                             <div class="form-group {{ errors.name ? 'has-error' : '' }}">
-                                <label for="name">Name</label>
+                                <label for="name">Nama</label>
                                 <input type="text" name="name" placeholder="Name"
                                  class="form-control"  value="{{ old.name }}">
                                 {% if errors.name %}
@@ -40,7 +40,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-7">
                             <div class="form-group {{ errors.description ? 'has-error' : '' }}">
-                                <label for="description">Description</label>
+                                <label for="description">Deskripsi</label>
                                 <input type="text" name="description" placeholder="Description"
                                  class="form-control"  value="{{ old.description }}">
                                 {% if errors.description %}
@@ -50,17 +50,17 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-5">
                             <div class="form-group {{ errors.recurrent ? 'has-error' : '' }}">
-                                <label for="recurrent">Recurrent</label>
+                                <label for="recurrent">Pengulangan</label>
                                 <select class="form-control" name="recurrent" >
-                                    <option value="">Select Recurrent</option>
+                                    <option value="">Pilih pengulangan</option>
                                     <option value="daily" {% if  old.recurrent == "daily" %}
-                                     selected="selected"{% endif %}>Daily</option>
+                                     selected="selected"{% endif %}>Harian</option>
                                     <option value="weekly"{% if  old.recurrent == "weekly" %}
-                                     selected="selected"{% endif %}>Weekly</option>
+                                     selected="selected"{% endif %}>Mingguan</option>
                                     <option value="monthly"{% if  old.recurrent == "monthly" %}
-                                     selected="selected"{% endif %}>Monthly</option>
+                                     selected="selected"{% endif %}>Bulanan</option>
                                     <option value="yearly"{% if  old.recurrent == "yearly" %}
-                                     selected="selected"{% endif %}>Yearly</option>
+                                     selected="selected"{% endif %}>Tahunan</option>
                                 </select>
                                 {% if errors.recurrent %}
                                     <span class="help-block">{{ errors.recurrent | first }}</span>
@@ -71,7 +71,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-7">
                             <div class="form-group {{ errors.start_date ? 'has-error' : '' }}">
-                                <label for="start_date">Start date</label>
+                                <label for="start_date">Tanggal mulai</label>
                                 <input type="datetime" placeholder="yyyy-mm-dd hh:mm:ss"
                                 name="start_date" class="form-control"  value="{{ old.start_date }}">
                                 {% if errors.start_date %}
@@ -81,7 +81,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-5">
                             <div class="form-group {{ errors.end_date ? 'has-error' : '' }}">
-                                <label for="end_date">End date</label>
+                                <label for="end_date">Tanggal berakhir</label>
                                 <input type="datetime" placeholder="yyyy-mm-dd hh:mm:ss"
                                 name="end_date" class="form-control"  value="{{ old.end_date }}">
                                 {% if errors.end_date %}
@@ -92,17 +92,13 @@
                     </div>
                     <div class="">
                         <center><button type="submit" class="btn btn-success">
-                            <i class="fa fa-file-o" aria-hidden="true"></i> CREATE </button>
+                            <i class="fa fa-file-o" aria-hidden="true"></i> BUAT ITEM </button>
                         </center>
                         <hr style="margin-top:10px;margin-bottom:10px;">
                     </div>
-
                 </form>
-
             </div>
-
     </div>
-
 </div>
 
 {% endblock %}

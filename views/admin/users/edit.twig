@@ -1,10 +1,10 @@
 {% extends 'templates/default.twig' %}
 
 {% block title %} Updata User {% endblock %}
-{% block headContent %} <i class="fa fa-pencil-square">   Update User</i> <br />
+{% block headContent %} <i class="fa fa-pencil-square">   Ubah detail user</i> <br />
     <a href="{{path_for('user.list.all')}}">
         <button type="submit" class="btn btn-default" style="margin:10px">
-            <i class="fa fa-undo"></i> Back</button></a>
+            <i class="fa fa-undo"></i> Kembali</button></a>
 {% endblock %}
 
 {% block content %}
@@ -23,7 +23,7 @@
                             <i class="fa fa-users"></i>
                         </div>
                         <input type="text" name="username" class="form-control"
-                         value="{{ data.username }}" placeholder="Your Username">
+                         value="{{ data.username }}" placeholder="Username">
                     </div>
                     {% if errors.username %}
                     <span class="help-block">
@@ -32,13 +32,13 @@
                     </div>
 
                     <div class="form-group {{ errors.name ? 'has-error' : '' }}">
-                        <label>Name:</label>
+                        <label>Nama:</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-user"></i>
                             </div>
                             <input type="text" name="name" class="form-control"
-                             value="{{ data.name }}" placeholder="Your Name">
+                             value="{{ data.name }}" placeholder="Name">
                         </div>
                         {% if errors.name %}
                         <span class="help-block">{{errors.name | first}}</span>
@@ -52,7 +52,7 @@
                                 <i class="fa fa-envelope"></i>
                             </div>
                             <input type="text" name="email" class="form-control"
-                             value="{{ data.email }}" placeholder="Your email">
+                             value="{{ data.email }}" placeholder="Email">
                         </div>
                         {% if errors.email %}
                         <span class="help-block">{{errors.email | first}}</span>
@@ -60,14 +60,14 @@
                     </div>
 
                     <div class="form-group {{ errors.password ? 'has-error' : '' }}">
-                        <p>*Do not fill password field if you not want to replace it</p>
+                        <p>*Tidak perlu diisi apabila tidak ingin mengubah password</p>
                         <label>Password :</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-lock"></i>
                             </div>
                             <input type="password" name="password"
-                            class="form-control" placeholder="New Password">
+                            class="form-control" placeholder="Password">
                         </div>
                         {% if errors.password %}
                         <span class="help-block">
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="form-group {{ errors.gender ? 'has-error' : '' }}">
-                            <label>Gender :</label>
+                            <label>Jenis kelamin :</label>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <i class="fa fa-transgender-alt"></i>
@@ -96,14 +96,14 @@
                             </div>
 
                             <div class="form-group {{ errors.phone ? 'has-error' : '' }}">
-                                <label>Phone Number:</label>
+                                <label>Telepon:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </div>
                                     <input type="text" class="form-control input-medium bfh-phone"
                                      data-format="+62 (ddd) ddd-ddd-ddd" name="phone"
-                                      value="{{ data.phone }}" placeholder="Your phone">
+                                      value="{{ data.phone }}" placeholder="Telepon">
                                 </div>
                                 {% if errors.phone %}
                                 <span class="help-block">{{errors.phone | first}}</span>
@@ -111,7 +111,7 @@
                             </div>
 
                             <div class="form-group {{ errors.address ? 'has-error' : '' }}">
-                                <label>Address:</label>
+                                <label>Alamat:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
@@ -128,7 +128,7 @@
                                 <div id="image_preview"><img id="previewing"
                                     src="{{ base_url() }}/assets/images/{{ login.image }}"
                                      class="img-thumbnail" style="width:200px" ></div><br />
-                                <label>Image :</label>
+                                <label>Foto :</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-image"></i>
@@ -142,7 +142,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-default"
-                            style="margin:10px"><i class="fa fa-pencil"></i> Update</button>
+                            style="margin:10px"><i class="fa fa-pencil"></i> Simpan perubahan</button>
                         </div>
                     </div>
                 </div>

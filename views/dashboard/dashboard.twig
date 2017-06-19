@@ -5,14 +5,14 @@
                 <h3>{{ counts.group +  counts.inact_group}}</h3>
                     <!-- <sup style="font-size: 20px">%</sup> -->
                 <p><b>Groups</b></p>
-                <p>{{ counts.group }} <i>Active</i></p>
-                <p>{{ counts.inact_group }} <i>Inactive</i></p>
+                <p>{{ counts.group }} <i>Aktif</i></p>
+                <p>{{ counts.inact_group }} <i>Nonaktif</i></p>
             </div>
             <div class="icon">
                 <i class="icon ion-ios-people"></i>
             </div>
             <a href="{{path_for('group.list')}}" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
+                Selengkapnya... <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
@@ -21,15 +21,15 @@
         <div class="small-box bg-aqua">
             <div class="inner">
                 <h3>{{ counts.user + counts.inact_user }}</h3>
-                <p><b>Users</b></p>
-                <p>{{ counts.user }} <i>Active</i></p>
-                <p>{{ counts.inact_user }} <i>Inactive</i></p>
+                <p><b>User</b></p>
+                <p>{{ counts.user }} <i>Aktif</i></p>
+                <p>{{ counts.inact_user }} <i>Nonaktif</i></p>
             </div>
             <div class="icon">
                 <i class="icon ion-android-person"></i>
             </div>
             <a href="{{path_for('user.list.all')}}" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
+                Selengkapnya... <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
@@ -39,15 +39,15 @@
             <div class="inner">
                 <h3>{{ counts.article +  counts.inact_article}}</h3>
                     <!-- <sup style="font-size: 20px">%</sup> -->
-                <p><b>Articles</b></p>
-                <p>{{ counts.article }} <i>Active</i></p>
-                <p>{{ counts.inact_article }} <i>Inactive</i></p>
+                <p><b>Artikel</b></p>
+                <p>{{ counts.article }} <i>Aktif</i></p>
+                <p>{{ counts.inact_article }} <i>Nonaktif</i></p>
             </div>
             <div class="icon">
                 <i class="icon ion-ios-paper-outline"></i>
             </div>
             <a href="{{ path_for('article-list-active') }}" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
+                Selengkapnya... <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
@@ -56,81 +56,17 @@
         <div class="small-box bg-yellow">
             <div class="inner">
                 <h3>{{ counts.item + counts.inact_item}}</h3>
-                <p><b>Items</b></p>
-                <p>{{ counts.item }} <i>Active</i></p>
-                <p>{{ counts.inact_item }} <i>Inactive</i></p>
+                <p><b>Item</b></p>
+                <p>{{ counts.item }} <i>Aktif</i></p>
+                <p>{{ counts.inact_item }} <i>Nonaktif</i></p>
             </div>
             <div class="icon">
                 <i class="icon ion-clipboard"></i>
             </div>
             <a href="{{ path_for('item.list') }}" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
+                Selengkapnya... <i class="fa fa-arrow-circle-right"></i>
             </a>
         </div>
     </div>
 
 </div>
-
-
-<!-- <div class="row">
-    <div class="col-lg-3 col-xs-6">
-        <div class="small-box bg-blue">
-            <div class="inner">
-                <h3>50</h3>
-                <p>Best Seller</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-bookmark"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-xs-6">
-        <div class="small-box bg-green">
-            <div class="inner">
-                <h3>5<sup style="font-size: 20px"></sup></h3>
-                <p>Admin</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-android-archive"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-xs-6">
-        <div class="small-box bg-yellow">
-            <div class="inner">
-                <h3>44</h3>
-                <p>User Registrations</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-xs-6">
-        <div class="small-box bg-red">
-            <div class="inner">
-                <h3>25</h3>
-                <p>Category</p>
-            </div>
-            <div class="icon">
-                <i class="ion ion-grid"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div> -->
-<!-- </div> -->
-

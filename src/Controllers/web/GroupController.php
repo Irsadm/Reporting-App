@@ -107,7 +107,6 @@ class GroupController extends BaseController
             'image/jpg', 'image/jpeg')),
             new \Upload\Validation\Size('5M')
         ));
-
         $dataImg = array(
           'name'       => $image->getNameWithExtension(),
           'extension'  => $image->getExtension(),
@@ -118,26 +117,28 @@ class GroupController extends BaseController
         );
 		$rules = ['required' => [['name'], ['description']] ];
 		$this->validator->rules($rules);
-
 		$this->validator->labels([
 			'name' 			=>	'Name',
 			'description'	=>	'Description',
 			'image'			=>	'Image',
 		]);
-
-		$data = [
-			'name' 			=>	$request->getParams()['name'],
-			'description'	=>	$request->getParams()['description'],
-			'image'			=>	$dataImg['name'],
-		];
-
+		$userId  = $_SESSION['login']['id'];
 		if ($this->validator->validate()) {
-			$image->upload();
+			if (!empty($_FILES['image']['name'])) {
+                $image->upload();
+                $imageName = $dataImg['name'];
+            } else {
+                $imageName = '';
+            }
+			$data = [
+				'name' 			=>	$request->getParams()['name'],
+				'description'	=>	$request->getParams()['description'],
+				'image'			=>	$imageName,
+				'creator'		=>	$userId,
+			];
 			$group = new GroupModel($this->db);
 			$addGroup = $group->add($data);
-
 			$this->flash->addMessage('succes', 'Data successfully added');
-
 			return $response->withRedirect($this->router
 							->pathFor('create.group.get'));
 		} else {
@@ -200,7 +201,14 @@ class GroupController extends BaseController
 			} else {
 				$group->updateData($request->getParams(), $args['id']);
 			}
-			return $response->withRedirect($this->router->pathFor('group.list'));
+
+			if ($_SESSION['login']['status'] == 1) {
+				return $response->withRedirect($this->router->pathFor('group.list'));
+			} else {
+				return $response->withRedirect($this->router->pathFor('pic.group'));
+
+			}
+
 		} else {
 			$_SESSION['old'] = $request->getParams();
 			$_SESSION['errors'] = $this->validator->errors();
@@ -390,7 +398,7 @@ class GroupController extends BaseController
 		$userId  = $_SESSION['login']['id'];
 		$getGroup = $userGroup->findAllUser(1);
 		// var_dump($getGroup);die();
-	var_dump($getGroup);die();
+	// var_dump($getGroup);die();
 		return $this->view->render($response, 'users/pic-group.twig', [
 			'groups' => $getGroup,
 
@@ -408,7 +416,7 @@ class GroupController extends BaseController
 		$userId  = $_SESSION['login']['id'];
 		$getGroup = $userGroup->picGroup($userId);
 
-		return $this->view->render($response, 'users/pic-group.twig', [
+		return $this->view->render($response, 'pic/pic-group.twig', [
 			'groups' => $getGroup,
 
 		]);
@@ -446,15 +454,21 @@ class GroupController extends BaseController
 
 		$userId  = $_SESSION['login']['id'];
 
-		$dataGroup = [
-			'name' 			=>	$request->getParams()['name'],
-			'description'	=>	$request->getParams()['description'],
-			'image'			=>	$dataImg['name'],
-			'creator'       =>  $userId
-		];
-
 		if ($this->validator->validate()) {
-			$image->upload();
+			if (!empty($_FILES['image']['name'])) {
+                $image->upload();
+                $imageName = $dataImg['name'];
+            } else {
+                $imageName = '';
+            }
+
+			$dataGroup = [
+				'name' 			=>	$request->getParams()['name'],
+				'description'	=>	$request->getParams()['description'],
+				'image'			=>	$imageName,
+				'creator'       =>  $userId
+			];
+
 			$group = new GroupModel($this->db);
 			$userGroup = new \App\Models\UserGroupModel($this->db);
 

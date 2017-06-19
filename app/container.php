@@ -43,8 +43,7 @@ $container['view'] = function ($container) {
 	if (@$_SESSION['search']) {
 		$view->getEnvironment()->addGlobal('search', $_SESSION['search']);
 		unset($_SESSION['search']);
-	}
-
+}
 	$view->getEnvironment()->addGlobal('flash', $container->flash);
 
 	return $view;

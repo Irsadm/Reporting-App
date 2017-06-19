@@ -62,11 +62,17 @@ class UserController extends BaseController
              ], 5);
 
         if ($this->validator->validate()) {
-            $image->upload();
+            if (!empty($_FILES['image']['name'])) {
+                $image->upload();
+                $imageName = $data['name'];
+            } else {
+                $imageName = '';
+            }
+
             $register = $user->checkDuplicate($request->getParam('username'),
                         $request->getParam('email'));
 
-            if ($register == 0) {
+            if ($register == 1) {
                 $_SESSION['old'] = $request->getParams();
                 $this->flash->addMessage('warning', 'Username, already used');
 
@@ -76,7 +82,7 @@ class UserController extends BaseController
                 $this->flash->addMessage('warning', 'Email, already used');
                 return $response->withRedirect($this->router->pathFor('user.create'));
             } else {
-                $user->createUser($request->getParams(), $data['name']);
+                $user->createUser($request->getParams(), $imageName);
                 $this->flash->addMessage('succes', 'Create Data Succes');
 
                 return $response->withRedirect($this->router->pathFor('user.list.all'));
