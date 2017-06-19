@@ -18,9 +18,9 @@
                     width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Description</th>
+                            <th>Foto</th>
+                            <th>Nama</th>
+                            <th>Deskripsi</th>
                             <th class="text-center">Status</th>
                         </tr>
                     </thead>
@@ -35,9 +35,9 @@
                             <td>{{ item.description }}</td>
                             <td class="text-center">
                                 {% if item.status == 0 %}
-                                Unreported
+                                Belum Dilaporkan
                                 {% else %}
-                                Reported
+                                Sudah Dilaporkan
                                 {% endif %}
                         </td>
                     </tr>

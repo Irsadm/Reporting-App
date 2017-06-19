@@ -1,12 +1,12 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Group | All Users {% endblock %}
+{% block title %} Grup | Semua Pengguna {% endblock %}
 
 {% block headContent %}
-	<i style="color:green" class="fa fa-check-square-o">All users of the {{ group }}</i>
+	<i style="color:green" class="fa fa-check-square-o">Semua anggota grup {{ group }}</i>
 	<span style="font-size: 20px;" class="pull-right">
 	<button class="btn btn-primary" href="" data-toggle="modal" data-target="#search">
-		<i class="fa fa-plus fa-lg"> Add User</i></button>
+		<i class="fa fa-plus fa-lg"> Tambah Anggota</i></button>
 	</span>
 {% endblock %}
 
@@ -24,20 +24,20 @@
 					<table id="example2" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Image</th>
-								<th>Name</th>
+								<th>Gambar</th>
+								<th>Nama</th>
 								<th>Username</th>
-								<th>Gender</th>
-								<th>Address</th>
+								<th>Jenis Kelamin</th>
+								<th>Alamat</th>
 								<th>Email</th>
-								<th>Phone</th>
+								<th>Telepon</th>
 								<th>Status</th>
 								<th style="width: 40px">Select</th>
 							</tr>
 						</thead>
 						{% for user in members %}
 						{% if (user.user_status == 0) %}
-						{% set status = 'Member' %}
+						{% set status = 'Anggota' %}
 						{% elseif (user.user_status == 1) %}
 						{% set  status = 'PIC' %}
 						{% endif %}
@@ -58,9 +58,9 @@
 				</div>
 				<div class="panel-body" align="right">
 					<input type="hidden" name="id" value="{{ group_id }}">
-					<button type="submit" name="member" value="1" class="btn btn-success"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i> Set as Member</button>
-					<button type="submit" name="pic" value="3" class="btn btn-primary"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Set as PIC</button>
-					<button type="submit" name="delete" value="4" class="btn btn-danger"><i class="fa fa-user-times fa-lg" aria-hidden="true"></i> Delete</button>
+					<button type="submit" name="member" value="1" class="btn btn-success"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i> Atur sebagai Anggota</button>
+					<button type="submit" name="pic" value="3" class="btn btn-primary"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Atur sebagai PIC</button>
+					<button type="submit" name="delete" value="4" class="btn btn-danger"><i class="fa fa-user-times fa-lg" aria-hidden="true"></i> Hapus</button>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</form>
 			</div>
@@ -93,7 +93,7 @@
 									<input type="hidden" name="group" value="{{ group_id }}">
                                     <button
                                      type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
-                                        <i class="fa fa-search"></i> Search
+                                        <i class="fa fa-search"></i> Cari
                                     </button>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                             <center>
                                 <div class="controls">
                                     <button type="button" class="btn btn-default"
-                                     data-dismiss="modal">Close</button>
+                                     data-dismiss="modal">Tutup</button>
                                 </div>
                             </center>
                         </div>

@@ -1,6 +1,6 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Guard | All Users {% endblock %}
+{% block title %} Wali | Semua Anak {% endblock %}
 
 {% block script %}
 {% if search %}
@@ -11,11 +11,11 @@ $('#search').modal('show');
  {% endblock %}
 
 {% block headContent %}
-	 <i style="color:green" class="fa fa-user-circle-o">  All Users </i>
+	 <i style="color:green" class="fa fa-user-circle-o">  Semua Anak </i>
 
   	<span style="font-size: 20px;" class="pull-right">
   	<button class="btn btn-primary" href="" data-toggle="modal" data-target="#search">
-        <i class="fa fa-plus fa-lg"> Add User</i></button>
+        <i class="fa fa-plus fa-lg"> Tambahkan Anak</i></button>
   	</span>
 {% endblock %}
 
@@ -42,7 +42,7 @@ $('#search').modal('show');
 </div>
 	{% if users == null %}
 	<hr style="margin-top:10px;margin-bottom:10px;" >
-	<p align="center" style="color:red">There are no active users !</p>
+	<p align="center" style="color:red">Belum mempunyai anak, silahkan tambahkan anak</p>
 	<hr style="margin-top:10px;margin-bottom:10px;" >
 	{% endif %}
 	<hr style="margin-top:10px;margin-bottom:10px;" >
@@ -57,9 +57,9 @@ $('#search').modal('show');
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
-                style="color:red">Close(&times;)</button>
+                style="color:red">Tutup(&times;)</button>
                 <h3 class="modal-title text-center" style="font-family:impact">
-                    User Information</h3>
+                    Informasi Anak</h3>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -68,25 +68,25 @@ $('#search').modal('show');
                         src="{{ base_url() }}/assets/images/{{ user.image }}" alt="">
                     </div>
                     <div class="col-lg-6">
-                        <p class="text-left"><b>Name :</b> {{user.name}}<br>
+                        <p class="text-left"><b>Nama :</b> {{user.name}}<br>
                             <b>Username :</b> {{user.username}}<br>
                             <b>Email :</b> {{user.email}}<br>
-                            <b>Gender :</b> {{user.gender}}<br>
-                            <b>Addres :</b> {{user.address}}<br>
-                            <b>phone :</b> {{user.phone}}<br>
-                        <b>Start Registration :</b> {{user.created_at}}</p>
+                            <b>Jenis Kelamin :</b> {{user.gender}}<br>
+                            <b>Alamat :</b> {{user.address}}<br>
+                            <b>Telepon :</b> {{user.phone}}<br>
+                        <b>Tanggal Terdaftar:</b> {{user.created_at}}</p>
 		                <div class="row">
 		                    <span class="pull-left">
                                 <a href="{{ path_for('user.item', {('id'): user.id}) }}">
                                     <button class="btn btn-info  btn-md"
-                                     style="margin-right:20px">View Item
+                                     style="margin-right:20px">Lihat Item
                                     </button>
                                 </a>
 		                    </span>
                             <span class="pull-right">
                                 <a href="{{ path_for('get.user.del', {('id'): user.id}) }}">
                                     <button class="btn btn-danger btn-info btn-md"
-                                     style="margin-right:20px">Delete </button></a>
+                                     style="margin-right:20px">Hapus </button></a>
 		                    </span>
 		                </div>
                     </div>
@@ -111,7 +111,7 @@ $('#search').modal('show');
                             <div class="control-group">
                                 <div class="controls">
                                     <input name="search" type="text" class="form-control"
-                                     placeholder="Name or phone number..." required="">
+                                     placeholder="Nama atau nomor telepon..." required="">
                                 </div>
                             </div>
 
@@ -122,7 +122,7 @@ $('#search').modal('show');
                                     <input type="hidden" name="guard" value="1">
                                     <button href="{{ base_url() }}/guardian/view-user-search"
                                      type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
-                                        <i class="fa fa-search"></i> Search
+                                        <i class="fa fa-search"></i> Cari
                                     </button>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ $('#search').modal('show');
                             <center>
                                 <div class="controls">
                                     <button type="button" class="btn btn-default"
-                                     data-dismiss="modal">Close</button>
+                                     data-dismiss="modal">Tutup</button>
                                 </div>
                             </center>
                         </div>

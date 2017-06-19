@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Guard | Search Users {% endblock %}
+{% block title %} Wali | Pencarian {% endblock %}
 
 {% block headContent %}
-	 <i style="color:green" class="fa fa-user-circle-o"> Search Users ({{ count }} found) </i>
+	 <i style="color:green" class="fa fa-user-circle-o"> Hasil Pencarian ({{ count }} ditemukan) </i>
 
 {% endblock %}
 
@@ -25,7 +25,7 @@
                         <center>
 	                        <button class="btn btn-primary btn-info btn-md"
 		                    	style="margin-left:10px">
-		                    	<a href="{{ path_for('post.user.add', {('id'): user.id}) }}">Add User</a>
+		                    	<a href="{{ path_for('post.user.add', {('id'): user.id}) }}">Tambahkan</a>
 		                    </button>
                         </center>
                     </div>

@@ -1,8 +1,8 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Admin | Group  {% endblock %}
+{% block title %} Admin | Grup  {% endblock %}
 
-{% block headContent %} Groups Inactive {% endblock %}
+{% block headContent %} Grup {% endblock %}
 
 {% block content %}
 
@@ -32,14 +32,14 @@
             </div>
             {% if groups == null %}
             <hr>
-        	<p align="center" style="color:red;"><b>There are no active groups</b></p>
+        	<p align="center" style="color:red;"><b>Tidak ada grup</b></p>
             <hr>
         	{% elseif groups != null %}
             <hr style="margin-top:10px;margin-bottom:10px;" >
             <button type="submit" name="restore" value="1" class="btn btn-warning">
-                <i class="fa fa-repeat fa-lg" aria-hidden="true"></i> Restore</button>
+                <i class="fa fa-repeat fa-lg" aria-hidden="true"></i> Kembalikan</button>
             <button type="submit" name="delete" value="2" class="btn btn-danger">
-                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete</button>
+                <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Hapus</button>
             <hr style="margin-top:10px;margin-bottom:10px;" >
             {% endif %}
 
