@@ -289,6 +289,7 @@ class ItemController extends BaseController
                     'image/jpg', 'image/jpeg')),
                     new \Upload\Validation\Size('5M')
                 ));
+
                 $dataImg = array(
                     'name'       => $image->getNameWithExtension(),
                     'extension'  => $image->getExtension(),
@@ -316,16 +317,13 @@ class ItemController extends BaseController
         ];
             $item  = new Item($this->db);
             $newItem = $item->create($itemData);
-
-
-
             $this->flash->addMessage('succes', 'New item successfully added');
 
-// var_dump($_SESSION['login']);die();
+
             if ($_SESSION['login']['status'] == 1){
 
                 return $response->withRedirect($this->router->pathFor('get.group.item', ['id' => $request->getParams()['group_id'] ]));
-            } elseif ($_SESSION['login']['status'] == 2) {
+            } else {
 
                 return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
             }
@@ -510,7 +508,6 @@ class ItemController extends BaseController
         $item = new Item($this->db);
         $itemDone = new \App\Models\ReportedItem($this->db);
         $userGroups = new \App\Models\UserGroupModel($this->db);
-        var_dump($_SESSION['login']);die();
 
         $userId  = $_SESSION['login']['id'];
         $findItem = $item->find('id', $args['id']);

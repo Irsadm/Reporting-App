@@ -522,12 +522,13 @@ class UserController extends BaseController
         $guardId = $_SESSION['login']['id'];
         // $userItems = $userItem->getItem($args['id']);
         $userGuard = $guard->findGuard('guard_id', $guardId, 'user_id', $args['id']);
-        $data = $item->userItem($args['id']);
-        // var_dump($findUser);die();
+        $findUser = $user->find('id', $args['id']);
+        $findItem = $item->
+        var_dump($userGuard);die();
 
         if ($userGuard) {
-            return $this->view->render($response, 'guardian/useritems.twig', [
-                'items' => $data,
+            return $this->view->render($response, 'guardian/useritem.twig', [
+                'items' => $userItems,
                 'user' => $findUser,
                 'count'=> count($userItems),
             ]);
