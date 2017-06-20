@@ -1,8 +1,8 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Edit | Group {% endblock %}
+{% block title %} Edit | Grup {% endblock %}
 
-{% block headContent %} Group Edit {% endblock %}
+{% block headContent %}  Edit Grup {% endblock %}
 
 {% block content %}
 
@@ -14,13 +14,13 @@
 				<form action="{{ path_for('edit.group.post', {id: group.id}) }}" method="POST" enctype="multipart/form-data">
 					{% if errors %}
 					<div class="alert alert-danger">
-						<a class="close" data-dismiss="alert" href="#">x</a>Please make sure all required fields are filled out correctly!
+						<a class="close" data-dismiss="alert" href="#">x</a>Pastikan semuanya terisi dengan benar!
 					</div>
 					{% endif %}
 					<div class="row">
 						<div class="col-xs-12 col-sm-4 col-md-7">
 							<div class="form-group {{ errors.name ? 'has-error' : '' }}">
-								<label for="name">Name</label>
+								<label for="name">Nama</label>
 								<input type="text" name="name" id="title" class="form-control" value="{{ group.name }}">
 								{% if errors.name %}
 								<span class="help-block">{{errors.name | first}}</span>
@@ -31,7 +31,7 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-4 col-md-7">
 							<div class="form-group {{ errors.image ? 'has-error' : '' }}">
-								<label for="image">Image</label>
+								<label for="image">Foto</label>
 								<input type="file" name="image" id="image" class="form-control" value="{{ group.image }}">
 								{% if errors.image %}
 								<span class="help-block">{{errors.image | first}}</span>
@@ -42,7 +42,7 @@
 					<div class="row">
 						<div class="col-xs-12 col-sm-6 col-md-12">
 							<div class="form-group {{ errors.description ? 'has-error' : '' }}">
-								<label for=description>Description</label>
+								<label for=description>Deskripsi</label>
 								<textarea name="description" id="description" class="form-control">{{ group.description }}</textarea>
 								{% if errors.description %}
 								<span class="help-block">{{errors.description | first}}</span>
@@ -50,7 +50,7 @@
 							</div>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>  Save change</button>
+					<button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>  Selesai</button>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</form>
 			</div>

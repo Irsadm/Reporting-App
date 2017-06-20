@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Group | All Users {% endblock %}
+{% block title %} Group | Anggota {% endblock %}
 
 {% block headContent %}
-	All Users<i style="color:green" class="fa fa-check-square-o"></i>
+	Semua Anggota<i style="color:green" class="fa fa-check-square-o"></i>
 {% endblock %}
 
 {% block content %}
@@ -20,23 +20,23 @@
 					<table id="example2" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Gender</th>
-								<th>Address</th>
+								<th>Nama</th>
+								<th>Jenis Kelamin</th>
+								<th>Alamat</th>
 								<th>Status</th>
 								<th>Email</th>
-								<th>Phone</th>
-								<th>Image</th>
-								<th style="width: 40px">Select</th>
+								<th>Telepon</th>
+								<th>Foto</th>
+								<th style="width: 40px">Pilih</th>
 							</tr>
 						</thead>
 						{% for user in users %}
 						{% if (user.status == 0) %}
-						{% set status = 'Member' %}
+						{% set status = 'Anggota' %}
 						{% elseif (user.status == 1) %}
 						{% set  status = 'PIC' %}
 						{% elseif (user.status == 2) %}
-						{% set status = 'Guardian' %}
+						{% set status = 'Wali' %}
 						{% endif %}
 						<tr>
 							<td>{{ user.name }}</td>
@@ -56,11 +56,11 @@
 					<input type="hidden" name="id" value="{{ group_id }}">
 
 					{% if (login.status == 1) %}
-					<button type="submit" name="member" value="1" class="btn btn-success"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i> Set as Member</button>
-					<button type="submit" name="pic" value="3" class="btn btn-primary"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Set as PIC</button>
+					<button type="submit" name="member" value="1" class="btn btn-success"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i> Atur Sebagai Anggota</button>
+					<button type="submit" name="pic" value="3" class="btn btn-primary"><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Atur Sebagai PIC</button>
 					{% endif %}
 
-					<button type="submit" name="delete" value="4" class="btn btn-danger"><i class="fa fa-user-times fa-lg" aria-hidden="true"></i> Delete</button>
+					<button type="submit" name="delete" value="4" class="btn btn-danger"><i class="fa fa-user-times fa-lg" aria-hidden="true"></i> Hapus</button>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</form>
 			</div>

@@ -2,11 +2,8 @@
 
 {% block title %} Grup  {% endblock %}
 
-{% block headContent %} Grup Umum
-<!-- <span style="font-size: 20px;" class="pull-right" >
-<button class="btn btn-primary" href="" data-toggle="modal" data-target="#search" title="Join to group">
-    <i class="fa fa-plus fa-lg"> Add Group</i></button>
-</span> -->
+{% block headContent %} Grup
+
 {% endblock %}
 
 {% block content %}
@@ -20,11 +17,15 @@
                 			<center><img src="{{ base_url() }}/assets/images/{{ group.image }}"
                 				 height="222" width="222" style="margin-bottom:5px"></center>
                 			  	<div class="caption">
-                                    <a href="" data-toggle="modal" data-target="#{{group.id}}"
+                                    <a href="{{ path_for('enter.group', {('id'): group.id}) }}"
+                                    title="Masuk group" class="btn btn-primary btn-block btn btn-info btn-md"
+                                   style="margin-bottom:7px"><b>{{ group.name }}</b>
+
+                                    <!-- <a href="" data-toggle="modal" data-target="#{{group.id}}"
                                         value="{{group.id}} "title="View Group Details"
                 			    		class="btn btn-primary btn-block btn btn-info btn-md"
                 						style="margin-bottom:7px">
-                			    		<b>{{ group.name }}</b>
+                			    		<b>{{ group.name }}</b> -->
                 			    	</a>
                 			  	</div>
                 			</div>

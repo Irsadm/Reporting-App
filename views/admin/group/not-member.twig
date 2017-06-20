@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Search Users {% endblock %}
+{% block title %} Pencarian {% endblock %}
 
 {% block headContent %}
-	 <i style="color:green" class="fa fa-user-circle-o"> {{ count }} Users found</i>
+	 <i style="color:green" class="fa fa-user-circle-o"> {{ count }} pengguna ditemukan</i>
 
 {% endblock %}
 
@@ -27,7 +27,7 @@
 							<input type="hidden" name="group_id" value="{{ group_id }}">
 							<button type="submit" name="user_id" value="{{ user.id }}" class="btn btn-primary">
 								<i class="fa fa-plus-o" aria-hidden="{{ user.id }}"></i>
-								Add user to group
+							Tambahkan ke Grup
 								</button>
 							</a>
 							</form>
@@ -40,7 +40,7 @@
 </div>
 	{% if users == null %}
 	<hr style="margin-top:10px;margin-bottom:10px;" >
-	<p align="center" style="color:red">User not found</p>
+	<p align="center" style="color:red">Pengguna tidak ditemukan</p>
 	<hr style="margin-top:10px;margin-bottom:10px;" >
 	{% endif %}
 	<hr style="margin-top:10px;margin-bottom:10px;" >

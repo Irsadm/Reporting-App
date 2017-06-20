@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Article | List In - Active {% endblock %}
+{% block title %} Artikel | Daftar Artikel {% endblock %}
 
 {% block headContent %}
-	<i class="fa fa-list" aria-hidden="true">  Inactive Article</i>
+	<i class="fa fa-list" aria-hidden="true">  Daftar Artikel</i>
 {% endblock %}
 
 {% block content %}
@@ -16,11 +16,11 @@
 					<table id="example2" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th style="width: 40px">Select</th>
-								<th>Image</th>
-								<th>Title</th>
-								<th>Content</th>
-								<th style="width: 40px">Restore</th>
+								<th style="width: 40px">Pilih</th>
+								<th>Foto</th>
+								<th>Judul</th>
+								<th>Isi</th>
+								<th style="width: 40px">Kembalikan</th>
 							</tr>
 						</thead>
 						{% for article in article %}
@@ -40,7 +40,7 @@
 				</div>
 				<div class="panel-body" align="right">
 					<button type="submit" name="active"  class="btn btn-danger">
-						<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Delete permanent</button>
+						<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>Hapus</button>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</form>
 			</div>

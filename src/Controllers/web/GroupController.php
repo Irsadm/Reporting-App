@@ -84,7 +84,7 @@ class GroupController extends BaseController
 				]
 			]);
 		} else {
-			$this->flash->addMessage('error', 'You are not allowed to access this group!');
+			$this->flash->addMessage('error', 'Anda tidak memiliki akses di grup ini!');
 			return $response->withRedirect($this->router
 					->pathFor('home'));
 		}
@@ -138,7 +138,7 @@ class GroupController extends BaseController
 			];
 			$group = new GroupModel($this->db);
 			$addGroup = $group->add($data);
-			$this->flash->addMessage('succes', 'Data successfully added');
+			$this->flash->addMessage('succes', 'Grup berhasil dibuat');
 			return $response->withRedirect($this->router
 							->pathFor('create.group.get'));
 		} else {
@@ -278,7 +278,7 @@ class GroupController extends BaseController
 			return $response->withRedirect($this->router->pathFor('user.group.get', ['id' => $groupId]));
 
 		} else {
-			$this->flash->addMessage('error', 'You are not allowed to access this member group!');
+			$this->flash->addMessage('error', 'Anda tidak memiliki akses ke user ini!');
 			return $response->withRedirect($this->router
 			->pathFor('home'));
 		}
@@ -303,7 +303,7 @@ class GroupController extends BaseController
 				'group'		=> $group['name'],
 			]);
 		} else {
-			$this->flash->addMessage('error', 'You are not allowed to access this member group!');
+			$this->flash->addMessage('error', 'Anda tidak memiliki akses ke user ini!');
 			return $response->withRedirect($this->router
 			->pathFor('home'));
 		}
@@ -324,7 +324,7 @@ class GroupController extends BaseController
 				'group_id'	=> $args['id']
 			]);
 		} else {
-			$this->flash->addMessage('error', 'You are not allowed to access this member group!');
+			$this->flash->addMessage('error', 'Anda tidak memiliki akses ke user ini!');
 			return $response->withRedirect($this->router
 			->pathFor('home'));
 		}
@@ -341,7 +341,7 @@ class GroupController extends BaseController
 		$userGroup = $userGroups->finds('group_id', $groupId, 'user_id', $userId);
 		// var_dump($request->getParams());die();
 		if ($userGroup) {
-			$this->flash->addMessage('error', 'Member already exist!');
+			$this->flash->addMessage('error', 'Member sudah tergabung!');
 
 		}else {
 			if ($_SESSION['login']['status'] == 1 || $pic[0]['status'] == 1) {
@@ -352,7 +352,7 @@ class GroupController extends BaseController
 
 				$addMember = $userGroups->createData($data);
 			} else {
-				$this->flash->addMessage('error', 'You are not allowed to set member of this group!');
+				$this->flash->addMessage('error', 'Anda tidak memiliki akses !');
 				return $response->withRedirect($this->router
 				->pathFor('home'));
 			}
@@ -369,7 +369,7 @@ class GroupController extends BaseController
 		}
 	}
 
-	function getGeneralGroup($request, $response)
+	function getGroup($request, $response)
 	{
 		$group = new GroupModel($this->db);
 		$article = new \App\Models\ArticleModel($this->db);
@@ -377,12 +377,10 @@ class GroupController extends BaseController
 		$item = new \App\Models\Item($this->db);
 
 		$userId  = $_SESSION['login']['id'];
-		$getGroup = $userGroup->generalGroup($userId);
+		$getGroup = $userGroup->findAllGroup($userId);
 
-
-		return $this->view->render($response, 'users/general-group.twig', [
+		return $this->view->render($response, 'users/group/group.twig', [
 			'groups' => $getGroup,
-			// 'counts'=> [
 
 		]);
 
@@ -397,13 +395,10 @@ class GroupController extends BaseController
 
 		$userId  = $_SESSION['login']['id'];
 		$getGroup = $userGroup->findAllUser(1);
-		// var_dump($getGroup);die();
 	// var_dump($getGroup);die();
 		return $this->view->render($response, 'users/pic-group.twig', [
 			'groups' => $getGroup,
-
 		]);
-
 	}
 
 	function getPicGroup($request, $response)
@@ -418,9 +413,7 @@ class GroupController extends BaseController
 
 		return $this->view->render($response, 'pic/pic-group.twig', [
 			'groups' => $getGroup,
-
 		]);
-
 	}
 
 	//Post create group
@@ -481,7 +474,7 @@ class GroupController extends BaseController
 			];
 			$userGroup->createData($data);
 
-			$this->flash->addMessage('succes', 'Group successfully created');
+			$this->flash->addMessage('succes', 'Grup berhasil dibuat');
 
 		} else {
 			$_SESSION['old'] = $request->getParams();
@@ -505,7 +498,7 @@ class GroupController extends BaseController
 			$delete = $group->hardDelete($args['id']);
 
 		} else {
-			$this->flash->addMessage('error', 'You are not allowed to delete this group!');
+			$this->flash->addMessage('error', 'Anda tidak memiliki akses untuk menghapus grup ini!');
 		}
 			return $response->withRedirect($this->router
 					->pathFor('pic.group'));
@@ -524,7 +517,7 @@ class GroupController extends BaseController
         // var_dump($data);die();
         // $_SESSION['search'] = $data;
 
-        return $this->view->render($response, 'users/found-group.twig', $data);
+        return $this->view->render($response, 'users/user/found-group.twig', $data);
     }
 
 	//Set user as member of group
@@ -542,11 +535,11 @@ class GroupController extends BaseController
 		];
 
 		if ($findUser[0]) {
-			$this->flash->addMessage('error', 'Group already exist!');
+			$this->flash->addMessage('error', 'Anda sudah tergabung ke grup!');
 		} else {
 			$addMember = $userGroup->createData($data);
 
-			$this->flash->addMessage('succes', 'You have successfully joined the group');
+			$this->flash->addMessage('succes', 'Anda berhasil bergabung dengan grup');
 		}
 
 		return $response->withRedirect($this->router
@@ -565,9 +558,9 @@ class GroupController extends BaseController
 
 			$leaveGroup = $userGroup->hardDelete($group[0]['id']);
 
-			$this->flash->addMessage('succes', 'You have left the group');
+			$this->flash->addMessage('succes', 'Anda telah keluar dari grup');
 		} else {
-			$this->flash->addMessage('error', 'You not allowed to access this group!');
+			$this->flash->addMessage('error', 'Anda tidak tergabung di grup ini!');
 
 		}
 

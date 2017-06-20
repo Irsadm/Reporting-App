@@ -113,7 +113,7 @@ $app->group('', function() use ($app, $container) {
     $app->group('/user', function(){
         $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
         ->setName('user.article-read');
-        $this->get('/group', 'App\Controllers\web\GroupController:getGeneralGroup')
+        $this->get('/group', 'App\Controllers\web\GroupController:getGroup')
         ->setName('user.group');
         $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')
         ->setName('user.item.status');
@@ -144,8 +144,10 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.item.delete');
         $this->get('/delete/guard/{id}', 'App\Controllers\web\UserController:deleteGuardian')
         ->setName('user.guard.delete');
-        $this->post('/search', 'App\Controllers\web\UserController:searchUser')->setName('user.search');
-
+        $this->post('/search', 'App\Controllers\web\UserController:searchUser')
+        ->setName('user.search');
+        $this->get('/group/{id}', 'App\Controllers\web\UserController:enterGroup')
+        ->setName('enter.group');
     });
 
     $app->group('/article/', function() {

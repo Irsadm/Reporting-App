@@ -1,6 +1,6 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} User | Group  {% endblock %}
+{% block title %} Group {% endblock %}
 {% block script %}
 {% if errors %}
 <script type="text/javascript">
@@ -9,10 +9,10 @@ $('#create').modal('show');
 {% endif %}
 {% endblock %}
 
-{% block headContent %} My Groups
+{% block headContent %} Grupku
 <span style="font-size: 20px;" class="pull-right" >
     <button class="btn btn-primary" href="" data-toggle="modal" data-target="#create" title="Create Group">
-        <i class="fa fa-plus fa-lg"> Create Group</i></button>
+        <i class="fa fa-plus fa-lg"> Buat Grup</i></button>
 </span>
 {% endblock %}
 
@@ -28,7 +28,7 @@ $('#create').modal('show');
                             height="222" width="232" style="margin-bottom:5px"></center>
                             <div class="caption">
                                 <a href="" data-toggle="modal" data-target="#{{group.id}}"
-                                value="{{group.id}}"title="View Group Details"
+                                value="{{group.id}}"title="Lihat detail grup"
                                 class="btn btn-primary btn-block btn btn-info btn-md"
                                 style="margin-bottom:7px">
                                 <b>{{ group.name }}</b>
@@ -40,7 +40,7 @@ $('#create').modal('show');
             </div>
                 {% if groups == null %}
                 <hr style="margin-top:10px;margin-bottom:10px;" >
-                <p align="center" style="color:red">You aren't have group</p>
+                <p align="center" style="color:red">Anda belum tergabung di grup manapun</p>
                 {% endif %}
                 <hr style="margin-top:10px;margin-bottom:10px;" >
 
@@ -55,20 +55,20 @@ $('#create').modal('show');
                 <div class="modal-body">
                     <div class="panel panel-default">
                         <div class="panel-heading"><h3 class="panel-title">
-                            <strong>Create Group</strong></h3></div>
+                            <strong>Buat Grup</strong></h3></div>
                             <div class="panel-body">
                                 <form action="{{ path_for('pic.create.group') }}"
                                 method="POST" enctype="multipart/form-data">
                                 {% if errors %}
                                 <div class="alert alert-danger">
                                     <a class="close" data-dismiss="alert" href="#">x</a>
-                                    Please make sure all required fields are filled out correctly!
+                                    Mohon isi form dengan benar!
                                 </div>
                                 {% endif %}
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-4 col-md-7">
                                         <div class="form-group {{ errors.name ? 'has-error' : '' }}">
-                                            <label for="name">Name</label>
+                                            <label for="name">Nama</label>
                                             <input type="text" name="name" id="title"
                                             class="form-control" value="{{ old.name }}">
                                             {% if errors.name %}
@@ -83,7 +83,7 @@ $('#create').modal('show');
                                             src="{{ base_url() }}/assets/images/{{ login.image }}"
                                             class="img-thumbnail" style="width:200px" ></div><br />
                                             <div class="form-group {{ errors.image ? 'has-error' : '' }}">
-                                                <label for="image">Image</label>
+                                                <label for="image">Foto</label>
                                                 <input type="file" id="file" name="image"
                                                 id="image" class="form-control">
                                                 {% if errors.image %}
@@ -95,7 +95,7 @@ $('#create').modal('show');
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 col-md-12">
                                             <div class="form-group {{ errors.description ? 'has-error' : '' }}">
-                                                <label for=description>Description</label>
+                                                <label for=description>Deskripsi</label>
                                                 <textarea name="description" id="description"
                                                 class="form-control">{{ old.description }}</textarea>
                                                 {% if errors.description %}
@@ -105,7 +105,7 @@ $('#create').modal('show');
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-success">
-                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>  CREATE</button>
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i> BUAT GRUP</button>
                                         <hr style="margin-top:10px;margin-bottom:10px;" >
                                     </form>
                                 </div>
@@ -124,9 +124,9 @@ $('#create').modal('show');
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"
-                            style="color:red">Close(&times;)</button>
+                            style="color:red">tutup(&times;)</button>
                             <h3 class="modal-title text-left" style="font-family:impact">
-                                Group Information</h3>
+                                Informasi Grup</h3>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -136,8 +136,8 @@ $('#create').modal('show');
                                     </div>
                                     <div class="col-lg-8">
                                         <p class="text-left">
-                                            <b>Name :<br></b> {{group.name}}<br><br>
-                                            <b>Description :<br></b> {{group.description}}</p>
+                                            <b>Nama :<br></b> {{group.name}}<br><br>
+                                            <b>Deskripsi :<br></b> {{group.description}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -145,27 +145,27 @@ $('#create').modal('show');
                                     <div class="col-lg-12" align="center">
                                         <a href="{{ path_for('user.item.group', {('id'): group.group_id}) }}">
                                             <button class="btn btn-primary btn-info btn-md"
-                                            style="margin-right:10px">My Items</button>
+                                            style="margin-right:10px">Itemku</button>
                                         </a>
 
                                         <a href="{{ path_for('pic.item.group', {('id'): group.group_id}) }}">
                                             <button style="margin-right:10px" class="btn btn-primary btn-success btn-md">
-                                                Group Items</button>
+                                                Item Group</button>
                                         </a>
 
                                         <a href="{{ path_for('pic.member.group.get', {('id'): group.group_id}) }}">
                                             <button style="margin-right:10px" class="btn btn-primary btn-success btn-md">
-                                                Group Members</button>
+                                                Anggota Grup</button>
                                         </a>
 
                                         <a href="{{ path_for('pic.edit.group.get', {('id'): group.group_id}) }}">
                                                 <button class="btn btn-primary  btn-md"
-                                                style="margin-right:10px">Edit Group</button>
+                                                style="margin-right:10px">Edit Grup</button>
                                         </a>
 
                                         <a href="{{ path_for('get.del.group', {('id'): group.group_id}) }}">
                                             <button class="btn btn-danger btn-md"
-                                            style="margin-right:10px">Leave Group</button>
+                                            style="margin-right:10px">Keluar Grup</button>
                                         </a>
                                     </div>
                                 </div>

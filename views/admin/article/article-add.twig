@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Create Article  {% endblock %}
+{% block title %} Buat Artikel  {% endblock %}
 
 {% block headContent %}
-	<i class="fa fa-plus" aria-hidden="true">  Create Article</i>
+	<i class="fa fa-plus" aria-hidden="true">  Buat Artikel</i>
 {% endblock %}
 
 {% block content %}
@@ -13,13 +13,13 @@
 	 enctype="multipart/form-data">
 	 <div class="box-body">
 		 <div class="form-group {{ errors.title ? 'has-error': '' }}">
-			 <input type="text" name="title" class="form-control" placeholder="Title">
+			 <input type="text" name="title" class="form-control" placeholder="Judul">
 			 {% if errors.title %}
 			 <span class="help-block">{{ errors.title|first }}</span>
 			 {% endif %}
 		 </div>
 		 <div class="form-group {{ errors.content ? 'has-error': '' }}">
-			 <textarea name="content" id="summernote" class="form-control" placeholder="Content" rows="10">
+			 <textarea name="content" id="summernote" class="form-control" placeholder="Isi" rows="10">
 			 </textarea>
 			 {% if errors.content %}
 			 <span class="help-block">{{ errors.content|first }}</span>
@@ -30,7 +30,7 @@
 				 src="{{ base_url() }}/assets/images/file-empty.png"
 				 class="img-thumbnail" style="width:200px" ></div><br />
 
-				 <label for="image">Image</label>
+				 <label for="image">Foto</label>
 				 <input type="file" id="file" name="image" id="image" class="form-control">
 				 {% if errors.image %}
 				 <span class="help-block">{{errors.image | first}}</span>
@@ -39,7 +39,7 @@
 		 </div>
 		 <div class="box-footer">
 			<button type="submit" class="btn btn-primary center-block">
-				 <i class="fa fa-reply"></i> Submit
+				 <i class="fa fa-reply"></i> Buat
 			</button>
 		 </div>
 	 </form>

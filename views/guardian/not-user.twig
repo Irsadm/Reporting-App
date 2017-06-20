@@ -1,9 +1,9 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Group | All Members {% endblock %}
+{% block title %} Grup | Semua Pengguna {% endblock %}
 
 {% block headContent %}
-	 <i style="color:green" class="fa fa-check-square-o">  All Users </i>
+	 <i style="color:green" class="fa fa-check-square-o">  Semua Pengguna </i>
 {% endblock %}
 
 {% block content %}
@@ -16,13 +16,13 @@
 					<table id="example2" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Gender</th>
-								<th>Address</th>
+								<th>Nama</th>
+								<th>Jenis Kelamin</th>
+								<th>Alamat</th>
 								<th>Email</th>
-								<th>Phone</th>
-								<th>Image</th>
-								<th style="width: 40px">Select</th>
+								<th>Telepon</th>
+								<th>Photo</th>
+								<th style="width: 40px">Pilih</th>
 							</tr>
 						</thead>
 						{% for user in users %}
@@ -44,7 +44,7 @@
 				<div class="panel-body" align="right">
 					<input type="hidden" name="guard_id" value="{{ guard_id }}">
 					<button type="submit" name="setuser" value="1" class="btn btn-primary">
-						<i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>Add User</button>
+						<i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>Tambahkan</button>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</form>
 			</div>

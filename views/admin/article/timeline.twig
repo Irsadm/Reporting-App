@@ -2,9 +2,9 @@
     <div class="col-md-8 col-md-offset-1">
 	<form method="GET" action="{{ path_for('home') }}">
 	    <div class="input-group">
-	        <input type="text" class="form-control" name="search" placeholder="Search for...">
+	        <input type="text" class="form-control" name="search" placeholder="Cari ...">
 	        <span class="input-group-btn">
-	            <button class="btn btn-default" type="submit">Search</button>
+	            <button class="btn btn-default" type="submit">Cari</button>
 	        </span>
 	    </div>
  	</form>
@@ -21,9 +21,9 @@
 			                <p class="text-justify">{{ article.content|slice(0, 300)|raw }}
 
 			                    {% if login.status == 1 %}
-			                    <a href="{{ path_for('article-read', { id:article.id }) }}">Readmore...</a></p>
+			                    <a href="{{ path_for('article-read', { id:article.id }) }}">Selengkapnya...</a></p>
 			                    {% elseif login.status == 0 %}
-			                    <a href="{{ path_for('user.article-read', { id:article.id }) }}">Readmore...</a></p>
+			                    <a href="{{ path_for('user.article-read', { id:article.id }) }}">Selengkapnya...</a></p>
 			                    {% endif %}
 
 			                    <br>
@@ -43,9 +43,9 @@
 			                <p class="text-justify">{{ article.content|slice(0, 300)|raw }}
 
 			                    {% if login.status == 1 %}
-			                    <a href="{{ path_for('article-read', { id:article.id }) }}">Readmore...</a></p>
+			                    <a href="{{ path_for('article-read', { id:article.id }) }}">Baca Selengkapnya...</a></p>
 			                    {% elseif login.status == 0 %}
-			                    <a href="{{ path_for('user.article-read', { id:article.id }) }}">Readmore...</a></p>
+			                    <a href="{{ path_for('user.article-read', { id:article.id }) }}">Baca Selengkapnya...</a></p>
 			                    {% endif %}
 
 			                    <br>
@@ -65,12 +65,12 @@
         <nav aria-label="...">
 			<ul class="pager">
 				{% if data.current > data.first_page %}
-			    	<li class="previous"><a href="{{ base_url() }}/home?page={{ data.first_page }}"><span aria-hidden="true">&larr;</span> First page</a></li>
-			    	<li class="previous"><a href="{{ base_url() }}/home?page={{ data.current - 1 }}"><span aria-hidden="true">&larr;</span> Back</a></li>
+			    	<li class="previous"><a href="{{ base_url() }}/home?page={{ data.first_page }}"><span aria-hidden="true">&larr;</span> Halaman pertama</a></li>
+			    	<li class="previous"><a href="{{ base_url() }}/home?page={{ data.current - 1 }}"><span aria-hidden="true">&larr;</span> Kembali</a></li>
 			    {% endif %}
             	{% if data.current < data.total_page %}
-			    	<li class="next"><a href="{{ base_url() }}/home?page={{ data.total_page }}">Last page <span aria-hidden="true">&rarr;</span></a></li>
-			    	<li class="next"><a href="{{ base_url() }}/home?page={{ data.current + 1 }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+			    	<li class="next"><a href="{{ base_url() }}/home?page={{ data.total_page }}">Halaman terakhir <span aria-hidden="true">&rarr;</span></a></li>
+			    	<li class="next"><a href="{{ base_url() }}/home?page={{ data.current + 1 }}">Selanjutnya <span aria-hidden="true">&rarr;</span></a></li>
 			    {% endif %}
 <!-- 			    {% if data.current <= 1 %}
 			    	<li class="disabled pull-left"><a href="#"><span aria-hidden="false">&larr;</span> Back</a></li>

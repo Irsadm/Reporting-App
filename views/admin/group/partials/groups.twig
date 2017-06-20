@@ -12,20 +12,20 @@
 			    		<b>{{ group.name }}</b>
 			    	</a>
 					<input type="checkbox" name="group[]" value="{{ group.id }}">
-					<font color=#0160a4> set inactive</font><span class="pull-right">
+					<font color=#0160a4> Pilih</font><span class="pull-right">
 					<a href="{{ path_for('edit.group.get', { ('id'):group.id }) }}">
-						edit  <i class="fa fa-pencil"></i></a></span><hr>
+						Edit  <i class="fa fa-pencil"></i></a></span><hr>
 			  	</div>
 			</div>
 	  	</div>
 	{% endfor %}
 </div>
 	{% if groups == null %}
-	<p align="center" style="color:red">There are no active groups</p>
+	<p align="center" style="color:red">Tidak ada grup</p>
 	{% elseif groups != null %}
 	<hr style="margin-top:10px;margin-bottom:10px;" >
 	<center><button type="submit" name="active"  class="btn btn-warning">
-	<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Send to trash</button></center>
+	<i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> Hapus</button></center>
 	{% endif %}
 	<hr style="margin-top:10px;margin-bottom:10px;" >
 </form>
