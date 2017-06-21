@@ -161,7 +161,7 @@ class UserModel extends BaseModel
 
         $qb1 = $this->db->createQueryBuilder();
 
-        $this->query = $qb1->select('u.name', 'u.id', 'u.phone', 'u.email', 'u.gender', 'u.address', 'u.image')
+        $this->query = $qb1->select('u.name', 'u.created_at', 'u.id', 'u.phone', 'u.email', 'u.gender', 'u.address', 'u.image')
              ->from($this->table, 'u')
              ->join('u', 'guardian', 'g', $qb1->expr()->in('u.id', $query1))
              ->groupBy('u.id');

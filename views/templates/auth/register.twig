@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register And Login</title>
+    <title>Masuk dan Daftar</title>
     <link rel="shortcut icon" href="(http://app.unbounce.com/favicon.ico)"/>
     <link href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/glowing-purple-neon-icons-social-media-logos/114150-glowing-purple-neon-icon-social-media-logos-picasa.png"
      rel="shortcut icon" type="image/x-icon" />
@@ -37,7 +37,7 @@
             <div class="container" align="center">
                 <div class="row">
                     <div class="col-sm-8 col-sm-offset-2 text">
-                        <h1><strong></strong> Login &amp; Register Forms</h1>
+                        <h1><strong></strong> Form Masuk &amp; Daftar</h1>
                     </div>
                 </div>
             </div>
@@ -47,8 +47,8 @@
                     <div class="form-box">
                         <div class="form-top">
                             <div class="form-top-left">
-                                <h3 style="color:white">Login to our site</h3>
-                                <p style="color:white">Enter username and password to log on:</p>
+                                <h3 style="color:white">Masuk</h3>
+                                <p style="color:white">Masukkan username and password untuk masuk:</p>
                             </div>
                         </div>
                         <div class="row">
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-social-button btn-yahoo">
-                                        <i class="fa fa-login"></i>Sign in!</button>
+                                        <i class="fa fa-login"></i>Masuk</button>
                                 </form>
                             </div>
                         </div>
@@ -87,9 +87,9 @@
                     <div class="form-box">
                         <div class="form-top">
                             <div class="form-top-left">
-                                <h3 style="color:white">Sign up now</h3>
+                                <h3 style="color:white">Daftar sekarang juga</h3>
                                 <p style="color:white">
-                                    Fill in the form below to get instant access:</p>
+                                    Isi form dengan benar:</p>
                             </div>
                         </div>
                         <div class="form-bottom">
@@ -116,7 +116,7 @@
                                     <div class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </div>
-                                    <input type="text" name="name" placeholder="Name..."
+                                    <input type="text" name="name" placeholder="Nama..."
                                     value="{{ old.name }}"
                                     class="form-last-name form-control" id="form-last-name">
                                 </div>
@@ -164,7 +164,7 @@
                                         <i class="fa fa-transgender-alt"></i>
                                     </div>
                                     <select name="gender" class="form-control" id="">
-                                        <option value="">Select Gender</option>
+                                        <option value="">Jenis kelamin</option>
                                         <option value="Laki-laki" {% if  old.gender == 'Laki-laki' %}
                                         selected="selected"{% endif %}>Laki-Laki</option>
                                         <option value="Perempuan" {% if  old.gender == 'Perempuan' %}
@@ -180,7 +180,7 @@
                                     </div>
                                     <input type="text" class="form-control input-medium bfh-phone"
                                     data-format="+62dddddddddddd" name="phone"
-                                    value="{{old.phone}}" placeholder=" Phone Number...">
+                                    value="{{old.phone}}" placeholder=" Telepon...">
                                 </div>
                                 {% if errors.phone %}
                                 <span class="help-block">
@@ -189,7 +189,7 @@
                                 {% endif %}
                             </div>
                             <button type="submit" class="btn btn-social-button btn-yahoo">
-                                Sign me up!</button>
+                                Buat akun</button>
                             </form>
                         </div>
                     </div>

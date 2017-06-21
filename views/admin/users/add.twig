@@ -1,7 +1,7 @@
 {% extends 'templates/default.twig' %}
 
-{% block title %} Create User {% endblock %}
-{% block headContent %} <i class="fa fa-plus">  Create User </i> {% endblock %}
+{% block title %} Daftarkan User {% endblock %}
+{% block headContent %} <i class="fa fa-plus">  Buat akun User </i> {% endblock %}
 
 {% block content %}
 <form action="{{ path_for('user.create')}}" method="POST" enctype="multipart/form-data">
@@ -18,7 +18,7 @@
                             <i class="fa fa-users"></i>
                         </div>
                         <input type="text" name="username" class="form-control"
-                        value="{{ old.username }}" placeholder="Your Username">
+                        value="{{ old.username }}" placeholder="Username">
                     </div>
                     {% if errors.username %}
                     <span class="help-block">
@@ -27,13 +27,13 @@
                     </div>
 
                     <div class="form-group {{ errors.name ? 'has-error' : '' }}">
-                        <label>Name:</label>
+                        <label>Nama:</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-user"></i>
                             </div>
                             <input type="text" name="name" class="form-control"
-                            value="{{ old.name }}" placeholder="Your Name">
+                            value="{{ old.name }}" placeholder="Nama">
                         </div>
                         {% if errors.name %}
                         <span class="help-block">{{errors.name | first}}</span>
@@ -47,7 +47,7 @@
                                 <i class="fa fa-envelope"></i>
                             </div>
                             <input type="text" name="email" class="form-control"
-                            value="{{ old.email }}" placeholder="Your email">
+                            value="{{ old.email }}" placeholder="Email">
                         </div>
                         {% if errors.email %}
                         <span class="help-block">{{errors.email | first}}</span>
@@ -61,7 +61,7 @@
                                 <i class="fa fa-lock"></i>
                             </div>
                             <input type="password" name="password"
-                            class="form-control" placeholder="Your Password">
+                            class="form-control" placeholder="Password">
                         </div>
                         {% if errors.password %}
                         <span class="help-block">
@@ -70,14 +70,14 @@
                         </div>
 
                         <div class="form-group {{ errors.gender ? 'has-error' : '' }}">
-                            <label>Gender :</label>
+                            <label>Jenis kelamin :</label>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <i class="fa fa-transgender-alt"></i>
                                 </div>
 
                                 <select name="gender" class="form-control" id="">
-                                    <option value="">Select Gender</option>
+                                    <option value="">Pilih jenis kelamin</option>
                                     <option value="Laki-laki"{% if  old.gender == "Laki-laki" %}
                                      selected="selected"{% endif %}>Laki-laki</option>
                                     <option value="Perempuan"{% if  old.gender == "Perempuan" %}
@@ -91,14 +91,14 @@
                             </div>
 
                             <div class="form-group {{ errors.phone ? 'has-error' : '' }}">
-                                <label>Phone Number:</label>
+                                <label>Telepon:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-phone"></i>
                                     </div>
                                     <input type="text" class="form-control input-medium bfh-phone"
                                     data-format="+62 (ddd) ddd-ddd-ddd" name="phone"
-                                    value="{{ old.phone }}" placeholder="Your phone">
+                                    value="{{ old.phone }}" placeholder="Telepon">
                                 </div>
                                 {% if errors.phone %}
                                 <span class="help-block">{{errors.phone | first}}</span>
@@ -106,7 +106,7 @@
                             </div>
 
                             <div class="form-group {{ errors.address ? 'has-error' : '' }}">
-                                <label>Address:</label>
+                                <label>Alamat:</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-envelope"></i>
@@ -122,7 +122,7 @@
                                 <div id="image_preview"><img id="previewing"
                                     src="{{ base_url() }}/assets/images/{{ login.image }}"
                                      class="img-thumbnail" style="width:200px" ></div><br />
-                                <label>Image :</label>
+                                <label>Foto :</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-image"></i>
@@ -137,7 +137,7 @@
 
                             <button type="submit" class="btn btn-default" style="margin:10px">
                                 <span class="glyphicon glyphicon-share-alt">
-                                </span> Create</button>
+                                </span> Buat akun</button>
                         </div>
                     </div>
                 </div>

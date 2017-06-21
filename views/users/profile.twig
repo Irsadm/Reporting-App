@@ -13,7 +13,7 @@
 <div class="panel-body">
     <div class="box box-info">
         <h4 class="text-center" style="font-family:impact">
-            My &nbsp;P r o f i l e</h4>
+            P r o f i l</h4>
             <div class="box-header">
                 <div class="col-lg-4">
                     {% if login %}
@@ -26,25 +26,25 @@
                 </div>
                     <div class="col-lg-8">
                         <hr>
-                        <p class="text-left"><b><span class="col1">Name </span>:</b> {{login.name}}<br><br>
+                        <p class="text-left"><b><span class="col1">Nama </span>:</b> {{login.name}}<br><br>
                             <b><span class="col1">Username </span>:  </b> {{login.username}}<br><br>
                             <b><span class="col1">Email </span>:  </b> {{login.email}}<br><br>
-                            <b><span class="col1">Gender </span>:  </b> {{login.gender}}<br><br>
-                            <b><span class="col1">Address </span>:  </b> {{login.address}}<br><br>
-                            <b><span class="col1">Phone </span>:  </b> {{login.phone}}<br><br>
-                            <b><span class="col1">Registration Date</span>:  </b>
+                            <b><span class="col1">Jenis kelamin </span>:  </b> {{login.gender}}<br><br>
+                            <b><span class="col1">Alamat </span>:  </b> {{login.address}}<br><br>
+                            <b><span class="col1">Telepon </span>:  </b> {{login.phone}}<br><br>
+                            <b><span class="col1">Terdaftar</span>:  </b>
                             {{login.created_at | date("F jS Y ")}}</p>
                         </p>
                         <hr>
-                        <b><span class="col1">Group( as member) </span>:
+                        <b><span class="col1">Grup( sebagai member) </span>:
                                 {% for group in group1 %}
                                 <button type="button" class="btn btn-xs btn-warning"></b> {{group.name}}</button>
                                 {% endfor %}<br><br>
-                                <b><span class="col1">Group ( as PIC) </span>:
+                                <b><span class="col1">Grup ( sebagai PIC) </span>:
                                     {% for group in group2 %}
                                     <button type="button" class="btn btn-xs btn-info"></b> {{group.name}}</button>
                                     {% endfor %}<br><br>
-                                    <b><span class="col1">Guardian </span>:
+                                    <b><span class="col1">Wali </span>:
                                         {% for guardian in guardian %}
                                     </b><a href="#" data-toggle="modal" data-target="#{{guardian.id}}"
                                     class="btn btn-xs btn-success"
@@ -57,7 +57,7 @@
                         </div>
                         <a href="{{path_for('user.setting')}}"><button type="submit"
                             class="btn btn-social-button btn-github">
-                            <i class="fa fa-cogs"></i> Setting profile</button></a>
+                            <i class="fa fa-cogs"></i> Pengaturan profile</button></a>
                             {% endif %}
 
                             {% for guardian in guardian %}
@@ -69,10 +69,10 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal"
-                                            style="color:red">Close(&times;)
+                                            style="color:red">Tutup(&times;)
                                         </button>
                                         <h3 class="modal-title text-center" style="font-family:impact">
-                                            Guardian Information</h3>
+                                            Detail wali</h3>
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
@@ -81,16 +81,16 @@
                                                     src="{{ base_url() }}/assets/images/{{ guardian.image }}" alt="">
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <p class="text-left"><b>Name :</b> {{guardian.name}}<br>
+                                                    <p class="text-left"><b>Nama :</b> {{guardian.name}}<br>
                                                         <b>Email  :</b> {{guardian.email}}<br>
-                                                        <b>Gender :</b> {{guardian.gender}}<br>
-                                                        <b>Addres :</b> {{guardian.address}}<br>
-                                                        <b>Phone  :</b> {{guardian.phone}}<br>
+                                                        <b>Jenis kelamin :</b> {{guardian.gender}}<br>
+                                                        <b>Alamat :</b> {{guardian.address}}<br>
+                                                        <b>Telepon  :</b> {{guardian.phone}}<br>
                                                     </p>
                                                     <div class="row">
                                                         <a href="{{ path_for('user.guard.delete', {('id'): guardian.id}) }}">
                                                             <button class="btn btn-danger btn-info btn-md"
-                                                            style="margin-top:40px; margin-left:50px">Delete
+                                                            style="margin-top:40px; margin-left:50px">Hapus
                                                         </button></a>
                                                     </div>
                                                 </div>

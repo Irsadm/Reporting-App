@@ -89,13 +89,13 @@ class ArticleController extends BaseController
 			    // Fail!
 			    $errors = $file->getErrors();
 
-			    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
+			    $this->flash->addMessage('error', 'Format foto harus JPG, JPEG atau GIF');
 
 			    return $response->withRedirect($this->router->pathFor('article-add'));
 			}
 			$article->add($request->getParams(), $data['name']);
 
-			$this->flash->addMessage('succes', 'Data succesfully added');
+			$this->flash->addMessage('succes', 'Artikel berhasil dibuat');
 			return $response->withRedirect($this->router->pathFor('article-list-active'));
 		} else {
 			$_SESSION['old'] = $request->getParams();
@@ -108,10 +108,12 @@ class ArticleController extends BaseController
 	public function readArticle(Request $request, Response $response, $args)
 	{
 		$article = new ArticleModel($this->db);
-		if (!empty($data['article'] == $article->find('id', $args['id']))) {
+        $data['article'] = $article->find('id', $args['id']);
+// var_dump($data);die();
+		if (!empty($data)) {
 			return $this->view->render($response , 'admin/article/article-read.twig', $data);
 		} else {
-			$this->flash->addMessage('error', 'Article not found !');
+			$this->flash->addMessage('error', 'Artikel tidak ditemukan!');
             return $response->withRedirect($this->router->pathFor('home'));
 		}
 
@@ -169,7 +171,7 @@ class ArticleController extends BaseController
 				    // Fail!
 				    $errors = $file->getErrors();
 
-				    $this->flash->addMessage('error', 'Image format should be in JPG, JPEG or GIF');
+				    $this->flash->addMessage('error', 'Format foto harus JPG, JPEG atau GIF');
 
 				    return $response->withRedirect($this->router->pathFor('article-edit', ['id' => $args['id']]));
 				}

@@ -6,8 +6,8 @@
     <div class="box box-info">
       <a href="{{path_for('user.change.password')}}"><button type="submit"
                 class="btn btn-social-button btn-github pull-right" style="margin:10px">
-                <i class="fa fa-user-secret"></i> Change Password</button></a>
-        <a href="#"><h4 class="text-center"><i class="fa fa-cogs"></i>Setting account</h4></a>
+                <i class="fa fa-user-secret"></i> Ubah Password</button></a>
+        <a href="#"><h4 class="text-center"><i class="fa fa-cogs"></i>Pengaturan akun</h4></a>
 
         <form action="{{ path_for('user.setting', {id:login.id} ) }}"
         method="POST" enctype="multipart/form-data">
@@ -20,7 +20,7 @@
                                 <i class="fa fa-users"></i>
                             </div>
                             <input type="text" name="username" class="form-control"
-                            value="{{ login.username }}" placeholder="Your Username">
+                            value="{{ login.username }}" placeholder="Username">
                         </div>
                         {% if errors.username %}
                         <span class="help-block">
@@ -29,13 +29,13 @@
                     </div>
 
                     <div class="form-group {{ errors.name ? 'has-error' : '' }}">
-                        <label>Name:</label>
+                        <label>Nama:</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-user"></i>
                             </div>
                             <input type="text" name="name" class="form-control"
-                             value="{{ login.name }}" placeholder="Your Name">
+                             value="{{ login.name }}" placeholder="Nama">
                         </div>
                         {% if errors.name %}
                         <span class="help-block">{{errors.name | first}}</span>
@@ -43,15 +43,15 @@
                     </div>
 
                     <div class="form-group {{ errors.gender ? 'has-error' : '' }}">
-                        <label>Gender :</label>
+                        <label>Jenis kelamin :</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-transgender-alt"></i>
                             </div>
                             <select name="gender" class="form-control" id="">
-                                <option value="L" {% if  login.gender == "L" %}
+                                <option value="Laki-laki" {% if  login.gender == "Laki-laki" %}
                                  selected="selected"{% endif %}>Laki-Laki</option>
-                                <option value="P" {% if  login.gender == "P" %}
+                                <option value="Perempuan" {% if  login.gender == "Perempuan" %}
                                  selected="selected"{% endif %}>Perempuan</option>
                             </select>
                         </div>
@@ -62,13 +62,13 @@
                     </div>
 
                     <div class="form-group {{ errors.address ? 'has-error' : '' }}">
-                        <label>Address:</label>
+                        <label>Alamat:</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-envelope"></i>
                             </div>
                             <input type="text" name="address" class="form-control"
-                             value="{{ login.address }}" placeholder="Your address">
+                             value="{{ login.address }}" placeholder="Alamat">
                         </div>
                         {% if errors.address %}
                         <span class="help-block">{{errors.address | first}}</span>
@@ -81,21 +81,21 @@
                                 <i class="fa fa-envelope"></i>
                             </div>
                             <input type="email" name="email" class="form-control"
-                            value="{{ login.email }}" placeholder="Your email">
+                            value="{{ login.email }}" placeholder="Email">
                         </div>
                         {% if errors.email %}
                         <span class="help-block">{{errors.email | first}}</span>
                         {% endif %}
                     </div>
                     <div class="form-group {{ errors.phone ? 'has-error' : '' }}">
-                        <label>Phone Number:</label>
+                        <label>Nomor telepon:</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-phone"></i>
                             </div>
                             <input type="text" class="form-control input-medium bfh-phone"
-                             data-format="+62 (ddd) ddd-ddd-ddd" name="phone"
-                             value="{{ login.phone }}" placeholder="Your phone">
+                             data-format="+62dddddddddddd" name="phone"
+                             value="{{ login.phone }}" placeholder="Telepon">
                         </div>
                         {% if errors.phone %}
                         <span class="help-block">{{errors.phone | first}}</span>
@@ -110,13 +110,13 @@
                         <div id="image_preview"><img id="previewing"
                             src="{{ base_url() }}/assets/images/{{ login.image }}"
                             class="img-thumbnail" style="width:200px" ></div><br />
-                        <label>Image :</label>
+                        <label>Foto :</label>
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="fa fa-image"></i>
                             </div>
                             <input type="file" id="file" class="form-control"
-                            name="image" value="{{login.image}}" placeholder="Your image">
+                            name="image" value="{{login.image}}" placeholder="Foto">
                             <input type="hidden" name="id" value="{{ login.id }}">
                         </div>
                         {% if errors.image %}
@@ -125,8 +125,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-default" style="margin:10px">
-                    <i class="fa fa-cog"></i> Save changes</button>
-
+                    <i class="fa fa-cog"></i> Simpan perubahan</button>
                 </form>
             </div>
             </div>

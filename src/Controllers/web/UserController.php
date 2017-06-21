@@ -62,22 +62,28 @@ class UserController extends BaseController
              ], 5);
 
         if ($this->validator->validate()) {
-            $image->upload();
+            if (!empty($_FILES['image']['name'])) {
+                $image->upload();
+                $imageName = $data['name'];
+            } else {
+                $imageName = '';
+            }
+
             $register = $user->checkDuplicate($request->getParam('username'),
                         $request->getParam('email'));
 
-            if ($register == 0) {
+            if ($register == 1) {
                 $_SESSION['old'] = $request->getParams();
-                $this->flash->addMessage('warning', 'Username, already used');
+                $this->flash->addMessage('warning', 'Username, sudah digunakan');
 
                 return $response->withRedirect($this->router->pathFor('user.create'));
             } elseif ($register == 2) {
                 $_SESSION['old'] = $request->getParams();
-                $this->flash->addMessage('warning', 'Email, already used');
+                $this->flash->addMessage('warning', 'Email, sudah digunakan');
                 return $response->withRedirect($this->router->pathFor('user.create'));
             } else {
-                $user->createUser($request->getParams(), $data['name']);
-                $this->flash->addMessage('succes', 'Create Data Succes');
+                $user->createUser($request->getParams(), $imageName);
+                $this->flash->addMessage('succes', 'Akun berhasil dibuat');
 
                 return $response->withRedirect($this->router->pathFor('user.list.all'));
             }
@@ -232,11 +238,11 @@ class UserController extends BaseController
 
             if ($register == 1) {
                 $_SESSION['old'] = $request->getParams();
-                $this->flash->addMessage('warning', 'Username, already used');
+                $this->flash->addMessage('warning', 'Username sudah digunakan');
                     return $response->withRedirect($this->router->pathFor('register'));
             } elseif ($register == 2) {
                 $_SESSION['old'] = $request->getParams();
-                $this->flash->addMessage('warning', 'Email, already used');
+                $this->flash->addMessage('warning', 'Email sudah digunakan');
                 return $response->withRedirect($this->router->pathFor('register'));
             } else {
                 $newUser = $user->register($request->getParams());
@@ -247,17 +253,16 @@ class UserController extends BaseController
 
                 $base = $request->getUri()->getBaseUrl();
                 $keyToken = $userToken['token'];
-                $activateUrl = '<a href ='.$base ."/activateaccount/".$keyToken.'><h3>ACTIVATE ACCOUNT</h3></a>';
-                $content = "Thank you for registering your Reporting App account.
-                To finally activate your account please click the following link. <br /> <br />"
+                $activateUrl = '<a href ='.$base ."/activateaccount/".$keyToken.'><h3>AKTIFKAN AKUN</h3></a>';
+                $content = "Terima kasih telah mendafta di Reporting App.
+                Untuk mengaktifkan akun anda, silakan klik link di bawah ini. <br /> <br />"
                 .$activateUrl.
-                "<br /> <br /> If clicking the link doesn't work, you can copy the link into your browser window
-                or type it there directly. <br /><br /> "
+                "<br /> <br /> Jika dengan mengklik link tidak bekerja, anda dapat menyalin atau mengetik kembali link di bawah ini. <br /><br /> "
                 .$base ."/activateaccount/".$keyToken.
-                " <br /><br /> Regards, <br /><br /> Reporting App Team";
+                " <br /><br /> Terima kasih, <br /><br /> Admin Reporting App";
 
                 $mail = [
-                    'subject'   =>  'Reporting App - Email validation',
+                    'subject'   =>  'Reporting App - Verifikasi Email',
                     'from'      =>  'reportingmit@gmail.com',
                     'to'        =>  $findUser['email'],
                     'sender'    =>  'Reporting App',
@@ -267,8 +272,8 @@ class UserController extends BaseController
 
                 $result = $mailer->send($mail);
 
-                $this->flash->addMessage('succes', 'Register Succes,
-                                Please check your email to activate your account');
+                $this->flash->addMessage('succes', 'Registrasi sukses,
+                                Silakan cek email anda untuk mengaktifkan akun');
 
                 return $response->withRedirect($this->router->pathFor('register'));
             }
@@ -293,7 +298,7 @@ class UserController extends BaseController
         $user = new UserModel($this->db);
         $login = $user->find('username', $request->getParam('username'));
         if (empty($login)) {
-            $this->flash->addMessage('warning', ' Username is not registered');
+            $this->flash->addMessage('warning', ' Username tidak terdaftar');
             return $response->withRedirect($this->router
                     ->pathFor('login.admin'));
         } else {
@@ -302,17 +307,17 @@ class UserController extends BaseController
                 $_SESSION['login'] = $login;
                 if ($_SESSION['login']['status'] == 1) {
                     // var_dump($_SESSION['login']['status']);die();
-                    $this->flash->addMessage('succes', 'Congratulations you have successfully logged in as admin');
+                    $this->flash->addMessage('succes', 'Selamat datang admin');
                     return $response->withRedirect($this->router->pathFor('home'));
                 } else {
                     if (isset($_SESSION['login']['status'])) {
-                        $this->flash->addMessage('error', 'You are not admin');
+                        $this->flash->addMessage('error', 'Anda bukan admin');
                         return $response->withRedirect($this->router
                                 ->pathFor('login.admin'));
                     }
                 }
             } else {
-                $this->flash->addMessage('warning', ' Password is not registered');
+                $this->flash->addMessage('warning', 'Password salah');
                 return $response->withRedirect($this->router
                         ->pathFor('login.admin'));
             }
@@ -337,7 +342,7 @@ class UserController extends BaseController
         // var_dump($login);die();
 
         if (empty($login)) {
-            $this->flash->addMessage('warning', 'Username is not registered!');
+            $this->flash->addMessage('warning', 'Username tidak terdaftar!');
             return $response->withRedirect($this->router
             ->pathFor('login'));
         } else {
@@ -348,15 +353,15 @@ class UserController extends BaseController
                 if ($_SESSION['login']['status'] == 2) {
                     $_SESSION['user_group'] = $groups;
 
-                    $this->flash->addMessage('succes', 'Welcome to the reporting app, '. $login['name']);
+                    $this->flash->addMessage('succes', 'Selamat datang, '. $login['name']);
                     return $response->withRedirect($this->router->pathFor('home'));
                 } else {
-                    $this->flash->addMessage('warning', 'You Are Not User');
+                    $this->flash->addMessage('warning', 'Anda bukan user');
                     return $response->withRedirect($this->router->pathFor('login'));
                 }
 
             } else {
-                $this->flash->addMessage('warning', 'Password incorrect!');
+                $this->flash->addMessage('warning', 'Password salah!');
                 return $response->withRedirect($this->router->pathFor('login'));
             }
         }
@@ -461,24 +466,37 @@ class UserController extends BaseController
 
     public function enterGroup($request,$response, $args)
     {
-        $userGroup = new \App\Models\UserGroupModel($this->db);
+        $items = new \App\Models\Item($this->db);
+        $posts = new \App\Models\PostModel($this->db);
+        $groups = new \App\Models\GroupModel($this->db);
+        $userGroups = new \App\Models\UserGroupModel($this->db);
 
         $userId  = $_SESSION['login']['id'];
-        $user = $userGroup->findUser('group_id', $args['id'], 'user_id', $userId);
+        $userGroup = $userGroups->finds('group_id', $args['id'], 'user_id', $userId);
+        $memberGroup = $userGroups->finds('group_id', $args['id'], 'group_id',  $args['id']);
+        $item = $items->finds('group_id', $args['id'], 'user_id', NULL);
+        $group = $groups->find('id', $args['id']);
+        $post = $posts->getInGroup($args['id']);
 
-        $_SESSION['group'] = $user['group_id'];
-        $reported = $request->getQueryParam('reported');
 
-        if ($user['status'] == 1 && $reported) {
-            return $this->getItemInGroup($request,$response, $args);
+        if ($group && $userGroup) {
 
-        } elseif ($user['status'] == 1) {
-            $_SESSION['pic'] = $user['group_id'];
+            $data = [
+                'group' => $group,
+                'posts' => $post,
+                'counts' => [
+                    'member' => count($memberGroup),
+                    'article' => count($item),
+                ]
 
-            return $response->withRedirect($this->router
-                            ->pathFor('pic.group.detail', ['id' => $args['id']]));
-        } elseif ($user['status'] == 0) {
-            return $this->getItemInGroup($request,$response, $args);
+            ];
+
+            return $this->view->render($response, 'users/group/group-home.twig', $data);
+
+        } else {
+            $this->flash->addMessage('error', 'Anda tidak memiliki akses ke grup ini!');
+
+            return $response->withRedirect($this->router->pathFor('user.group'));
         }
     }
 
@@ -508,7 +526,7 @@ class UserController extends BaseController
                 'count'=> $count,
             ]);
         } else {
-            $this->flash->addMessage('error', 'You are not allowed to access this group!');
+            $this->flash->addMessage('error', 'Anda tidak memiliki akses ke grup ini!');
             return $response->withRedirect($this->router->pathFor('home'));
         }
     }
@@ -520,21 +538,21 @@ class UserController extends BaseController
         $guard = new \App\Models\GuardModel($this->db);
 
         $guardId = $_SESSION['login']['id'];
-        // $userItems = $userItem->getItem($args['id']);
         $userGuard = $guard->findGuard('guard_id', $guardId, 'user_id', $args['id']);
-        $findUser = $user->find('id', $args['id']);
-        $findItem = $item->
-        var_dump($userGuard);die();
+        $data = $item->userItem($args['id']);
+        $data2 = $item->getUserItemInGroup($args['id']);
+        $dataClear = array_map("unserialize", array_unique(array_map("serialize", $data2)));
+        $result = array_merge($data, $dataClear);
 
         if ($userGuard) {
-            return $this->view->render($response, 'guardian/useritem.twig', [
-                'items' => $userItems,
+            return $this->view->render($response, 'guardian/useritems.twig', [
+                'items' => $result,
                 'user' => $findUser,
                 'count'=> count($userItems),
             ]);
 
         } else {
-            $this->flash->addMessage('error', 'You are not allowed to access this user!');
+            $this->flash->addMessage('error', 'Anda tidak memiliki akses untuk user ini!');
             return $response->withRedirect($this->router->pathFor('home'));
         }
     }
@@ -555,7 +573,7 @@ class UserController extends BaseController
             ]);
 
         } else {
-            $this->flash->addMessage('error', 'You are not allowed to access this user!');
+            $this->flash->addMessage('error', 'Anda tidak memiliki akses  untuk user ini!');
             return $response->withRedirect($this->router->pathFor('home'));
         }
     }
@@ -589,7 +607,7 @@ class UserController extends BaseController
             ]);
 
         } else {
-            $this->flash->addMessage('error', 'You can only add user to your own!');
+            $this->flash->addMessage('error', 'Anda hanya bisa menambahkan user untuk anda sendiri!');
             return $response->withRedirect($this->router->pathFor('home'));
         }
 	}
@@ -623,12 +641,12 @@ class UserController extends BaseController
         if (empty($findUser[0])) {
            $addUser = $guard->createData($data);
 
-           $result = $mailer->send($mail);
+        //    $result = $mailer->send($mail);
 
-           $this->flash->addMessage('succes', 'User successfully added');
+           $this->flash->addMessage('succes', 'User berhasil ditambahkan');
 
         } else {
-            $this->flash->addMessage('error', 'User already exists!');
+            $this->flash->addMessage('error', 'User sudah ada sebelumnya!');
         }
 
         return $response->withRedirect($this->router->pathFor('list.user'));
@@ -662,7 +680,7 @@ class UserController extends BaseController
 
             $_SESSION['guard'] = ['user' => $users];
 
-            $this->flash->addMessage('succes', 'User successfully deleted');
+            $this->flash->addMessage('succes', 'User berhasil dihapus');
         }
 
         return $response->withRedirect($this->router->pathFor('list.user'));
@@ -783,7 +801,7 @@ class UserController extends BaseController
             return $response->withRedirect($this->router->pathFor('user.setting'));
             } else {
 
-                $this->flash->addMessage('warning', 'The old password you have entered is incorrect');
+                $this->flash->addMessage('warning', 'Password lama yang anda masukkan salah');
                 return $response->withRedirect($this->router->pathFor('user.change.password'));
             }
         } else {
@@ -846,7 +864,7 @@ class UserController extends BaseController
             ]);
 
         } else {
-            $this->flash->addMessage('error', 'You are not allowed to access this group!');
+            $this->flash->addMessage('error', 'Anda tidak memiliki akses ke grup ini!');
             return $response->withRedirect($this->router->pathFor('home'));
         }
     }
@@ -865,13 +883,13 @@ class UserController extends BaseController
             $user = $users->setActive($userToken['user_id']);
             $registers->hardDelete($userToken['id']);
 
-            $this->flash->addMessage('succes', 'Your account has been successfully activated');
+            $this->flash->addMessage('succes', 'Akun anda telah berhasil diaktifkan');
 
         }elseif ($userToken['expired_date'] > $now) {
-            $this->flash->addMessage('error', 'Your token has been expired');
+            $this->flash->addMessage('error', 'Token telah kadaluarsa');
 
         } else{
-            $this->flash->addMessage('error', 'You have not signed up yet');
+            $this->flash->addMessage('error', 'Anda belum mendaftar');
         }
 
         return $response->withRedirect($this->router->pathFor('login'));
@@ -886,10 +904,108 @@ class UserController extends BaseController
         if ($findGuardian) {
             $guardian->hardDelete($findGuardian['id']);
 
-            $this->flash->addMessage('succes', 'Guardian succesfully deleted');
+            $this->flash->addMessage('succes', 'Wali sberhasil dihapus');
         }
 
         return $response->withRedirect($this->router->pathFor('user.profile'));
 
     }
+
+    public function viewGuardian($request, $response)
+    {
+        $user = new UserModel($this->db);
+
+        $data['guardian'] = $user->getUserGuardian($_SESSION['login']['id']);
+
+        // var_dump($data['guardian']); die();
+
+        return  $this->view->render($response, '/users/list-guardian.twig', $data);
+    }
+
+    public function searchGuard($request, $response)
+    {
+        $user = new UserModel($this->db);
+
+        $search = $request->getParams()['search'];
+
+        $userId  = $_SESSION['login']['id'];
+
+        $data['group_id'] = $request->getParams()['group'];
+        $data['users'] = $user->search($search, $userId);
+        $data['count'] = count($data['users']);
+
+        if (!empty($request->getParams()['guard'])) {
+
+            return $this->view->render($response, 'users/view-guard-search.twig', $data);
+
+        } elseif (!empty($request->getParams()['group'])) {
+
+            return $this->view->render($response, 'admin/group/not-member.twig', $data);
+        }
+    }
+
+
+    public function setGuardianByUser($request, $response, $args)
+    {
+        $users = new \App\Models\Users\UserModel($this->db);
+        $guard = new \App\Models\GuardModel($this->db);
+        $mailer = new \App\Extensions\Mailers\Mailer();
+
+        $userId = $_SESSION['login']['id'];
+        $findUser = $guard->finds('guard_id', $args['id'], 'user_id', $userId);
+
+        $data = [
+           'guard_id' 	=> 	$args['id'],
+           'user_id'	=>	$userId,
+            ];
+
+        $userName = $_SESSION['login']['name'];
+        $guardian = $users->find('id', $args['id']);
+
+        $mail = [
+            'subject'   =>  'Permohonan menjadi anak asuh',
+            'from'      =>  'reportingmit@gmail.com',
+            'to'        =>  $guardian['email'],
+            'sender'    =>  'Reporting App',
+            'receiver'  =>  $guardian['name'],
+            'content'   =>  $userName.'Meminta anda untuk menjadi Walinya',
+        ];
+        // var_dump($data);die();
+        if (empty($findUser[0])) {
+           $addUser = $guard->createData($data);
+
+        //    $result = $mailer->send($mail);
+
+           $this->flash->addMessage('succes', $guardian['name'].  ' telah berhasil ditambahkan sebagai Wali Anda');
+
+        } else {
+            $this->flash->addMessage('error', $guardian['name']. ' sudah menjadi Wali Anda');
+        }
+
+        return $response->withRedirect($this->router->pathFor('list.guard'));
+    }
+
+    public function delGuardian($request, $response, $args)
+    {
+        $guard = new \App\Models\GuardModel($this->db);
+
+        $userId = $_SESSION['login']['id'];
+        $findId = $guard->findGuard('user_id', $userId , 'guard_id', $args['id']);
+        // var_dump($findId);die();
+
+        if ($findId) {
+
+            $guard->hardDelete($findId['id']);
+
+            $users = $guard->findAllUser($guardId);
+
+            $_SESSION['guard'] = ['user' => $users];
+
+            $this->flash->addMessage('succes', 'Wali berhasil dihapus');
+        }
+
+        return $response->withRedirect($this->router->pathFor('list.guard'));
+    }
+
+
 }

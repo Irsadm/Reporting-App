@@ -55,7 +55,7 @@ class ItemController extends BaseController
         if ($this->validator->validate()) {
             $item  = new Item($this->db);
             $newItem = $item->create($request->getParams());
-            $this->flash->addMessage('succes', 'New item successfully added');
+            $this->flash->addMessage('succes', 'Item berhasil dibuat');
             return $response->withRedirect($this->router->pathFor('item.add'));
         } else {
             $_SESSION['old']  = $request->getParams();
@@ -99,7 +99,7 @@ class ItemController extends BaseController
         if ($this->validator->validate()) {
             $item  = new Item($this->db);
             $newItem = $item->update($request->getParams(), $args['id']);
-            $this->flash->addMessage('succes', 'Item successfully updated');
+            $this->flash->addMessage('succes', 'Item berhasil diubah');
             return $response->withRedirect($this->router->pathFor('item.list'));
         } else {
             $_SESSION['old']  = $request->getParams();
@@ -119,21 +119,21 @@ class ItemController extends BaseController
     {
         $item = new Item($this->db);
         $deleteItem = $item->hardDelete($args['id']);
-        $this->flash->addMessage('succes', 'Item deleted');
+        $this->flash->addMessage('succes', 'Item telah dihapus');
         return $response->withRedirect($this->router->pathFor('item.trash'));
     }
     public function softDeleteItem(Request $request, Response $response, $args)
     {
         $item = new Item($this->db);
         $deleteItem = $item->softDelete($args['id']);
-        $this->flash->addMessage('succes', 'Item deleted');
+        $this->flash->addMessage('succes', 'Item telah dihapus');
         return $response->withRedirect($this->router->pathFor('item.list'));
     }
     public function restoreItem(Request $request, Response $response, $args)
     {
         $item = new Item($this->db);
         $deleteItem = $item->restoreData($args['id']);
-        $this->flash->addMessage('succes', 'Item restored');
+        $this->flash->addMessage('succes', 'Item telah dipulihkan');
         return $response->withRedirect($this->router->pathFor('item.trash'));
     }
     public function getSelectItem($request, $response)
@@ -217,7 +217,7 @@ class ItemController extends BaseController
                 'user_group_id' => $UserGroupId
             ];
             $newUserItem = $userItem->setItem($userItemData, $UserGroupId);
-            $this->flash->addMessage('succes', 'New item successfully added');
+            $this->flash->addMessage('succes', 'Item berhasil dibuat');
             return $response->withRedirect($this->router->pathFor('user.item.create'));
         } else {
             $_SESSION['old']  = $request->getParams();
@@ -249,7 +249,7 @@ class ItemController extends BaseController
                 'count'=> $count,
             ]);
         } else {
-            $this->flash->addMessage('error', 'You are not allowed to access this group!');
+            $this->flash->addMessage('error', 'Anda tidak memiliki akses untuk grup ini!');
             return $response->withRedirect($this->router->pathFor('home'));
         }
     }
@@ -317,7 +317,14 @@ class ItemController extends BaseController
         ];
             $item  = new Item($this->db);
             $newItem = $item->create($itemData);
+<<<<<<< HEAD
             $this->flash->addMessage('succes', 'New item successfully added');
+=======
+
+
+
+            $this->flash->addMessage('succes', 'Item berhasil dibuat');
+>>>>>>> upstream/new-web
 
 
             if ($_SESSION['login']['status'] == 1){
@@ -389,7 +396,7 @@ class ItemController extends BaseController
             ];
             $items = new Item($this->db);
             $addItems = $items->createData($data);
-            $this->flash->addMessage('succes', 'Item successfully created');
+            $this->flash->addMessage('succes', 'Item berhasil dibuat');
             return $response->withRedirect($this->router
             ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
         } else {
@@ -441,6 +448,7 @@ class ItemController extends BaseController
             'description'	=>	$request->getParams()['description'],
             'image'			=>	$imgName,
             'reported_at'	=>	$dateNow,
+            'user_id'	    =>	$userId,
             'status'		=>	1,
         ];
 
@@ -479,7 +487,7 @@ class ItemController extends BaseController
             ];
 
             $this->sendWebNotif($report, $guard['id']);
-            $mailer->send($dataGuard);
+            // $mailer->send($dataGuard);
         }
 
         if ($pic && $pic['id'] != $guard['id']) {
@@ -493,10 +501,10 @@ class ItemController extends BaseController
             ];
 
             $this->sendWebNotif($report, $pic['id']);
-            $mailer->send($dataPic);
+            // $mailer->send($dataPic);
         }
 
-        $this->flash->addMessage('succes', 'Item successfully reported');
+        $this->flash->addMessage('succes', 'Item berhasil dilaporkan');
 
         return $response->withRedirect($this->router
         ->pathFor('user.item.group', ['id' => $request->getParams()['group_id']]));
@@ -508,6 +516,10 @@ class ItemController extends BaseController
         $item = new Item($this->db);
         $itemDone = new \App\Models\ReportedItem($this->db);
         $userGroups = new \App\Models\UserGroupModel($this->db);
+<<<<<<< HEAD
+=======
+        // var_dump($_SESSION['login']);die();
+>>>>>>> upstream/new-web
 
         $userId  = $_SESSION['login']['id'];
         $findItem = $item->find('id', $args['id']);
@@ -522,10 +534,10 @@ class ItemController extends BaseController
                 $itemDone->hardDelete($findItemDone[0]['id']);
             }
 
-            $this->flash->addMessage('succes', 'Item deleted');
+            $this->flash->addMessage('succes', 'Item telah dihapus');
         } else {
 
-            $this->flash->addMessage('error', 'You are not allowed to delete this item');
+            $this->flash->addMessage('error', 'Anda tidak diijinkan menghapus item ini');
         }
         if ($_SESSION['login']['status'] == 1){
 
@@ -534,8 +546,7 @@ class ItemController extends BaseController
 
             return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $findItem['group_id'] ]));
         }
-        // return $response->withRedirect($this->router->pathFor('pic.item.group',
-        // ['id' => $findItem['group_id'] ]));
+
     }
 
     public function deleteItemByUser($request, $response, $args)
@@ -557,11 +568,11 @@ class ItemController extends BaseController
                 $itemDone->hardDelete($findItemDone[0]['id']);
             }
 
-            $this->flash->addMessage('succes', 'Item deleted');
+            $this->flash->addMessage('succes', 'Item telah dihapus');
 
         } else {
 
-            $this->flash->addMessage('error', 'You are not allowed to delete this item');
+            $this->flash->addMessage('error', 'Anda tidak diijinkan menghapus item ini');
         }
 
         return $response->withRedirect($this->router->pathFor('user.item.group',

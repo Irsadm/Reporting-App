@@ -106,12 +106,14 @@ $app->group('', function() use ($app, $container) {
         ->setName('pic.create.item');
         $this->get('/delete/item/{id}', 'App\Controllers\web\ItemController:deleteItemByPic')
         ->setName('pic.delete.item');
+        $this->get('/edit/{id}', 'App\Controllers\web\GroupController:getUpdate')
+        ->setName('pic.edit.group.get');
     });
 
     $app->group('/user', function(){
         $this->get('/article/read/{id}', 'App\Controllers\web\ArticleController:readArticle')
         ->setName('user.article-read');
-        $this->get('/group', 'App\Controllers\web\GroupController:getGeneralGroup')
+        $this->get('/group', 'App\Controllers\web\GroupController:getGroup')
         ->setName('user.group');
         $this->get('/item/status/{id}', 'App\Controllers\web\UserController:setItemUserStatus')
         ->setName('user.item.status');
@@ -142,8 +144,16 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.item.delete');
         $this->get('/delete/guard/{id}', 'App\Controllers\web\UserController:deleteGuardian')
         ->setName('user.guard.delete');
-        $this->post('/search', 'App\Controllers\web\UserController:searchUser')->setName('user.search');
-
+        $this->post('/search', 'App\Controllers\web\UserController:searchUser')
+        ->setName('user.search');
+        $this->get('/group/{id}', 'App\Controllers\web\UserController:enterGroup')
+        ->setName('enter.group');
+        $this->get('/guard/list', 'App\Controllers\web\UserController:viewGuardian')
+        ->setName('list.guard');
+        $this->get('/guard/add/{id}', 'App\Controllers\web\UserController:setGuardianByUser')
+        ->setName('set.guardian');
+        $this->post('/guard/search', 'App\Controllers\web\UserController:searchGuard')->setName('post.guard.search');
+        $this->get('/del/guard/{id}', 'App\Controllers\web\UserController:delGuardian')->setName('delete.guard');
     });
 
     $app->group('/article/', function() {

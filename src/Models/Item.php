@@ -67,6 +67,7 @@ class Item extends BaseModel
         ->from('reported_item')
         ->where('user_id =' . $userId)
         ->execute();
+
         $qb1 = $this->db->createQueryBuilder();
         if ($query1->fetchAll()[0] != NULL) {
             $this->query = $qb1->select('i.*')
@@ -109,13 +110,46 @@ class Item extends BaseModel
            return $result->fetchAll();
     }
 
+    public function getUserItemInGroup($userId)
+    {
+        $qb = $this->db->createQueryBuilder();
+        $query1 = $qb->select('item_id')
+        ->from('reported_item', 'ri')
+        ->where('ri.user_id =' . $userId)
+        ->execute();
 
-    public function userItem($id)
+        $qb2 = $this->db->createQueryBuilder();
+        $query2 = $qb2->select('group_id')
+        ->from('user_group', 'ug')
+        ->where('ug.user_id =' . $userId)
+        ->execute();
+
+        $qb1 = $this->db->createQueryBuilder();
+        if ($query1->fetchAll()[0] != NULL) {
+            $this->query = $qb1->select('i.*')
+            ->from($this->table, 'i')
+            ->join('i', 'reported_item', 'r', $qb1->expr()->notIn('i.id', $query1))
+            ->where('i.user_id is NULL')
+            ->andWhere('i.deleted = 0')
+            ->groupBy('i.id');
+        } else {
+            $this->query = $qb1->select('i.*')
+            ->from($this->table, 'i')
+            ->join('i', 'user_group', 'ug', $qb1->expr()->in('i.group_id', $query2))
+            ->where('i.user_id is NULL')
+            ->andWhere('i.deleted = 0');
+        }
+
+        return $this->fetchAll();
+    }
+
+    public function userItem($userId)
     {
         $qb = $this->db->createQueryBuilder();
         $qb->select('*')
            ->from($this->table)
-           ->where('user_id = '. $id);
+           ->where('user_id = '. $userId)
+           ->andWhere('deleted = 0');
 
            $result = $qb->execute();
            return $result->fetchAll();

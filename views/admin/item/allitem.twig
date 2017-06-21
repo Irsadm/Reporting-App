@@ -3,7 +3,7 @@
 {% block title %} Reporting App {% endblock %}
 
 {% block headContent %}
-        <i style="color:green" class="fa fa-check-square-o">  All Item</i>
+        <i style="color:green" class="fa fa-check-square-o">  Daftar Item</i>
 {% endblock %}
 
 {% block content %}
@@ -13,17 +13,16 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <form action="{{ path_for('item.list') }}" method="post">
-
                     <table id="example2" class="table table-bordered table-striped ">
                         <thead>
                             <tr>
-                                <th>Group</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Recurring</th>
-                                <th>Start Date</th>
+                                <th>Grup</th>
+                                <th>Nama</th>
+                                <th>Deskripsi</th>
+                                <th>Pengulangan</th>
+                                <th>Tanggal mulai</th>
                                 <th>Status</th>
-                                <th>Option</th>
+                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,7 +32,7 @@
                                 <td>{{ item.name }}</td>
                                 <td>{{ item.description }}</td>
                                 <td>{% if item.recurrent == null %}
-                                    no recurring
+                                    Tanpa pengulangan
                                     {% else %}
                                     {{ item.recurrent }}
                                     {% endif %}
@@ -41,9 +40,9 @@
                                 <td>{{ item.start_date }}</td>
                                 <td>
                                 {% if item.status == 1 %}
-                                reported
+                                Telah dilaporkan
                                 {% else %}
-                                unreported
+                                Belum dilaporkan
                                 {% endif %}
                                 </td><td>
                                     <a href="{{ path_for('item.soft.delete', {('id'): item.id})}}"
@@ -57,16 +56,11 @@
                             </tr>
                         {% endfor %}
                     </tbody>
-
                     </table>
                 </form>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}

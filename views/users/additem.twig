@@ -3,7 +3,7 @@
 {% block title %} Add Item {% endblock %}
 
 {% block headContent %}
-<i style="color:green" class="fa fa-plus-square">  	Add Item </i>
+<i style="color:green" class="fa fa-plus-square"> Tambah Item </i>
 {% endblock %}
 
 {% block content %}
@@ -16,12 +16,12 @@
 					<table id="example2" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Description</th>
-								<th>Recurrent</th>
-								<th>Start Date</th>
-								<th>End Date</th>
-								<th style="width: 40px">Select</th>
+								<th>Nama</th>
+								<th>Deskripsi</th>
+								<th>Pengulangan</th>
+								<th>Tangggal mulai</th>
+								<th>Tanggal berakhir</th>
+								<th style="width: 40px">Pilih</th>
 							</tr>
 						</thead>
 						{% for item in item %}
@@ -44,7 +44,7 @@
 					<input type="hidden" name="id" value="{{ group_id }}">
 
 					<button type="submit" name="set" value="1" class="btn btn-success">
-						<i class="fa fa-plus" aria-hidden="true"></i> Add Item </button>
+						<i class="fa fa-plus" aria-hidden="true"></i> Tambah Item </button>
 					<hr style="margin-top:10px;margin-bottom:10px;" >
 				</form>
 			</div>

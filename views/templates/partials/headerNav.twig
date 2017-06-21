@@ -5,7 +5,7 @@
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Navigasi</span>
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
@@ -20,38 +20,18 @@
                             <span class="label label-warning"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
+                            <li class="header">Notifikasi</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-red"></i> 5 new members joined
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-user text-red"></i> You changed your username
+                                            <i class="fa fa-users text-aqua"></i> 5 member tergabung
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a href="#">Lihat semua ...</a></li>
                         </ul>
                     </li>
 
@@ -68,7 +48,7 @@
 
                                 <p>
                                     {{login.name}}
-                                    <small>Join since {{ login.created_at | date("m-d-Y") }}</small>
+                                    <small>Terdaftar sejak {{ login.created_at | date("m-d-Y") }}</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -78,10 +58,10 @@
                                         <a href="#">Item</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Group</a>
+                                        <a href="#">Grup</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a href="">Setting</a>
+                                        <a href="">Pengaturan</a>
                                     </div>
                                 </div>
                                 <!-- /.row -->
@@ -89,11 +69,10 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{path_for('user.profile')}}" class="btn btn-default btn-flat">View Profile</a>
+                                    <a href="{{path_for('user.profile')}}" class="btn btn-default btn-flat">Profil</a>
                                 </div>
                                 <div class="pull-right">
-                                    <!-- <a href="{{path_for('user.setting')}}" class="btn btn-default btn-flat">Setting Account</a> -->
-                                    <a href="{{path_for('logout')}}" class="btn btn-default btn-flat">Logout</a>
+                                    <a href="{{path_for('logout')}}" class="btn btn-default btn-flat">Keluar</a>
                                 </div>
                             </li>
                         </ul>

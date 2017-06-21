@@ -13,24 +13,24 @@
     </div>
 
     <ul class="sidebar-menu">
-        <li class="header">NAVIGATION MENU</li>
+        <li class="header">MENU</li>
         <li class="treeview">
             <a href="{{path_for('home')}}"><i class="fa ion-ios-speedometer fa-lg">
-            </i> <span>HOME</span></a>
+            </i> <span>BERANDA</span></a>
         </li>
 
         {% if login.status == 1 %}
         <li class="treeview">
             <a href="#"><i class="fa fa-users"></i>
-                <span>GROUP</span>
+                <span>GRUP</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{path_for('create.group.get')}}">Create Group</a></li>
-                <li><a href="{{path_for('group.list')}}">Group List</a></li>
-                <li><a href="{{path_for('group.inactive')}}">Group Inactive</a></li>
+                <li><a href="{{path_for('create.group.get')}}">Buat Grup</a></li>
+                <li><a href="{{path_for('group.list')}}">Daftar Grup</a></li>
+                <li><a href="{{path_for('group.inactive')}}">Grup tidak aktif</a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -41,22 +41,22 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{path_for('user.create')}}">Create User</a></li>
-                <li><a href="{{path_for('user.list.all')}}">User List</a></li>
-                <li><a href="{{path_for('user.trash')}}">User Inactive</a></li>
+                <li><a href="{{path_for('user.create')}}">Buat User</a></li>
+                <li><a href="{{path_for('user.list.all')}}">Daftar user</a></li>
+                <li><a href="{{path_for('user.trash')}}">User tidak aktif</a></li>
             </ul>
         </li>
         <li class="treeview">
             <a href="#"><i class="fa fa-list-alt"></i>
-                <span>ARTICLE</span>
+                <span>ARTIKEL</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ path_for('article-add') }}">Create Article</a></li>
-                <li><a href="{{ path_for('article-list-active') }}">Article List</a></li>
-                <li><a href="{{ path_for('article-list-inactive') }}">Article Inactive</a></li>
+                <li><a href="{{ path_for('article-add') }}">Buat Artikel</a></li>
+                <li><a href="{{ path_for('article-list-active') }}">Daftar Artikel</a></li>
+                <li><a href="{{ path_for('article-list-inactive') }}">Artikel tidak aktif</a></li>
             </ul>
         </li>
         <li class="treeview">
@@ -67,8 +67,8 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ path_for('item.list')}}">Item List</a></li>
-                <li><a href="{{ path_for('item.trash')}}">Trash</a></li>
+                <li><a href="{{ path_for('item.list')}}">Daftar Item </a></li>
+                <li><a href="{{ path_for('item.trash')}}">Item tidak aktif</a></li>
             </ul>
         </li>
 
@@ -76,16 +76,15 @@
 
         <li class="treeview">
             <a href="{{ path_for('list.user')}}"><i class="fa fa-users"></i>
-                <span>MY USER</span>
+                <span>ANAK</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
         </li>
-
         <li class="treeview">
-            <a href="{{ path_for('pic.group') }}"><i class="fa fa-users"></i>
-                <span>MY GROUP</span>
+            <a href="{{ path_for('list.guard')}}"><i class="fa fa-users"></i>
+                <span>WALI</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -94,7 +93,7 @@
 
         <li class="treeview">
             <a href="{{ path_for('user.group') }}"><i class="fa fa-users"></i>
-                <span>GENERAL GROUP</span>
+                <span>GRUP</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
