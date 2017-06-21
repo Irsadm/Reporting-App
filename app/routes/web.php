@@ -85,7 +85,8 @@ $app->group('', function() use ($app, $container) {
     $app->group('/pic', function(){
         $this->get('/group', 'App\Controllers\web\GroupController:getPicGroup')
         ->setName('pic.group');
-        $this->post('/create', 'App\Controllers\web\GroupController:createByUser')->setName('pic.create.group');
+        $this->post('/create', 'App\Controllers\web\GroupController:createByUser')
+        ->setName('pic.create.group');
         $this->get('/group/{id}/item', 'App\Controllers\web\ItemController:getItemInGroup')
         ->setName('pic.item.group');
         $this->get('/detail/{id}', 'App\Controllers\web\GroupController:findGroup')
@@ -148,6 +149,10 @@ $app->group('', function() use ($app, $container) {
         ->setName('user.search');
         $this->get('/group/{id}', 'App\Controllers\web\UserController:enterGroup')
         ->setName('enter.group');
+        $this->post('/group/post/create', 'App\Controllers\web\PostController:addPost')
+        ->setName('create.post');
+        $this->get('/{group}/post/{id}/del', 'App\Controllers\web\PostController:delPost')
+        ->setName('delete.post');
     });
 
     $app->group('/article/', function() {

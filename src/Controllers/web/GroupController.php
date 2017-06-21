@@ -205,7 +205,8 @@ class GroupController extends BaseController
 			if ($_SESSION['login']['status'] == 1) {
 				return $response->withRedirect($this->router->pathFor('group.list'));
 			} else {
-				return $response->withRedirect($this->router->pathFor('pic.group'));
+				return $response->withRedirect($this->router
+		        ->pathFor('enter.group', ['id' => $args['id']]));
 
 			}
 
@@ -481,7 +482,7 @@ class GroupController extends BaseController
 			$_SESSION['errors'] = $this->validator->errors();
 		}
 
-		return $response->withRedirect($this->router->pathFor('pic.group'));
+		return $response->withRedirect($this->router->pathFor('user.group'));
 	}
 
 	//Find group by id
@@ -497,11 +498,12 @@ class GroupController extends BaseController
 		if ($_SESSION['login']['status'] == 1 || $pic['status'] == 1) {
 			$delete = $group->hardDelete($args['id']);
 
+			$this->flash->addMessage('succes', 'Grup telah berhasil dihapus');
 		} else {
 			$this->flash->addMessage('error', 'Anda tidak memiliki akses untuk menghapus grup ini!');
 		}
 			return $response->withRedirect($this->router
-					->pathFor('pic.group'));
+					->pathFor('user.group'));
 	}
 
 	public function searchGroup($request, $response)
@@ -549,16 +551,24 @@ class GroupController extends BaseController
 	public function leaveGroup($request, $response, $args)
 	{
 		$userGroup = new UserGroupModel($this->db);
+		$posts = new \App\Models\PostModel($this->db);
 
 		$userId = $_SESSION['login']['id'];
 
 		$group = $userGroup->finds('user_id', $userId, 'group_id', $args['id']);
-		// var_dump($group[0]);die();
+		$findPost = $posts->finds('creator', $userId, 'group_id', $args['id']);
+
 		if ($group[0]) {
+
+			if ($findPost) {
+				foreach ($findPost as $key => $value) {
+					$post_del = $posts->hardDelete($value['id']);
+				}
+			}
 
 			$leaveGroup = $userGroup->hardDelete($group[0]['id']);
 
-			$this->flash->addMessage('succes', 'Anda telah keluar dari grup');
+			$this->flash->addMessage('succes', 'Anda telah meninggalkan grup');
 		} else {
 			$this->flash->addMessage('error', 'Anda tidak tergabung di grup ini!');
 

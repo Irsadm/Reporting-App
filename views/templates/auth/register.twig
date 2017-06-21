@@ -111,7 +111,7 @@
                                 {% endif %}
                             </div>
 
-                            <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                            <!-- <div class="form-group {{ errors.name ? 'has-error' : '' }}">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-user"></i>
@@ -123,6 +123,22 @@
                                 {% if errors.name %}
                                 <span class="help-block">
                                     {{errors.name | first}}
+                                </span>
+                                {% endif %}
+                            </div> -->
+
+                            <div class="form-group {{ errors.password ? 'has-error' : '' }}">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-lock"></i>
+                                    </div>
+                                    <input type="password" name="password" placeholder="Password..."
+                                    value="{{ old.password }}"
+                                    class="form-last-name form-control" id="form-last-name">
+                                </div>
+                                {% if errors.password %}
+                                <span class="help-block">
+                                    {{errors.password | first}}
                                 </span>
                                 {% endif %}
                             </div>
@@ -142,23 +158,7 @@
                                 {% endif %}
                             </div>
 
-                            <div class="form-group {{ errors.password ? 'has-error' : '' }}">
-                                <div class="input-group">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-lock"></i>
-                                    </div>
-                                    <input type="password" name="password" placeholder="Password..."
-                                    value="{{ old.password }}"
-                                    class="form-last-name form-control" id="form-last-name">
-                                </div>
-                                {% if errors.password %}
-                                <span class="help-block">
-                                    {{errors.password | first}}
-                                </span>
-                                {% endif %}
-                            </div>
-
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-transgender-alt"></i>
@@ -171,9 +171,9 @@
                                         selected="selected"{% endif %}>Perempuan</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="form-group { errors.phone ? 'has-error' : '' }}">
+                            <!-- <div class="form-group { errors.phone ? 'has-error' : '' }}">
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-phone"></i>
@@ -187,7 +187,7 @@
                                     {{errors.phone | first}}
                                 </span>
                                 {% endif %}
-                            </div>
+                            </div> -->
                             <button type="submit" class="btn btn-social-button btn-yahoo">
                                 Buat akun</button>
                             </form>

@@ -205,9 +205,9 @@ class UserController extends BaseController
     {
 
         $this->validator
-            ->rule('required', ['username', 'password', 'name', 'email', 'phone', 'gender'])
+            ->rule('required', ['username', 'password', 'email'])
             ->message('{field} must not be empty')
-            ->label('Username', 'password', 'name', 'Password', 'Email', 'Address');
+            ->label('Username', 'Password', 'Email');
         $this->validator
             ->rule('integer', 'id');
         $this->validator
@@ -217,14 +217,12 @@ class UserController extends BaseController
         $this->validator
              ->rule('lengthMax', [
                 'username',
-                'name',
                 'password'
              ], 30);
 
         $this->validator
              ->rule('lengthMin', [
                 'username',
-                'name',
                 'password'
              ], 5);
 
@@ -474,21 +472,23 @@ class UserController extends BaseController
         $userId  = $_SESSION['login']['id'];
         $userGroup = $userGroups->finds('group_id', $args['id'], 'user_id', $userId);
         $memberGroup = $userGroups->finds('group_id', $args['id'], 'group_id',  $args['id']);
-        $item = $items->finds('group_id', $args['id'], 'user_id', NULL);
+        $item = $items->finds('group_id', $args['id'], 'group_id', $args['id']);
         $group = $groups->find('id', $args['id']);
-        $post = $posts->getInGroup($args['id']);
 
+        $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
+
+        $post = $posts->getInGroup($args['id'])->setPaginate($page, 5);
 
         if ($group && $userGroup) {
 
             $data = [
                 'group' => $group,
                 'posts' => $post,
+                'users' => $userGroup[0],
                 'counts' => [
                     'member' => count($memberGroup),
                     'article' => count($item),
                 ]
-
             ];
 
             return $this->view->render($response, 'users/group/group-home.twig', $data);
@@ -630,12 +630,12 @@ class UserController extends BaseController
         $user = $users->find('id', $args['id']);
 
         $mail = [
-            'subject'   =>  'Guardian Added You',
+            'subject'   =>  'Wali menambahkan anda',
             'from'      =>  'reportingmit@gmail.com',
             'to'        =>  $user['email'],
             'sender'    =>  'Reporting App',
             'receiver'  =>  $user['name'],
-            'content'   =>  'You are successfully added by '. $guardName,
+            'content'   =>  'Anda telah ditambahkan sebagai anak oleh '. $guardName,
         ];
         // var_dump($mail);die();
         if (empty($findUser[0])) {

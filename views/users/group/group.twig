@@ -2,8 +2,19 @@
 
 {% block title %} Grup  {% endblock %}
 
-{% block headContent %} Grup
+{% block script %}
+{% if errors %}
+<script type="text/javascript">
+$('#create').modal('show');
+</script>
+{% endif %}
+{% endblock %}
 
+{% block headContent %} Grup
+<span style="font-size: 20px;" class="pull-right" >
+    <button class="btn btn-primary" href="" data-toggle="modal" data-target="#create" title="Create Group">
+        <i class="fa fa-plus fa-lg"> Buat Grup</i></button>
+</span>
 {% endblock %}
 
 {% block content %}
@@ -85,47 +96,115 @@
             </div>
             {% endfor %}
 
-    <div class="modal fade bs-modal-sm" id="search" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <!-- <div id="myTabContent" class="tab-content"> -->
-                    <div class="tab-pane fade active in" id="signin">
-                        <fieldset>
-                            <!-- Sign In Form -->
-                            <!-- Text input-->
-                            <form class="form-horizontal" action="{{ path_for('post.group.search') }}" method="POST">
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <input name="search" type="text" class="form-control"
-                                         placeholder="Nama grup ..." required="">
-                                    </div>
-                                </div>
+            <div class="modal fade bs-modal-sm" id="search" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <!-- <div id="myTabContent" class="tab-content"> -->
+                            <div class="tab-pane fade active in" id="signin">
+                                <fieldset>
+                                    <!-- Sign In Form -->
+                                    <!-- Text input-->
+                                    <form class="form-horizontal" action="{{ path_for('post.group.search') }}" method="POST">
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <input name="search" type="text" class="form-control"
+                                                placeholder="Nama grup ..." required="">
+                                            </div>
+                                        </div>
 
-                                <!-- Button -->
-                                <div class="control-group">
-                                    <label class="control-label" for="search"></label>
-                                    <div class="controls">
-                                        <button type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
-                                            <i class="fa fa-search"></i> Cari
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                                        <!-- Button -->
+                                        <div class="control-group">
+                                            <label class="control-label" for="search"></label>
+                                            <div class="controls">
+                                                <button type="submit" class="btn btn-primary btn-block btn btn-info btn-md">
+                                                    <i class="fa fa-search"></i> Cari
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
 
-                            <!-- Button -->
-                            <div class="control-group">
-                                <label class="control-label" for="signin"></label>
-                                <center>
-                                    <div class="controls">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                    <!-- Button -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="signin"></label>
+                                        <center>
+                                            <div class="controls">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                            </div>
+                                        </center>
                                     </div>
-                                </center>
+                                </fieldset>
                             </div>
-                        </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-{% endblock %}
+
+            <div id="create" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><h3 class="panel-title">
+                                    <strong>Buat Grup Baru</strong></h3></div>
+                                    <div class="panel-body">
+                                        <form action="{{ path_for('pic.create.group') }}"
+                                        method="POST" enctype="multipart/form-data">
+                                        {% if errors %}
+                                        <div class="alert alert-danger">
+                                            <a class="close" data-dismiss="alert" href="#">x</a>
+                                            Mohon isi form dengan benar!
+                                        </div>
+                                        {% endif %}
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-4 col-md-7">
+                                                <div class="form-group {{ errors.name ? 'has-error' : '' }}">
+                                                    <label for="name">Nama</label>
+                                                    <input type="text" name="name" id="title"
+                                                    class="form-control" value="{{ old.name }}">
+                                                    {% if errors.name %}
+                                                    <span class="help-block">{{errors.name | first}}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-4 col-md-7">
+                                                <div id="image_preview"><img id="previewing"
+                                                    src="{{ base_url() }}/assets/images/group.jpg"
+                                                    class="img-thumbnail" style="width:200px" ></div><br />
+                                                    <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                                                        <label for="image">Foto</label>
+                                                        <input type="file" id="file" name="image"
+                                                        id="image" class="form-control">
+                                                        {% if errors.image %}
+                                                        <span class="help-block">{{errors.image | first}}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6 col-md-12">
+                                                    <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                                                        <label for=description>Deskripsi</label>
+                                                        <textarea name="description" id="description"
+                                                        class="form-control">{{ old.description }}</textarea>
+                                                        {% if errors.description %}
+                                                        <span class="help-block">{{errors.description | first}}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fa fa-floppy-o" aria-hidden="true"></i> BUAT GRUP</button>
+                                                <hr style="margin-top:10px;margin-bottom:10px;" >
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endblock %}

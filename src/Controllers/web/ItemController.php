@@ -1,9 +1,13 @@
 <?php
+
 namespace App\Controllers\web;
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Models\Item;
 use App\Models\UserItem;
+
+
 class ItemController extends BaseController
 {
     public function index(Request $request, Response $response)
@@ -279,6 +283,7 @@ class ItemController extends BaseController
             'description'  => 'Description',
             'start_date'   => 'Start date',
         ]);
+
         if ($this->validator->validate()) {
             if (!empty($_FILES['image']['name'])) {
                 $storage = new \Upload\Storage\FileSystem('assets/images');
@@ -317,23 +322,24 @@ class ItemController extends BaseController
             $item  = new Item($this->db);
             $newItem = $item->create($itemData);
 
-
-
             $this->flash->addMessage('succes', 'Item berhasil dibuat');
 
 // var_dump($_SESSION['login']);die();
             if ($_SESSION['login']['status'] == 1){
 
-                return $response->withRedirect($this->router->pathFor('get.group.item', ['id' => $request->getParams()['group_id'] ]));
+                return $response->withRedirect($this->router->pathFor('get.group.item',
+                 ['id' => $request->getParams()['group_id'] ]));
             } elseif ($_SESSION['login']['status'] == 2) {
 
-                return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+                return $response->withRedirect($this->router->pathFor('pic.item.group',
+                 ['id' => $request->getParams()['group_id'] ]));
             }
         } else {
             $_SESSION['errors'] = $this->validator->errors();
             $_SESSION['old']  = $request->getParams();
             // var_dump($_SESSION['old']); die();
-            return $response->withRedirect($this->router->pathFor('pic.item.group', ['id' => $request->getParams()['group_id'] ]));
+            return $response->withRedirect($this->router->pathFor('pic.item.group',
+             ['id' => $request->getParams()['group_id'] ]));
         }
     }
 

@@ -35,7 +35,8 @@ class ArticleModel extends BaseModel
 
 		$this->query =$qb->select('*')
             ->from($this->table)
-            ->where('deleted = 0');
+            ->where('deleted = 0')
+			->orderBy('updated_at', 'DESC');
 
         return $this;
     }

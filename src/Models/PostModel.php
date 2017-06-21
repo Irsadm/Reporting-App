@@ -24,18 +24,14 @@ class PostModel extends BaseModel
     {
 
 		$qb = $this->db->createQueryBuilder();
-		$qb->select('u.name', 'p.*')
+
+		$this->query = $qb->select('u.name', 'p.*')
 		   ->from($this->table, 'p')
 		   ->where('p.group_id = '. $groupId)
-		   ->join('p', 'users', 'u', 'u.id = p.creator');
-		   $result = $qb->execute();
-		   return $result->fetchAll();
+		   ->join('p', 'users', 'u', 'u.id = p.creator')
+		   ->orderBy('updated_at', 'DESC');
 
-        // $qb->select('*')
-        //     ->from($this->table)
-        //     ->where('group_id = '. $groupId);
-        // $query = $qb->execute();
-        // return $query->fetchAll();
+	   	return $this;
     }
 
 	public function restore($id)
