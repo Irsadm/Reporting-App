@@ -3,68 +3,254 @@
 {% block title %} Grup  {% endblock %}
 
 {% block headContent %}
-<div class="btn-group">
-  <a href="#" class="btn btn-default">Member</a>
-  <a href="#" class="btn btn-default">Item Grup</a>
-</div>
 
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-		<div class="col-md-9">
-			<div class="panel box-body">
-                <p align="center"><font color=#3d0f28 size=5>Timeline</font></p>
-                <hr>
-                <div style="margin-left:70px;" class="row">
-                	{% for post in posts %}
-                    <div class="col-lg-10">
-                        <font color=#02596c size=4><b>{{post.name}}</b></font>
-                        <br>
-                        <font color=#01323d size=1><b>{{post.created_at|date("d-M-Y H:i")}}</b></font>
-                        {% if post.image != null %}
-                        <br>
-                        <img style="width:175px; height:175px" class="img-thumbnail"
-                        src="{{ base_url() }}/assets/images/{{ post.image }}" alt="">
-                        {% endif %}
-                        <br>
-                        <br>
-                        <font color=#000000 size=3><b>{{post.content}}</b></font>
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel box-body">
+            <span class="pull-left">
+                <button class="btn btn-primary" href="" data-toggle="modal"
+                data-target="#create" title="Create Group">
+                <i class="fa fa-pencil" aria-hidden="true">
+                    Buat kiriman</i></button>
+                </a>
+            </span>
+            <p align="center"><font color=#3d0f28 size=5>Timeline</font></p>
+            <hr>
+            <div style="margin-left:70px;" class="row">
+                {% for post in posts.data %}
+                <div class="col-lg-10">
+                    <font color=#02596c size=4><b>{{post.name}}</b></font>
+                    {% if users.status == 1 or post.creator == login.id %}
+                    <span class="pull-right">
+                        <a href="" data-toggle="modal" data-target="#del{{post.id}}"
+                            value="{{post.id}}"title="Hapus kiriman">x
+                        </a>
+                    </span>
+                    {% endif %}
+                    <br>
+                    <font color=#01323d size=1><b>{{post.created_at|date("d-M-Y H:i")}}</b></font>
+                    {% if post.image != null %}
+                    <br>
+                    <img style="height:200px" class="img-thumbnail"
+                    src="{{ base_url() }}/assets/images/{{ post.image }}" alt="">
+                    {% endif %}
+                    <br>
+                    <br>
+                    <font color=#000000 size=3>{{post.content}}</font>
 
-                        <hr>
-                    </div>
-                	{% endfor %}
+                    <hr>
                 </div>
-			</div>
-		</div>
-        <div class="col-md-3">
-        	<div class="panel box-body" style="background-color:#d9dde9">
-        		<p align="center"><font color=#3d0f28 size=4>{{group.name}}</font></p>
-        		<hr>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <center>
+                {% endfor %}
+            </div>
+            <nav align="center" aria-label="...">
+                <ul class="pager">
+                    {% if posts.current > posts.first_page %}
+                    <li class="previous">
+                        <a href="{{ base_url() }}/user/group/{{ group.id}}?page={{ posts.first_page }}">
+                            <span aria-hidden="true">&larr;</span> Halaman pertama
+                        </a></li>
+                    <li class="previous">
+                        <a href="{{ base_url() }}/user/group/{{ group.id}}?page={{ posts.current - 1 }}">
+                            <span aria-hidden="true">&larr;</span> Kembali
+                        </a></li>
+                    {% endif %}
+                    {% if posts.current < posts.total_page %}
+                    <li class="next">
+                        <a href="{{ base_url() }}/user/group/{{ group.id}}?page={{ posts.total_page }}">
+                            Halaman terakhir <span aria-hidden="true">&rarr;</span></a></li>
+                    <li class="next">
+                        <a href="{{ base_url() }}/user/group/{{ group.id}}?page={{ posts.current + 1 }}">
+                        Selanjutnya <span aria-hidden="true">&rarr;</span></a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="panel box-body" style="background-color:#d9dde9">
+            <p align="center"><font color=#3d0f28 size=4>{{group.name}}</font></p>
+            <hr>
+            <div class="row">
+                <div class="col-lg-12">
+                    <center>
                         <img style="width:175px; height:175px" class="img-thumbnail"
                         src="{{ base_url() }}/assets/images/{{ group.image }}" alt="">
                     </center>
-                    </div>
-                    <div class="col-lg-12">
-                        <p class="text-left">
-                            <br>
-                            {{group.description}}
-                            <hr>
-                        </p>
-                    </div>
                 </div>
-        		<div class="form-group">
-        			<strong>
-        				<p><span class="label label-success">{{ counts.member }}</span>
-        					 <span class="pull-right"> Member </span></font></p>
-        				<p><span class="label label-info">{{ counts.article }}</span>
-        					<span class="pull-right"> Item</span></font></p>
-        			</strong>
-        		</div>
-        	</div>
+                <div class="col-lg-12">
+                    <p class="text-left">
+                        <br>
+                        {{group.description}}
+                    </p>
+                    {% if users.status == 1 %}
+                    <center><br>
+                        <a href="{{ path_for('pic.edit.group.get', {('id'): group.id}) }}">
+                            <i class="fa fa-pencil" aria-hidden="true"> Sunting</i>
+                    </a></center>
+                    {% endif %}
+                    <hr>
+                </div>
+            </div>
+            <div class="form-group">
+                <strong>
+                    <p><span class="label label-success">{{ counts.member }}</span>
+                        <span class="pull-right"> Member </span></font></p>
+                    <p><span class="label label-info">{{ counts.article }}</span>
+                        <span class="pull-right"> Item</span></font></p>
+                    <hr>
+                </strong>
+                <center>
+                <div align="center" class="btn-group">
+                    {% if users.status == 1 %}
+                    <a href="{{ path_for('pic.member.group.get',
+                     {('id'): group.id}) }}" class="btn btn-primary">Anggota</a>
+                    <a href="{{ path_for('pic.item.group',
+                     {('id'): group.id}) }}" class="btn btn-primary">Item Grup</a>
+                    {% endif %}
+                    <a href="{{ path_for('user.item.group', {('id'): group.id}) }}"
+                     class="btn btn-primary">Itemku</a>
+                </div>
+                <br><br><br>
+                <a href="" data-toggle="modal" data-target="#leave{{group.id}}"
+                    value="{{group.id}}"title="Keluar dari grup">
+                    <button class="btn btn-danger btn-md" style="margin-right:10px">Keluar Grup</button>
+                </a>
+                {% if users.status == 1 %}
+                <a href="" data-toggle="modal" data-target="#del{{group.id}}"
+                    value="{{group.id}}"title="Hapus grup">
+                    <button class="btn btn-danger btn-md" style="margin-right:10px">Hapus Grup</button>
+                </a>
+                {% endif %}
+            </center>
+            </div>
         </div>
     </div>
+</div>
+
+<div id="create" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form action="{{ path_for('create.post') }}"
+                        method="POST" enctype="multipart/form-data">
+                        {% if errors %}
+                        <div class="alert alert-danger">
+                            <a class="close" data-dismiss="alert" href="#">x</a>
+                            Mohon isi form dengan benar!
+                        </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-12">
+                                <div class="form-group {{ errors.description ? 'has-error' : '' }}">
+                                    <label for=description>Konten</label>
+                                    <textarea name="content" id="content"
+                                    class="form-control">{{ old.content }}</textarea>
+                                    {% if errors.content %}
+                                    <span class="help-block">{{errors.content | first}}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group {{ errors.image ? 'has-error' : '' }}">
+                                    <label for="image">Foto</label>
+                                    <input type="file" id="file" name="image"
+                                    id="image" class="form-control">
+                                    <input type="hidden" value="{{ group.id }}" name="group_id">
+                                    {% if errors.image %}
+                                    <span class="help-block">{{errors.image | first}}</span>
+                                    {% endif %}
+                                    <br>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i> Kirim</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div id="image_preview"><img id="previewing"
+                                        src="{{ base_url() }}/assets/images/{{ S }}"
+                                        class="img-thumbnail" style="width:200px" >
+                                    </div><br />
+                                </div>
+                            </div>
+                            <hr style="margin-top:10px;margin-bottom:10px;" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for post in posts.data %}
+
+<!-- Modal -->
+<div id="del{{post.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                style="color:red">Tutup(&times;)</button>
+                <h4>Apakah anda yakin akan menghapus kiriman?</h4>
+            </div>
+            <div align="center"class="modal-body">
+                <a href="{{ path_for('delete.post', {('id'): post.id, ('group'): group.id}) }}">
+                    <button class="btn btn-danger btn-md" style="margin-right:10px">
+                        <i class="fa fa-trash" aria-hidden="true">
+                            <b>Hapus kiriman ini</b></i></button>
+                </a><hr>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+<div id="del{{group.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                style="color:red">Tutup(&times;)</button>
+                <h4>Apakah anda yakin akan menghapus grup {{group.name}}?</h4>
+            </div>
+            <div align="center"class="modal-body">
+                <a href="{{ path_for('del.pic.group', {('id'): group.id}) }}">
+                    <button class="btn btn-danger btn-md" style="margin-right:10px">
+                        <i class="fa fa-trash" aria-hidden="true">
+                            <b>Hapus grup ini</b></i></button>
+                </a><hr>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="leave{{group.id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                style="color:red">Tutup(&times;)</button>
+                <h4>Apakah anda yakin akan meninggalkan grup {{group.name}}?</h4>
+            </div>
+            <div align="center"class="modal-body">
+                <a href="{{ path_for('get.del.group', {('id'): group.id}) }}">
+                    <button class="btn btn-danger btn-md" style="margin-right:10px">
+                        <i class="fa fa-trash" aria-hidden="true">
+                            <b>Tinggalkan grup ini</b></i></button>
+                </a><hr>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

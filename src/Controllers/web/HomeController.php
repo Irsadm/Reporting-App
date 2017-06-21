@@ -6,11 +6,12 @@ class HomeController extends BaseController
 {
     public function index($request, $response)
     {
+        $article = new \App\Models\ArticleModel($this->db);
+        $group = new \App\Models\GroupModel($this->db);
+        $item = new \App\Models\Item($this->db);
+        $user = new \App\Models\Users\UserModel($this->db);
+
         if ($_SESSION['login']['status'] == 1) {
-            $article = new \App\Models\ArticleModel($this->db);
-            $group = new \App\Models\GroupModel($this->db);
-            $item = new \App\Models\Item($this->db);
-            $user = new \App\Models\Users\UserModel($this->db);
 
             $activeGroup = count($group->getAll());
             $activeUser = count($user->getAll());
@@ -35,20 +36,10 @@ class HomeController extends BaseController
     		]);
 
         } elseif ($_SESSION['login']['status'] == 2) {
-            $article = new \App\Models\ArticleModel($this->db);
-
             $allArticle = count($article->getAll());
-            // var_dump($allArticle);die();
             $search = $request->getQueryParam('search');
 
-            if ($allArticle < 3) {
-
-                $page = 1;
-
-            }else {
-
-                $page = $request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
-            }
+            $page = !$request->getQueryParam('page') ? 1 : $request->getQueryParam('page');
 
             if (!empty($search)) {
                 $findAll = $article->search($request->getQueryParam('search'));

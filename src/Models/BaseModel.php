@@ -180,7 +180,6 @@ abstract class BaseModel
         $total = count($this->fetchAll());
         //count total pages
         $pages = (int) ceil($total / $limit);
-        $first_page = 1;
         // $number = (int) $page;
         $range = $limit * ($page - 1);
         $data = $this->query->setFirstResult($range)->setMaxResults($limit);
@@ -190,7 +189,7 @@ abstract class BaseModel
             'perpage'   => $limit,
             'current'   => $page,
             'total_page'=> $pages,
-            'first_page'=> $first_page,
+            'first_page'=> 1,
             'data'      => $data,
         ];
         return $result;
